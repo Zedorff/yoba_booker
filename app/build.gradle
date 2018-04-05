@@ -1,0 +1,59 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.zedorff.yobabooker"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            postprocessing {
+                removeUnusedCode false
+                removeUnusedResources false
+                obfuscate false
+                optimizeCode false
+                proguardFile 'proguard-rules.pro'
+            }
+        }
+    }
+    dataBinding {
+        enabled true
+    }
+}
+
+dependencies {
+    implementation libs.kotlin.stdlib
+
+    implementation libs.support.appcompat
+    implementation libs.support.design
+    implementation libs.support.preference
+    implementation libs.support.constraint
+
+    implementation libs.rx.java
+    implementation libs.rx.android
+    implementation libs.rx.kotlin
+    implementation libs.rx.rxrelay
+    implementation libs.rx.rxbinding
+
+    implementation libs.dagger.core
+    implementation libs.dagger.android.core
+    kapt libs.dagger.compiler
+    kapt libs.dagger.android.processor
+
+    implementation libs.room.runtime
+    implementation libs.room.rxsupport
+    annotationProcessor libs.room.compiler
+
+    implementation libs.arch.extensions
+    annotationProcessor libs.arch.compiler
+
+    implementation libs.misc.stetho
+}
