@@ -3,4 +3,56 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="black_semi_transparent">#b2000000</color>
+    <color name="background">#e5e5e5</color>
+    <color name="half_black">#808080</color>
+    <color name="white">#fafafa</color>
+    <color name="white_pressed">#f1f1f1</color>
+    <color name="pink">#e91e63</color>
+    <color name="pink_pressed">#ec407a</color>
+    <color name="blue_semi_transparent">#805677fc</color>
+    <color name="blue_semi_transparent_pressed">#80738ffe</color>
+
+    <color name="outcome_button_color">#dd2c00</color>
+    <color name="outcome_button_color_pressed">#b60000</color>
+
+    <color name="income_button_color">#4fd43d</color>
+    <color name="income_button_color_pressed">#3da430</color>
+
+    <color name="transfer_button_color">#a90478</color>
+    <color name="transfer_button_color_pressed">#890462</color>
+
+    <color name="transaction_fragment_overlay_background">#893d3d3d</color>
+
+    <color name="gray_semi">#5b808080</color>
+    <color name="white_semi">#70ffffff</color>
+
+    <color name="bright_pink">#FF007F</color>
+    <color name="red">#FF0000</color>
+    <color name="orange">#FF7F00</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="chartreuse">#7FFF00</color>
+    <color name="green">#00FF00</color>
+    <color name="spring_green">#00FF7F</color>
+    <color name="cyan">#00FFFF</color>
+    <color name="azure">#007FFF</color>
+    <color name="blue">#0000FF</color>
+    <color name="violet">#7F00FF</color>
+    <color name="magenta">#FF00FF</color>
+
+    <array name="rainbow">
+        <item>@color/bright_pink</item>
+        <item>@color/red</item>
+        <item>@color/orange</item>
+        <!--<item>@color/yellow</item>-->
+        <!--<item>@color/chartreuse</item>-->
+        <item>@color/green</item>
+        <!--<item>@color/spring_green</item>-->
+        <!--<item>@color/cyan</item>-->
+        <item>@color/azure</item>
+        <item>@color/blue</item>
+        <item>@color/violet</item>
+        <item>@color/magenta</item>
+    </array>
 </resources>

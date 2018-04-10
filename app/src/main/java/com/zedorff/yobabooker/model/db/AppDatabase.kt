@@ -2,10 +2,16 @@ package com.zedorff.yobabooker.model.db
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
-import com.zedorff.yobabooker.model.db.dao.SpendingDao
-import com.zedorff.yobabooker.model.db.entities.SpendingEntity
+import com.zedorff.yobabooker.model.db.dao.AccountDao
+import com.zedorff.yobabooker.model.db.dao.CategoryDao
+import com.zedorff.yobabooker.model.db.dao.TransactionDao
+import com.zedorff.yobabooker.model.db.entities.AccountEntity
+import com.zedorff.yobabooker.model.db.entities.CategoryEntity
+import com.zedorff.yobabooker.model.db.entities.TransactionEntity
 
-@Database(entities = [(SpendingEntity::class)], version = 1)
+@Database(entities = [(TransactionEntity::class), (AccountEntity::class), (CategoryEntity::class)], version = 1)
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun provideSpendingDao(): SpendingDao
+    abstract fun transactionDao(): TransactionDao
+    abstract fun accountDao(): AccountDao
+    abstract fun categoryDao(): CategoryDao
 }

@@ -4,5 +4,5 @@ import android.arch.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 
 open class BaseViewModel: ViewModel() {
-    private val compositeDisposable: CompositeDisposable by lazy {CompositeDisposable()}
+    val compositeDisposable: CompositeDisposable by lazy {CompositeDisposable()}
 }

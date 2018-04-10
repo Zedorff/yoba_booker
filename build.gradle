@@ -21,11 +21,14 @@ ext {
     rxjava_package = 'io.reactivex.rxjava2'
     room_package = 'android.arch.persistence.room'
     arch_package = 'android.arch.lifecycle'
+    anko_package = 'org.jetbrains.anko'
 
     support_version = '27.0.2'
     dagger_version = '2.14.1'
     room_version = '1.0.0'
     arch_version = '1.1.1'
+    anko_version = '0.10.4'
+    coroutine_version = '0.22.5'
 
     libs = [
             support : [
@@ -59,7 +62,12 @@ ext {
                     compiler: "$arch_package:compiler:$arch_version"
             ],
             kotlin  : [
-                    stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+                    stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version",
+                    coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+            ],
+            anko    : [
+                    commons: "$anko_package:anko-commons:$anko_version",
+                    coroutines: "$anko_package:anko-sdk25-coroutines:$anko_version"
             ],
             misc: [
                     stetho: "com.facebook.stetho:stetho:1.5.0",

@@ -12,6 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -31,6 +32,10 @@ android {
 
 dependencies {
     implementation libs.kotlin.stdlib
+    implementation libs.kotlin.coroutines
+
+    implementation libs.anko.commons
+    implementation libs.anko.coroutines
 
     implementation libs.support.appcompat
     implementation libs.support.design
@@ -50,10 +55,10 @@ dependencies {
 
     implementation libs.room.runtime
     implementation libs.room.rxsupport
-    annotationProcessor libs.room.compiler
+    kapt libs.room.compiler
 
     implementation libs.arch.extensions
-    annotationProcessor libs.arch.compiler
+    kapt libs.arch.compiler
 
     implementation libs.misc.stetho
 }
