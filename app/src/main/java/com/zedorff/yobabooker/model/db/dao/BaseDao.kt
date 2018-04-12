@@ -7,7 +7,7 @@ import android.arch.persistence.room.Update
 interface BaseDao<T> {
 
     @Insert
-    fun insert(item: T)
+    fun insert(item: T): Long
 
     @Insert
     fun insert(vararg items: T)

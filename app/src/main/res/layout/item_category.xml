@@ -2,17 +2,26 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="category"
-            type="com.zedorff.yobabooker.model.db.entities.CategoryEntity"/>
+            type="com.zedorff.yobabooker.model.db.entities.CategoryEntity" />
     </data>
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
         <TextView
             android:id="@+id/text_category_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{category.name}"/>
+            android:layout_height="?android:attr/listPreferredItemHeightSmall"
+            android:layout_gravity="center_vertical"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:text="@{category.name}"
+            android:textSize="16sp" />
     </FrameLayout>
 </layout>

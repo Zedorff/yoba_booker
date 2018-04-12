@@ -9,6 +9,6 @@ import com.zedorff.yobabooker.model.db.entities.TransactionEntity
 class FullAccount {
     @Embedded
     lateinit var account: AccountEntity
-    @Relation(parentColumn = "id", entityColumn = "account_id")
+    @Relation(parentColumn = "account_id", entityColumn = "account_id_relation")
     lateinit var transactions: List<TransactionEntity>
 }

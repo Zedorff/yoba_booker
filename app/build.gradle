@@ -39,14 +39,7 @@ dependencies {
 
     implementation libs.support.appcompat
     implementation libs.support.design
-    implementation libs.support.preference
     implementation libs.support.constraint
-
-    implementation libs.rx.java
-    implementation libs.rx.android
-    implementation libs.rx.kotlin
-    implementation libs.rx.rxrelay
-    implementation libs.rx.rxbinding
 
     implementation libs.dagger.core
     implementation libs.dagger.android.core
@@ -54,11 +47,11 @@ dependencies {
     kapt libs.dagger.android.processor
 
     implementation libs.room.runtime
-    implementation libs.room.rxsupport
     kapt libs.room.compiler
 
     implementation libs.arch.extensions
     kapt libs.arch.compiler
 
     implementation libs.misc.stetho
+    implementation libs.misc.fab
 }

@@ -71,6 +71,7 @@ ext {
             ],
             misc: [
                     stetho: "com.facebook.stetho:stetho:1.5.0",
+                    fab: "com.getbase:floatingactionbutton:1.10.1"
             ],
     ]
 }

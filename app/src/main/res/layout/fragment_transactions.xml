@@ -9,6 +9,18 @@
             android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:reverseLayout="true"
+            app:stackFromEnd="true"/>
+
+        <TextView
+            android:id="@+id/text_transactions_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:text="@string/text_transactions_empty"
+            android:textSize="36sp"
+            android:visibility="gone"/>
     </FrameLayout>
 </layout>

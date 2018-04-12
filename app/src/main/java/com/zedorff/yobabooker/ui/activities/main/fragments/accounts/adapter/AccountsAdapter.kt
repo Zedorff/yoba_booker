@@ -3,11 +3,13 @@ package com.zedorff.yobabooker.ui.activities.main.fragments.accounts.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
 import com.zedorff.yobabooker.databinding.ItemAccountBinding
 import com.zedorff.yobabooker.model.db.embeded.FullAccount
 import com.zedorff.yobabooker.ui.activities.base.fragments.adapter.BaseAdapter
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class AccountsAdapter : BaseAdapter<AccountsAdapter.ViewHolder, FullAccount>() {
+class AccountsAdapter(var listener: ViewHolderClickListener<FullAccount>) : BaseAdapter<AccountsAdapter.ViewHolder, FullAccount>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         var binding = ItemAccountBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
@@ -15,7 +17,8 @@ class AccountsAdapter : BaseAdapter<AccountsAdapter.ViewHolder, FullAccount>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.account = items[position].account
+        holder.binding.fullAccount = items[position]
+        holder.binding.root.onClick { listener.onClick(items[holder.adapterPosition]) }
     }
 
     override fun compareItems(oldItem: FullAccount, newItem: FullAccount): Boolean {

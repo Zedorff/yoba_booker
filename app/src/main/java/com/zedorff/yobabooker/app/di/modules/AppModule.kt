@@ -10,7 +10,7 @@ import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Module(includes = [(AndroidSupportInjectionModule::class), (DbModule::class),
-    (ComponentsModule::class), (ViewModelModule::class)])
+    (ComponentsModule::class), (ViewModelModule::class), (RepositoryModule::class)])
 abstract class AppModule {
 
     @Binds @Singleton

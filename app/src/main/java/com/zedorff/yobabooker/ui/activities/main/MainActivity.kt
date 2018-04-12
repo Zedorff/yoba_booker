@@ -3,24 +3,25 @@ package com.zedorff.yobabooker.ui.activities.main
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.databinding.ActivityMainBinding
+import com.zedorff.yobabooker.model.db.entities.AccountEntity
+import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.ui.activities.base.BaseActivity
 import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.AccountsFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.categories.CategoriesFragment
+import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.TransactionsFragment
+import com.zedorff.yobabooker.ui.activities.main.view.MainActivityView
+import com.zedorff.yobabooker.ui.activities.newtransaction.NewTransactionActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
-class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    @Inject lateinit var fragmentManager: FragmentManager
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener, MainActivityView {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -28,18 +29,16 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolbar)
-
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         binding.navView.setNavigationItemSelectedListener(this)
+        binding.fabNewIncome.setOnClickListener(this)
+        binding.fabNewOutcome.setOnClickListener(this)
+        binding.fabNewTransfer.setOnClickListener(this)
+        replaceFragment(R.id.container_main, TransactionsFragment.build())
     }
 
     override fun onBackPressed() {
@@ -70,14 +69,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_transactions -> {
+                replaceFragment(R.id.container_main, TransactionsFragment.build())
             }
             R.id.nav_categories -> {
-                replaceFragment(CategoriesFragment.build())
+                replaceFragment(R.id.container_main, CategoriesFragment.build())
             }
             R.id.nav_pie_charts -> {
             }
             R.id.nav_accounts -> {
-                replaceFragment(AccountsFragment.build())
+                replaceFragment(R.id.container_main, AccountsFragment.build())
             }
         }
 
@@ -85,10 +85,19 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return true
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        fragmentManager.beginTransaction()
-                .replace(R.id.container_main, fragment)
-                .addToBackStack(null)
-                .commit()
+    override fun onClick(view: View) {
+        when(view.id) {
+            R.id.fab_new_income -> {NewTransactionActivity.build(this, true)}
+            R.id.fab_new_outcome -> {NewTransactionActivity.build(this, false)}
+            R.id.fab_new_transfer -> {}
+        }
+    }
+
+    override fun openTransactionsForCategory(category: CategoryEntity) {
+        replaceFragment(R.id.container_main, TransactionsFragment.build(category = category))
+    }
+
+    override fun openTransactionsForAccount(account: AccountEntity) {
+        replaceFragment(R.id.container_main, TransactionsFragment.build(account = account))
     }
 }
