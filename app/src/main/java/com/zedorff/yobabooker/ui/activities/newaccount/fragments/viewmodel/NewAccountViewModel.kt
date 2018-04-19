@@ -14,7 +14,7 @@ class NewAccountViewModel @Inject constructor(var repository: YobaRepository): B
     var accountName: MutableLiveData<String> = MutableLiveData()
     var accountType: MutableLiveData<Int> = MutableLiveData()
 
-    fun saveNewAccount(): Deferred<Long> {
+    suspend fun saveNewAccount(): Long {
         return repository.createAccount(
                 AccountEntity(name = accountName.value.toString(), type = accountType.value!!)
         )

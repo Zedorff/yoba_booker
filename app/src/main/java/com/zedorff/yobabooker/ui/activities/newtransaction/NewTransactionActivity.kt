@@ -14,9 +14,10 @@ import com.zedorff.yobabooker.ui.activities.newtransaction.fragments.NewTransact
 import org.jetbrains.anko.intentFor
 import javax.inject.Inject
 
-class NewTransactionActivity: BaseActivity() {
+class NewTransactionActivity : BaseActivity() {
 
-    @Inject lateinit var repository: YobaRepository
+    @Inject
+    lateinit var repository: YobaRepository
     private lateinit var binding: ActivityNewTransactionBinding
 
     companion object {
@@ -38,15 +39,16 @@ class NewTransactionActivity: BaseActivity() {
         val isIncome = intent.getBooleanExtra(KEY_IS_INCOME, true)
         binding.income = isIncome
 
-        repository.getAllAccounts().observe(this@NewTransactionActivity, Observer {
-            it?.let {
-                if (it.isEmpty()) {
-                    startActivity(intentFor<NewAccountActivity>())
-                } else {
-                    replaceFragment(R.id.container_new_transaction, NewTransactionFragment.build(isIncome))
-                }
-            }
-        })
+        savedInstanceState
+                ?: repository.getAllAccounts().observe(this, Observer {
+                    it?.let {
+                        if (it.isEmpty()) {
+                            startActivity(intentFor<NewAccountActivity>())
+                        } else {
+                            replaceFragment(R.id.container_new_transaction, NewTransactionFragment.build(isIncome))
+                        }
+                    }
+                })
     }
 
     override fun onBackPressed() {

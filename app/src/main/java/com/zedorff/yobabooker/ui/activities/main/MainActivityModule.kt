@@ -7,6 +7,8 @@ import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.AccountsFrag
 import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.AccountsFragmentModule
 import com.zedorff.yobabooker.ui.activities.main.fragments.categories.CategoriesFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.categories.CategoriesFragmentModule
+import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.PieChartFragment
+import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.PieChartFragmentModule
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.TransactionsFragmentModule
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.TransactionsFragment
 import com.zedorff.yobabooker.ui.activities.main.view.MainActivityView
@@ -32,4 +34,7 @@ abstract class MainActivityModule {
 
     @ContributesAndroidInjector(modules = [(TransactionsFragmentModule::class)])
     abstract fun contributeTransactionsFragment(): TransactionsFragment
+
+    @ContributesAndroidInjector(modules = [(PieChartFragmentModule::class)])
+    abstract fun contributePieChartFragment(): PieChartFragment
 }

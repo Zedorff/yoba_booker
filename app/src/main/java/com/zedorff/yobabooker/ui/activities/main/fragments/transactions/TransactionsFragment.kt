@@ -3,7 +3,6 @@ package com.zedorff.yobabooker.ui.activities.main.fragments.transactions
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,9 @@ import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.adapter.TransactionsAdapter
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.viewmodel.TransactionsViewModel
+import com.zedorff.yobabooker.ui.activities.newtransaction.NewTransactionActivity
 
-class TransactionsFragment : BaseFragment<TransactionsViewModel>() {
+class TransactionsFragment : BaseFragment<TransactionsViewModel>(), View.OnClickListener {
 
     private lateinit var binding: FragmentTransactionsBinding
     private lateinit var adapter: TransactionsAdapter
@@ -69,6 +69,9 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         adapter = TransactionsAdapter()
         binding.recycler.adapter = adapter
+        binding.fabNewIncome.setOnClickListener(this)
+        binding.fabNewOutcome.setOnClickListener(this)
+        binding.fabNewTransfer.setOnClickListener(this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -78,9 +81,17 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>() {
         viewModel.getTransactions(categoryId, accountId)
                 .observe(this, Observer {
                     it?.let {
-                        if (it.isEmpty()) binding.textTransactionsEmpty.visibility = View.VISIBLE
+                        binding.empty = it.isEmpty()
                         adapter.swapItems(it)
                     }
                 })
+    }
+
+    override fun onClick(view: View) {
+        when(view.id) {
+            R.id.fab_new_income -> { NewTransactionActivity.build(view.context, true)}
+            R.id.fab_new_outcome -> { NewTransactionActivity.build(view.context, false)}
+            R.id.fab_new_transfer -> {}
+        }
     }
 }

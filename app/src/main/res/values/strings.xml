@@ -64,4 +64,6 @@
     <string name="text_title_categories">Категории</string>
     <string name="text_title_accounts">Счета</string>
     <string name="text_title_pie_charts">Графики</string>
+
+    <string name="pattern_transaction_info">%s / %s</string>
 </resources>

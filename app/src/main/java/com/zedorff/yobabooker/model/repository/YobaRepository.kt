@@ -15,6 +15,7 @@ interface YobaRepository {
     fun getTransactionsByAccountId(id: String): LiveData<List<TransactionEntity>>
     fun getFullTransactionsByCategoryId(id: String): LiveData<List<FullTransaction>>
     fun getFullTransactionsByAccountId(id: String): LiveData<List<FullTransaction>>
+    fun getFullTransactionsByMonthInYear(month: Int, year: Int): LiveData<List<FullTransaction>>
     fun getTransaction(id: String): LiveData<TransactionEntity>
 
     fun getAllAccounts(): LiveData<List<AccountEntity>>
@@ -27,6 +28,6 @@ interface YobaRepository {
     fun getOutcomeCategories(): LiveData<List<CategoryEntity>>
     fun getCategory(id: String): LiveData<CategoryEntity>
 
-    fun createAccount(account: AccountEntity): Deferred<Long>
-    fun createTransaction(transaction: TransactionEntity): Deferred<Long>
+    suspend fun createAccount(account: AccountEntity): Long
+    suspend fun createTransaction(transaction: TransactionEntity): Long
 }

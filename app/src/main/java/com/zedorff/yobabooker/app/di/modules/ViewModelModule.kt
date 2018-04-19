@@ -6,6 +6,7 @@ import com.zedorff.yobabooker.app.di.annotations.ViewModelKey
 import com.zedorff.yobabooker.ui.activities.base.fragments.viewmodel.ViewModelFactory
 import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.viewmodel.AccountsViewModel
 import com.zedorff.yobabooker.ui.activities.main.fragments.categories.viewmodel.CategoriesViewModel
+import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.viewmodel.PieChartViewModel
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.viewmodel.TransactionsViewModel
 import com.zedorff.yobabooker.ui.activities.newaccount.fragments.viewmodel.NewAccountViewModel
 import com.zedorff.yobabooker.ui.activities.newtransaction.fragments.viewmodel.NewTransactionViewModel
@@ -39,6 +40,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(NewAccountViewModel::class)
     abstract fun bindNewAccountViewModel(viewModel: NewAccountViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PieChartViewModel::class)
+    abstract fun bindPieChartViewModel(viewModel: PieChartViewModel): ViewModel
 
 
     @Binds

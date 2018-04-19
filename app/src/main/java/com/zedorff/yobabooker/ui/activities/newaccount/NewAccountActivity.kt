@@ -1,15 +1,23 @@
 package com.zedorff.yobabooker.ui.activities.newaccount
 
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.databinding.ActivityNewAccountBinding
 import com.zedorff.yobabooker.ui.activities.base.BaseActivity
 import com.zedorff.yobabooker.ui.activities.newaccount.fragments.NewAccountFragment
+import org.jetbrains.anko.intentFor
 
 class NewAccountActivity: BaseActivity() {
 
     private lateinit var binding: ActivityNewAccountBinding
+
+    companion object {
+        fun build(context: Context) {
+            context.startActivity(context.intentFor<NewAccountActivity>())
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,6 +25,11 @@ class NewAccountActivity: BaseActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        replaceFragment(R.id.container_new_account, NewAccountFragment.build())
+        savedInstanceState ?: replaceFragment(R.id.container_new_account, NewAccountFragment.build())
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

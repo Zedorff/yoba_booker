@@ -18,3 +18,7 @@ infix fun <T> Deferred<T>.then(function: (T) -> Unit): Job {
         function(this@then.await())
     }
 }
+
+suspend fun <T> asyncAwait(function: suspend CoroutineScope.() -> T): T {
+    return async(CommonPool) {function()}.await()
+}

@@ -4,7 +4,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
 import com.zedorff.yobabooker.R
-import com.zedorff.yobabooker.app.extensions.then
 import com.zedorff.yobabooker.databinding.FragmentNewTransactionBinding
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.newtransaction.fragments.viewmodel.NewTransactionViewModel
@@ -48,14 +47,14 @@ class NewTransactionFragment : BaseFragment<NewTransactionViewModel>() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+        when (item.itemId) {
             R.id.save -> {
-                viewModel.saveTransaction() then {
-                    activity?.finish()
-                }
-                true
+                viewModel.saveTransaction()
+                activity?.finish()
             }
+            android.R.id.home -> { activity?.finish() }
             else -> super.onOptionsItemSelected(item)
         }
+        return true
     }
 }

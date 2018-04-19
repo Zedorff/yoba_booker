@@ -7,7 +7,6 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.databinding.ActivityMainBinding
 import com.zedorff.yobabooker.model.db.entities.AccountEntity
@@ -15,13 +14,13 @@ import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.ui.activities.base.BaseActivity
 import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.AccountsFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.categories.CategoriesFragment
+import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.PieChartFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.TransactionsFragment
 import com.zedorff.yobabooker.ui.activities.main.view.MainActivityView
-import com.zedorff.yobabooker.ui.activities.newtransaction.NewTransactionActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener,
-        View.OnClickListener, MainActivityView {
+        MainActivityView {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -35,10 +34,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         toggle.syncState()
 
         binding.navView.setNavigationItemSelectedListener(this)
-        binding.fabNewIncome.setOnClickListener(this)
-        binding.fabNewOutcome.setOnClickListener(this)
-        binding.fabNewTransfer.setOnClickListener(this)
-        replaceFragment(R.id.container_main, TransactionsFragment.build())
+        savedInstanceState ?: replaceFragment(R.id.container_main, TransactionsFragment.build())
     }
 
     override fun onBackPressed() {
@@ -75,6 +71,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 replaceFragment(R.id.container_main, CategoriesFragment.build())
             }
             R.id.nav_pie_charts -> {
+                replaceFragment(R.id.container_main, PieChartFragment.build())
             }
             R.id.nav_accounts -> {
                 replaceFragment(R.id.container_main, AccountsFragment.build())
@@ -83,14 +80,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    override fun onClick(view: View) {
-        when(view.id) {
-            R.id.fab_new_income -> {NewTransactionActivity.build(this, true)}
-            R.id.fab_new_outcome -> {NewTransactionActivity.build(this, false)}
-            R.id.fab_new_transfer -> {}
-        }
     }
 
     override fun openTransactionsForCategory(category: CategoryEntity) {

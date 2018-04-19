@@ -15,9 +15,10 @@ import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.adapter.AccountsAdapter
 import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.viewmodel.AccountsViewModel
 import com.zedorff.yobabooker.ui.activities.main.view.MainActivityView
+import com.zedorff.yobabooker.ui.activities.newaccount.NewAccountActivity
 import javax.inject.Inject
 
-class AccountsFragment: BaseFragment<AccountsViewModel>(), ViewHolderClickListener<FullAccount> {
+class AccountsFragment: BaseFragment<AccountsViewModel>(), ViewHolderClickListener<FullAccount>, View.OnClickListener {
 
     @Inject lateinit var view: MainActivityView
     private lateinit var binding: FragmentAccountsBinding
@@ -44,6 +45,7 @@ class AccountsFragment: BaseFragment<AccountsViewModel>(), ViewHolderClickListen
         adapter = AccountsAdapter(this)
         binding.recycler.layoutManager = LinearLayoutManager(context)
         binding.recycler.adapter = adapter
+        binding.fabNewAccount.setOnClickListener(this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -58,5 +60,11 @@ class AccountsFragment: BaseFragment<AccountsViewModel>(), ViewHolderClickListen
 
     override fun onClick(item: FullAccount) {
         view.openTransactionsForAccount(item.account)
+    }
+
+    override fun onClick(view: View) {
+        when(view.id) {
+            R.id.fab_new_account -> {NewAccountActivity.build(view.context)}
+        }
     }
 }

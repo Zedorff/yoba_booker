@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ArrayAdapter
 import com.zedorff.yobabooker.R
-import com.zedorff.yobabooker.app.extensions.then
 import com.zedorff.yobabooker.databinding.FragmentNewAccountBinding
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.newaccount.fragments.viewmodel.NewAccountViewModel
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 
 class NewAccountFragment : BaseFragment<NewAccountViewModel>() {
 
@@ -48,14 +50,16 @@ class NewAccountFragment : BaseFragment<NewAccountViewModel>() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+        when (item.itemId) {
             R.id.save -> {
-                viewModel.saveNewAccount() then {
+                launch(UI) {
+                    viewModel.saveNewAccount()
                     activity?.finish()
                 }
-                true
             }
+            android.R.id.home -> { activity?.finish() }
             else -> super.onOptionsItemSelected(item)
         }
+        return true
     }
 }
