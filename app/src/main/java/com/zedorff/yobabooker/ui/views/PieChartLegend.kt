@@ -30,12 +30,12 @@ class PieChartLegend(context: Context?, attrs: AttributeSet?) : View(context, at
     private var legendTextLines: Float = 1f
 
     init {
+        setWillNotDraw(false)
         legendMarkerSize = dip(8).toFloat()
         legendTextStartOffset = dip(4).toFloat()
         legendLastX = legendMarkerSize
 
         initPaint()
-        initRect()
     }
 
     fun setCategories(categories: List<String>) {
@@ -60,10 +60,6 @@ class PieChartLegend(context: Context?, attrs: AttributeSet?) : View(context, at
         }
     }
 
-    private fun initRect() {
-
-    }
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = MeasureSpec.getSize(widthMeasureSpec)
         var lastX = legendMarkerSize
@@ -76,14 +72,12 @@ class PieChartLegend(context: Context?, attrs: AttributeSet?) : View(context, at
             lastX = (lastX + legendMarkerSize) + legendTextPaint.measureText(categories[index]) + legendMarkerSize * 2
         }
 
-        setMeasuredDimension(width, (legendMarkerSize + (legendMarkerSize + (textLines * legendMarkerSize) + legendMarkerSize)).toInt())
+        setMeasuredDimension(width, ((legendMarkerSize * 2 * textLines) + legendMarkerSize).toInt())
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (categories.isEmpty()) return
-
-        canvas.drawPaint(linePaint)
 
         for (index in 0 until categories.size) {
             drawLegend(canvas, index)

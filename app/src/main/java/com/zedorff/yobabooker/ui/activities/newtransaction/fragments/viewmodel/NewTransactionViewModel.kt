@@ -3,7 +3,6 @@ package com.zedorff.yobabooker.ui.activities.newtransaction.fragments.viewmodel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
-import com.zedorff.yobabooker.app.extensions.toNegative
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.model.db.entities.TransactionEntity
 import com.zedorff.yobabooker.model.repository.YobaRepository
@@ -46,7 +45,7 @@ class NewTransactionViewModel @Inject constructor(var repository: YobaRepository
                     value = (transactionCost.value?.toFloat() ?: 0f) * if (income) 1 else -1,
                     categoryId = categories.value?.get(selectedCategory)?.id
                             ?: throw IllegalStateException("Categories can't be null!!"),
-                    date = System.currentTimeMillis() / 1000L,
+                    date = System.currentTimeMillis(),
                     accountId = accounts.value?.get(selectedAccount)?.id
                             ?: throw IllegalStateException("Accounts can't be null!")))
         }
