@@ -3,7 +3,6 @@ package com.zedorff.yobabooker.ui.views
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.graphics.Paint.Cap
@@ -13,7 +12,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import com.zedorff.yobabooker.R
+import com.zedorff.yobabooker.app.extensions.getColor
 import com.zedorff.yobabooker.app.extensions.sumBy
+import com.zedorff.yobabooker.app.utils.ColorGenerator
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import org.jetbrains.anko.dip
@@ -30,21 +31,24 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
     private var categories: MutableList<CategoryEntity> = mutableListOf()
     private var categoriesSum: MutableList<Float> = mutableListOf()
 
+    private val generator = ColorGenerator.MATERIAL
+
     private var viewWidth: Int = 0
     private var viewHeight: Int = 0
 
-    private var categoryColors: IntArray
-
     private var angleInterpolation: Float = 0F
     private var selectionInterpolation: Float = 0F
+    private var unSelectionInterpolation: Float = 0F
     private var infoInterpolation: Float = 0F
 
     private var transactionTotal: Float = 0f
 
     private var selectionAnimator: ValueAnimator = ObjectAnimator.ofFloat(0f, 1f)
+    private var unSelectionAnimator: ValueAnimator = ObjectAnimator.ofFloat(1f, 0f)
     private var angleAnimator: ValueAnimator = ObjectAnimator.ofFloat(0f, 1f)
     private var infoAppearingAnimator: ValueAnimator = ObjectAnimator.ofFloat(0f, 1f)
     private var animatorSet: AnimatorSet = AnimatorSet()
+    private var selectionAnimatorSet: AnimatorSet = AnimatorSet()
 
     //onDraw variables
     private val pieChartPaint = Paint()
@@ -78,15 +82,14 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
     private var radius: Float = 0f
     private var clickedSlice: Int = -1
     private var previousClickedSlice: Int = -1
-    private var categoryNameWidth: Float = 0f
 
-    private lateinit var categoryName: String
+    private lateinit var percents: String
+    private var percentsWidth: Float = 0f
+
     private var listener: OnPieChartClickListener? = null
 
     init {
         setWillNotDraw(false)
-        categoryColors = resources.getIntArray(R.array.rainbow)
-
 
         post {
             initRect()
@@ -97,19 +100,27 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun setTransactions(transactions: List<FullTransaction>) {
-        categories.clear()
-        categoriesSum.clear()
+        clearValues()
+
         val transactionsGroup = transactions.groupBy { it.category }
         transactionsGroup.forEach {
             categories.add(it.key)
             categoriesSum.add(it.value.sumBy { it.transaction.value })
         }
         transactionTotal = transactions.map { it.transaction }.sumBy { it.value }
+
         startAnimation()
     }
 
     fun setOnSliceClickListener(listener: OnPieChartClickListener) {
         this.listener = listener
+    }
+
+    private fun clearValues() {
+        categories.clear()
+        categoriesSum.clear()
+        previousClickedSlice = -1
+        clickedSlice = -1
     }
 
     private fun initRect() {
@@ -158,13 +169,14 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         textPaint.apply {
             isAntiAlias = true
-            color = Color.BLACK
+            color = getColor(R.color.pie_chart_fragment_big_text_color)
             textSize = sp(16).toFloat()
+            typeface = Typeface.SANS_SERIF
         }
 
         semiTransparentPaint.apply {
             isAntiAlias = true
-            color = resources.getColor(R.color.white_semi)
+            color = getColor(R.color.white_semi)
             style = Paint.Style.FILL
         }
     }
@@ -182,17 +194,25 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
             invalidate()
         }
 
+        selectionAnimator.duration = 500
         selectionAnimator.addUpdateListener {
             selectionInterpolation = it.animatedValue as Float
             invalidate()
         }
-        selectionAnimator.duration = 500
-        selectionAnimator.interpolator = AccelerateDecelerateInterpolator()
-        selectionAnimator.startDelay = 300
+
+        unSelectionAnimator.duration = 500
+        unSelectionAnimator.addUpdateListener {
+            unSelectionInterpolation = it.animatedValue as Float
+        }
+
 
         animatorSet.playSequentially(angleAnimator, infoAppearingAnimator)
         animatorSet.startDelay = 300
         animatorSet.interpolator = AccelerateDecelerateInterpolator()
+
+        selectionAnimatorSet.playTogether(selectionAnimator, unSelectionAnimator)
+        selectionAnimatorSet.startDelay = 100
+        selectionAnimatorSet.interpolator = AccelerateDecelerateInterpolator()
     }
 
     private fun startAnimation() {
@@ -200,7 +220,6 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
         animatorSet.start()
     }
 
-    @SuppressLint("DrawAllocation")
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val availableWidth = MeasureSpec.getSize(widthMeasureSpec)
         val radius = availableWidth / 5F
@@ -226,10 +245,10 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
         sweepAngle = if (transactionTotal == 0f) 0f else (circleDegrees * categoryPercents)
         sliceCenterAngle = Math.round(startAngle + (sweepAngle / 2f)).toFloat()
 
-        pieChartPaint.color = categoryColors[index]
+        pieChartPaint.color = generator.getColor(categories[index])
 
-        categoryName = "${Math.round(categoryPercents * 100f)}%"
-        categoryNameWidth = textPaint.measureText(categoryName)
+        percents = "${Math.round(categoryPercents * 100f)}%"
+        percentsWidth = textPaint.measureText(percents)
 
         createPieChartSlice(slicePath, pieChartBounds, halfRadiusBounds, startAngle, sweepAngle, angleInterpolation)
         createPieChartSliceDecoration(sliceDecorationPath, decorationBounds, halfRadiusBounds, startAngle, sweepAngle, angleInterpolation)
@@ -244,16 +263,16 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
 
         if (index == previousClickedSlice) {
-            selectSlice(slicePath, startAngle, sweepAngle, selectionMatrix, 1 - selectionInterpolation, radius / 15f)
-            selectSlice(sliceDecorationPath, startAngle, sweepAngle, selectionMatrix, 1 - selectionInterpolation, radius / 15f)
-            selectSlice(sliceInfoPath, startAngle, sweepAngle, selectionMatrix, 1 - selectionInterpolation, radius / 15f)
-            selectSlice(sliceInfoTextPath, startAngle, sweepAngle, selectionMatrix, 1 - selectionInterpolation, radius / 15f)
+            selectSlice(slicePath, startAngle, sweepAngle, selectionMatrix, unSelectionInterpolation, radius / 15f)
+            selectSlice(sliceDecorationPath, startAngle, sweepAngle, selectionMatrix, unSelectionInterpolation, radius / 15f)
+            selectSlice(sliceInfoPath, startAngle, sweepAngle, selectionMatrix, unSelectionInterpolation, radius / 15f)
+            selectSlice(sliceInfoTextPath, startAngle, sweepAngle, selectionMatrix, unSelectionInterpolation, radius / 15f)
         }
 
         canvas.drawPath(slicePath, pieChartPaint)
         canvas.drawPath(sliceDecorationPath, semiTransparentPaint)
         canvas.drawPath(sliceInfoPath, linePaint)
-        canvas.drawTextOnPath(categoryName, sliceInfoTextPath, getTextOffset(sliceCenterAngle, textUnderlineBounds, categoryNameWidth), -16f, textPaint)
+        canvas.drawTextOnPath(percents, sliceInfoTextPath, getTextOffset(sliceCenterAngle, textUnderlineBounds, percentsWidth), -16f, textPaint)
 
         startAngle += sweepAngle
     }
@@ -353,7 +372,7 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
             val xPos = event.x - centerX
             val yPos = event.y - centerY
             var startAngle = 0f
-            var sweepAngle = 0f
+            var sweepAngle: Float
             var categoryPercents: Float
             var clickAngle = Math.toDegrees(Math.atan2(yPos.toDouble(), xPos.toDouble()))
 
@@ -369,7 +388,10 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
                     if (clickedSlice != index) {
                         previousClickedSlice = clickedSlice
                         clickedSlice = index
-                        if (categories.size > 1) selectionAnimator.start()
+                        if (categories.size > 1) {
+                            selectionAnimatorSet.cancel()
+                            selectionAnimatorSet.start()
+                        }
                         listener?.let {
                             it.onSliceClick(categories[index].id)
                         }
@@ -382,7 +404,7 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
         return false
     }
 
-    open interface OnPieChartClickListener {
+    interface OnPieChartClickListener {
         fun onSliceClick(categoryId: Int)
     }
 }

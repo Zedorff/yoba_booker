@@ -1,14 +1,15 @@
 package com.zedorff.yobabooker.ui.views
 
+import android.animation.ObjectAnimator
 import android.content.Context
-
 import android.graphics.*
 import android.util.ArrayMap
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.BounceInterpolator
 import com.zedorff.yobabooker.R
-import com.zedorff.yobabooker.app.extensions.negate
-import com.zedorff.yobabooker.app.extensions.sumBy
+import com.zedorff.yobabooker.app.extensions.*
+import com.zedorff.yobabooker.app.utils.ColorGenerator
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.sp
@@ -26,24 +27,32 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
     private var daysDescriptionString: String = ""
     private var valuesDescriptionString: String = ""
 
+    private var generator = ColorGenerator.MATERIAL
+
     private var linePaint = Paint()
     private var graphPaint = Paint()
-    private var descriptionPaint = Paint()
+    private var textPaint = Paint()
     private var daysPaint = Paint()
     private var valuesPaint = Paint()
     private var barPaint = Paint()
 
     private var graphBounds = RectF()
+    private var graphNameBounds = RectF()
     private var valuesBounds = RectF()
     private var valuesDescriptionBounds = RectF()
     private var daysBounds = RectF()
     private var daysDescriptionBounds = RectF()
     private var barBounds = RectF()
 
+    private var graphAnimator = ObjectAnimator.ofFloat(0f, 1f)
+
+    private var graphInterpolation: Float = 0f
+
     private var viewWidth: Int = 0
     private var viewHeight: Int = 0
 
     private var graphAxisOffset: Float = 0f
+    private var valuesTextSize: Float = 0f
     private var daysCount: Int = 0
 
     private var dayWidth: Float = 0f
@@ -60,7 +69,8 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
     private var valuesDescriptionStringHeight: Float = 0f
     private var valuesDescriptionStringWidth: Float = 0f
 
-    private var categoryColors: IntArray
+    private var graphNameStringHeight: Float = 0f
+    private var graphNameStringWidth: Float = 0f
 
     private var valuesCoordinates: FloatArray = FloatArray(VALUES_COUNT)
     private var daysCoordinates: FloatArray
@@ -69,18 +79,20 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
 
     init {
         setWillNotDraw(false)
-        categoryColors = resources.getIntArray(R.array.rainbow)
         daysDescriptionString = resources.getString(R.string.description_days_of_month)
         valuesDescriptionString = resources.getString(R.string.description_outcome_transactions)
 
         graphAxisOffset = dip(4).toFloat()
+        valuesTextSize = sp(6).toFloat()
         daysCount = Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH) + 1 //Due to start from 0
         daysCoordinates = FloatArray(daysCount)
 
         initPaint()
+        initAnimator()
         post {
             initRect()
             initSize()
+            startAnimator()
         }
     }
 
@@ -101,24 +113,27 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
             color = Color.BLACK
         }
 
-        descriptionPaint.apply {
+        textPaint.apply {
             isAntiAlias = true
-            color = Color.BLACK
+            color = getColor(R.color.pie_chart_fragment_big_text_color)
             textSize = sp(18).toFloat()
+            typeface = Typeface.SANS_SERIF
         }
 
         daysPaint.apply {
             isAntiAlias = true
-            color = Color.BLACK
+            color = getColor(R.color.pie_chart_fragment_small_text_color)
             textAlign = Paint.Align.CENTER
             textSize = sp(5).toFloat()
+            typeface = Typeface.SANS_SERIF
         }
 
         valuesPaint.apply {
             isAntiAlias = true
-            color = Color.BLACK
+            color = getColor(R.color.pie_chart_fragment_small_text_color)
             textAlign = Paint.Align.RIGHT
-            textSize = sp(6).toFloat()
+            textSize = valuesTextSize
+            typeface = Typeface.SANS_SERIF
         }
 
         barPaint.apply {
@@ -130,14 +145,33 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
         }
     }
 
+    private fun initAnimator() {
+        graphAnimator.duration = 500
+        graphAnimator.interpolator = BounceInterpolator()
+        graphAnimator.addUpdateListener {
+            graphInterpolation = it.animatedValue as Float
+            invalidate()
+        }
+    }
+
+    private fun startAnimator() {
+        graphAnimator.cancel()
+        graphAnimator.start()
+    }
+
     private fun initRect() {
         viewWidth = width
         viewHeight = height
 
-        valuesDescriptionBounds.top = viewHeight * 0.05f
+        graphNameBounds.top = 0f
+        graphNameBounds.bottom = viewHeight * 0.2f
+        graphNameBounds.left = 0f
+        graphNameBounds.right = viewWidth.toFloat()
+
+        valuesDescriptionBounds.top = graphNameBounds.bottom
         valuesDescriptionBounds.bottom = viewHeight * 0.7f
         valuesDescriptionBounds.left = 0f
-        valuesDescriptionBounds.right = viewWidth * 0.05f
+        valuesDescriptionBounds.right = viewWidth * 0.1f
 
         valuesBounds.top = valuesDescriptionBounds.top
         valuesBounds.bottom = valuesDescriptionBounds.bottom
@@ -147,7 +181,7 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
         graphBounds.top = valuesDescriptionBounds.top
         graphBounds.bottom = valuesDescriptionBounds.bottom
         graphBounds.left = valuesBounds.right
-        graphBounds.right = viewWidth * 0.8f
+        graphBounds.right = viewWidth * 0.9f
 
         daysBounds.top = graphBounds.bottom
         daysBounds.bottom = graphBounds.bottom + viewHeight * 0.15f
@@ -164,20 +198,23 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
 
     private fun initSize() {
         dayWidth = daysBounds.width() / (daysCount - 1) //Due to counting from 1
-        valueHeight = valuesBounds.height() / (VALUES_COUNT - 1)
+        valueHeight = valuesBounds.height() / (VALUES_COUNT - 1) //Due to counting from 1
 
         val bounds = Rect()
-        descriptionPaint.getTextBounds(daysDescriptionString, 0, daysDescriptionString.length, bounds)
+        textPaint.getTextBounds(daysDescriptionString, 0, daysDescriptionString.length, bounds)
         daysDescriptionStringHeight = bounds.height().toFloat()
         daysDescriptionStringWidth = bounds.width().toFloat()
 
-        descriptionPaint.getTextBounds(valuesDescriptionString, 0, valuesDescriptionString.length, bounds)
+        textPaint.getTextBounds(valuesDescriptionString, 0, valuesDescriptionString.length, bounds)
         valuesDescriptionStringHeight = bounds.height().toFloat()
         valuesDescriptionStringWidth = bounds.width().toFloat()
     }
 
     fun setTransactions(list: List<FullTransaction>) {
-        if (!list.isEmpty()) category = list[0].category.name
+        if (!list.isEmpty()) {
+            category = list[0].category.name
+            barPaint.color = generator.getColor(list[0].category)
+        }
 
         transactionsMap = list.map { fullTransaction ->
             fullTransaction.transaction
@@ -192,9 +229,9 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
         }
 
         transactionsMap.values.max()?.let {
-            valueMultiplier = roundTransactionValue(it / (VALUES_COUNT - 1))
+            valueMultiplier = roundTransactionValue(it / VALUES_COUNT)
         }
-        invalidate()
+        startAnimator()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -205,9 +242,8 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        if (transactionsMap.isEmpty()) return
-
         with(canvas) {
+            drawGraphName(this)
             drawGraphAxis(this)
             drawValues(this)
             drawValuesDescription(this)
@@ -217,18 +253,40 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
         }
     }
 
+    private fun drawGraphName(canvas: Canvas) {
+        var bounds = Rect()
+        textPaint.getTextBounds(category, 0, category.length, bounds)
+        graphNameStringHeight = bounds.height().toFloat()
+        graphNameStringWidth = bounds.width().toFloat()
+        canvas.drawText(category,
+                graphNameBounds.halfWidth() - graphNameStringWidth.half(),
+                graphNameBounds.halfHeight(),
+                textPaint)
+    }
+
     private fun drawGraphAxis(canvas: Canvas) {
-        canvas.drawLine(graphBounds.left, graphBounds.bottom, graphBounds.left, graphBounds.top, linePaint) //Y Axis
         canvas.drawLine(graphBounds.left, graphBounds.bottom, graphBounds.right, graphBounds.bottom, linePaint) //X Axis
+        canvas.drawLine(graphBounds.left, graphBounds.bottom, graphBounds.left, graphBounds.top, linePaint) //Y Axis
     }
 
     private fun drawValues(canvas: Canvas) {
         for (index in 0 until VALUES_COUNT) {
             valueCurrentY = valuesBounds.bottom - index * valueHeight
             valuesPaint.getTextBounds((valueMultiplier * index).toString(), 0, 1, valueTextBound)
-            canvas.drawLine(valuesBounds.right - graphAxisOffset, valueCurrentY, graphBounds.right, valueCurrentY, linePaint)
-            canvas.drawText((valueMultiplier * index).toString(), valuesBounds.right - graphAxisOffset * 2,
-                    valueCurrentY + valueTextBound.height() / 2f, valuesPaint)
+            canvas.drawLine(
+                    valuesBounds.right - graphAxisOffset,
+                    valueCurrentY,
+                    graphBounds.right,
+                    valueCurrentY,
+                    linePaint
+            )
+            valuesPaint.textSize = valuesTextSize * graphInterpolation
+            canvas.drawText(
+                    (valueMultiplier * index).toString(),
+                    valuesBounds.right - graphAxisOffset * 2,
+                    valueCurrentY + valueTextBound.halfHeight(),
+                    valuesPaint
+            )
             valuesCoordinates[index] = valueCurrentY
         }
     }
@@ -237,35 +295,46 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
         canvas.save()
         canvas.rotate(-90f, valuesDescriptionBounds.centerX(), valuesDescriptionBounds.centerY())
         canvas.drawText(valuesDescriptionString,
-                valuesDescriptionBounds.left + valuesDescriptionBounds.width() / 2f - valuesDescriptionStringWidth / 2f,
-                valuesDescriptionBounds.top + valuesDescriptionBounds.height() / 2f + valuesDescriptionStringHeight,
-                descriptionPaint)
+                valuesDescriptionBounds.left + valuesDescriptionBounds.halfWidth() - valuesDescriptionStringWidth.half(),
+                valuesDescriptionBounds.top + valuesDescriptionBounds.halfHeight() + valuesDescriptionStringHeight.half(),
+                textPaint)
         canvas.restore()
     }
 
     private fun drawDays(canvas: Canvas) {
         for (index in 0 until daysCount) {
             dayCurrentX = daysBounds.left + (index * dayWidth)
-            canvas.drawLine(dayCurrentX, daysBounds.top, dayCurrentX, daysBounds.top + graphAxisOffset, linePaint)
-            canvas.drawText(index.toString(), dayCurrentX, daysBounds.top + graphAxisOffset * 3, daysPaint)
+            canvas.drawLine(
+                    dayCurrentX, daysBounds.top,
+                    dayCurrentX, daysBounds.top + graphAxisOffset,
+                    linePaint
+            )
+            canvas.drawText(index.toString(),
+                    dayCurrentX,
+                    daysBounds.top + graphAxisOffset * 3,
+                    daysPaint)
             daysCoordinates[index] = dayCurrentX
         }
     }
 
     private fun drawDaysDescription(canvas: Canvas) {
         canvas.drawText(daysDescriptionString,
-                daysDescriptionBounds.left + daysDescriptionBounds.width() / 2f - daysDescriptionStringWidth / 2f,
-                daysDescriptionBounds.top + daysDescriptionBounds.height() / 2f - daysDescriptionStringHeight / 2f,
-                descriptionPaint)
+                daysDescriptionBounds.left + daysDescriptionBounds.halfWidth() - daysDescriptionStringWidth / 2f,
+                daysDescriptionBounds.top + daysDescriptionBounds.halfHeight() - daysDescriptionStringHeight / 2f,
+                textPaint)
     }
 
     private fun drawGraphBars(canvas: Canvas) {
         transactionsMap.forEach {
-            var pixelsByCoordinates = valuesCoordinates[0] / (valueMultiplier * VALUES_COUNT)
-            barBounds.top = barBounds.bottom - (it.value * pixelsByCoordinates)
+            barBounds.top = barBounds.bottom - (valuesBounds.height() / (valueMultiplier * (VALUES_COUNT - 1)) * it.value * graphInterpolation)
             barBounds.left = daysCoordinates[it.key] - dayWidth / 4f
-            barBounds.right = barBounds.left + dayWidth / 2f
+            barBounds.right = barBounds.left + dayWidth.half()
             canvas.drawRect(barBounds, barPaint)
+            canvas.drawText(it.value.toInt().toString(),
+                    barBounds.left + barBounds.halfWidth(),
+                    barBounds.top - barBounds.halfWidth(),
+                    daysPaint
+            )
         }
     }
 

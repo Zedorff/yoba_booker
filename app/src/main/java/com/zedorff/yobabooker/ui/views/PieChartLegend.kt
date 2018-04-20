@@ -2,19 +2,23 @@ package com.zedorff.yobabooker.ui.views
 
 import android.content.Context
 import android.graphics.*
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import com.zedorff.yobabooker.R
+import com.zedorff.yobabooker.app.extensions.getColor
+import com.zedorff.yobabooker.app.utils.ColorGenerator
+import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.sp
 
 class PieChartLegend(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    private var categories: List<String> = emptyList()
+    private var categories: List<CategoryEntity> = emptyList()
+
+    private var generator = ColorGenerator.MATERIAL
 
     private var legendMarkerBounds = RectF()
-
-    private var categoryColors: IntArray = resources.getIntArray(R.array.rainbow)
 
     private var legendMarkerPath = Path()
     private var legendMarkerTextPath = Path()
@@ -38,7 +42,7 @@ class PieChartLegend(context: Context?, attrs: AttributeSet?) : View(context, at
         initPaint()
     }
 
-    fun setCategories(categories: List<String>) {
+    fun setCategories(categories: List<CategoryEntity>) {
         this.categories = categories
         requestLayout()
     }
@@ -46,8 +50,9 @@ class PieChartLegend(context: Context?, attrs: AttributeSet?) : View(context, at
     private fun initPaint() {
         legendTextPaint.apply {
             isAntiAlias = true
-            color = Color.BLACK
+            color = getColor(R.color.pie_chart_fragment_small_text_color)
             textSize = sp(10).toFloat()
+            typeface = Typeface.SANS_SERIF
         }
 
         linePaint.apply {
@@ -65,11 +70,11 @@ class PieChartLegend(context: Context?, attrs: AttributeSet?) : View(context, at
         var lastX = legendMarkerSize
         var textLines = 1
         for (index in 0 until categories.size) {
-            if (lastX + legendMarkerSize + legendTextStartOffset + legendTextPaint.measureText(categories[index]) > width - legendMarkerSize) {
+            if (lastX + legendMarkerSize + legendTextStartOffset + legendTextPaint.measureText(categories[index].name) > width - legendMarkerSize) {
                 textLines++
                 lastX = legendMarkerSize
             }
-            lastX = (lastX + legendMarkerSize) + legendTextPaint.measureText(categories[index]) + legendMarkerSize * 2
+            lastX = (lastX + legendMarkerSize) + legendTextPaint.measureText(categories[index].name) + legendMarkerSize * 2
         }
 
         setMeasuredDimension(width, ((legendMarkerSize * 2 * textLines) + legendMarkerSize).toInt())
@@ -88,9 +93,9 @@ class PieChartLegend(context: Context?, attrs: AttributeSet?) : View(context, at
     }
 
     private fun drawLegend(canvas: Canvas, index: Int) {
-        legendMarkerPaint.color = categoryColors[index]
+        legendMarkerPaint.color = generator.getColor(categories[index])
 
-        if (legendLastX + legendMarkerSize + legendTextStartOffset + legendTextPaint.measureText(categories[index]) > width - legendMarkerSize) {
+        if (legendLastX + legendMarkerSize + legendTextStartOffset + legendTextPaint.measureText(categories[index].name) > width - legendMarkerSize) {
             legendTextLines++
             legendLastX = legendMarkerSize
         }
@@ -101,16 +106,16 @@ class PieChartLegend(context: Context?, attrs: AttributeSet?) : View(context, at
         legendMarkerBounds.right = legendMarkerBounds.left + legendMarkerSize
 
         createLegendMarker(legendMarkerPath, legendMarkerBounds)
-        createLegendInfo(legendMarkerTextPath, legendMarkerBounds, legendTextPaint.measureText(categories[index]))
+        createLegendInfo(legendMarkerTextPath, legendMarkerBounds, legendTextPaint.measureText(categories[index].name))
         canvas.drawPath(legendMarkerPath, legendMarkerPaint)
-        canvas.drawTextOnPath(categories[index], legendMarkerTextPath, 0f, 0f, legendTextPaint)
+        canvas.drawTextOnPath(categories[index].name, legendMarkerTextPath, 0f, 0f, legendTextPaint)
 
-        legendLastX = legendMarkerBounds.right + legendTextPaint.measureText(categories[index]) + legendMarkerSize * 2
+        legendLastX = legendMarkerBounds.right + legendTextPaint.measureText(categories[index].name) + legendMarkerSize * 2
     }
 
     private fun createLegendMarker(path: Path, rect: RectF) {
         path.reset()
-        path.addRect(rect, Path.Direction.CW)
+        path.addRoundRect(rect, rect.width() / 4f, rect.height() / 4f,  Path.Direction.CW)
     }
 
     private fun createLegendInfo(path: Path, markerRect: RectF, width: Float) {
