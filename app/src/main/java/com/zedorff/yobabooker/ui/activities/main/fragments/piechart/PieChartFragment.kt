@@ -1,22 +1,15 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.piechart
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModelProviders
-import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.zedorff.yobabooker.app.extensions.fromTimeInMillis
-import com.zedorff.yobabooker.app.extensions.getMonth
-import com.zedorff.yobabooker.app.extensions.getYear
 import com.zedorff.yobabooker.databinding.FragmentPieChartBinding
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.viewmodel.PieChartViewModel
 import com.zedorff.yobabooker.ui.views.PieChartView
-import java.util.*
 
 class PieChartFragment : BaseFragment<PieChartViewModel>(), PieChartView.OnPieChartClickListener {
 
@@ -39,17 +32,21 @@ class PieChartFragment : BaseFragment<PieChartViewModel>(), PieChartView.OnPieCh
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PieChartViewModel::class.java)
-
-        Transformations.switchMap(binding.monthSelector.selectedTimeInMillis, {
-            with(Calendar.getInstance().fromTimeInMillis(it), {
-                viewModel.getOutcomeTransactions(getMonth() + 1, getYear())
-            })
-        }).observe(this, Observer { it?.let {
-                binding.viewPieChart.setTransactions(it)
-                binding.viewPieChartLegend.setCategories(it.map { it.category.name }.distinct())
+        binding.monthSelector.selectedTimeInMillis.observe(this, Observer {
+            it?.let {
+                viewModel.onDateChanged(it)
             }
         })
-        viewModel.getGraphData().observe(this, Observer { it?.let {
+
+        viewModel.getOutcomeTransactions().observe(this, Observer {
+            it?.let {
+                binding.viewPieChart.setTransactions(it)
+                binding.viewPieChartLegend.setCategories(it.map { it.category }.distinct())
+                binding.hasData = !it.isEmpty()
+            }
+        })
+        viewModel.getGraphData().observe(this, Observer {
+            it?.let {
                 binding.viewColumnBarGraph.setTransactions(it)
             }
         })
