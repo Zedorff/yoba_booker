@@ -33,6 +33,8 @@ fun Calendar.getMonth(): Int = this.get(Calendar.MONTH)
 
 fun Calendar.getActualMonth(): Int = this.get(Calendar.MONTH) + 1
 
+fun Calendar.getDayOfMonth(): Int = this.get(Calendar.DAY_OF_MONTH)
+
 fun Calendar.fromTimeInMillis(millis: Long): Calendar {
     timeInMillis = millis
     return this
