@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/choose_date_transaction"
+        android:icon="@drawable/ic_date_range_black_24dp"
+        app:showAsAction="always"
+        android:title="" />
+
+    <item
+        android:id="@+id/save_transaction"
+        android:icon="@drawable/ic_check_white_24dp"
+        android:title="@string/text_new_account"
+        app:showAsAction="always" />
+</menu>

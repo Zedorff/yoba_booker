@@ -19,6 +19,7 @@ class NewTransactionViewModel @Inject constructor(var repository: YobaRepository
     var transactionDescription: MutableLiveData<String> = MutableLiveData()
     var transactionCategory: MutableLiveData<Int> = MutableLiveData()
     var transactionAccount: MutableLiveData<Int> = MutableLiveData()
+    var transactionDate: MutableLiveData<Long> = MutableLiveData()
     lateinit var categories: LiveData<List<CategoryEntity>>
     lateinit var categoriesData: LiveData<List<String>>
     private var income: Boolean = false
@@ -32,8 +33,14 @@ class NewTransactionViewModel @Inject constructor(var repository: YobaRepository
             repository.getOutcomeCategories()
         }
         categoriesData = Transformations.map(categories, { it.map { it.name } })
+        transactionDate.value = System.currentTimeMillis()
     }
 
+    fun setDate(millis: Long) {
+        transactionDate.value = millis
+    }
+
+    //TODO get rid of this elvis guys
     fun saveTransaction() {
         val selectedCategory = transactionCategory.value
                 ?: throw IllegalStateException("Category can't be null!")
@@ -45,7 +52,8 @@ class NewTransactionViewModel @Inject constructor(var repository: YobaRepository
                     value = (transactionCost.value?.toFloat() ?: 0f) * if (income) 1 else -1,
                     categoryId = categories.value?.get(selectedCategory)?.id
                             ?: throw IllegalStateException("Categories can't be null!!"),
-                    date = System.currentTimeMillis(),
+                    date = transactionDate.value
+                            ?: throw IllegalStateException("Date can't be null!!"),
                     accountId = accounts.value?.get(selectedAccount)?.id
                             ?: throw IllegalStateException("Accounts can't be null!")))
         }

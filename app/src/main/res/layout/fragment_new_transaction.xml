@@ -3,44 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
-            type="com.zedorff.yobabooker.ui.activities.newtransaction.fragments.viewmodel.NewTransactionViewModel"/>
+            type="com.zedorff.yobabooker.ui.activities.newtransaction.fragments.viewmodel.NewTransactionViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/new_transaction_cost"
             android:layout_width="0dp"
             android:layout_height="?android:attr/actionBarSize"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:hint="@string/text_new_transaction_cost"
-            android:inputType="numberDecimal"
-            android:text="@={viewModel.transactionCost}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageButton2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/text_new_transaction_cost"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.transactionCost}" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/new_transaction_description"
             android:layout_width="0dp"
             android:layout_height="?android:attr/actionBarSize"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:hint="@string/text_new_transaction_description"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.transactionDescription}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageButton"
-            app:layout_constraintTop_toBottomOf="@+id/new_transaction_cost" />
+            app:layout_constraintTop_toBottomOf="@+id/new_transaction_cost">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/text_new_transaction_description"
+                android:inputType="textPersonName"
+                android:text="@={viewModel.transactionDescription}" />
+        </android.support.design.widget.TextInputLayout>
+
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/new_transaction_category_spinner"
@@ -70,9 +82,9 @@
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/new_transaction_description"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/new_transaction_description"
@@ -82,9 +94,9 @@
             android:id="@+id/imageButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/new_transaction_cost"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/new_transaction_cost"
@@ -107,9 +119,9 @@
             android:id="@+id/imageButton4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/new_transaction_account_spinner"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/new_transaction_account_spinner"
