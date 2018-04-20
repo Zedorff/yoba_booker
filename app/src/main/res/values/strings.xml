@@ -66,4 +66,6 @@
     <string name="text_title_pie_charts">Графики</string>
 
     <string name="pattern_transaction_info">%s / %s</string>
+    <string name="description_days_of_month">Дни месяца</string>
+    <string name="description_outcome_transactions">Траты</string>
 </resources>

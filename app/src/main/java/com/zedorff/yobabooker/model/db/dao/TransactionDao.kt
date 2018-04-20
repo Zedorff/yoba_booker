@@ -35,6 +35,6 @@ interface TransactionDao: BaseDao<TransactionEntity> {
     fun getFullTransactionsByAccountId(id: String): LiveData<List<FullTransaction>>
 
     @Transaction
-    @Query("SELECT * FROM transactions JOIN categories ON category_id_relation = category_id JOIN accounts ON account_id_relation = account_id WHERE cast(strftime('%m', datetime(transaction_date, 'unixepoch')) as INTEGER) =:month AND cast(strftime('%Y', datetime(transaction_date, 'unixepoch')) as INTEGER) =:year")
+    @Query("SELECT * FROM transactions JOIN categories ON category_id_relation = category_id JOIN accounts ON account_id_relation = account_id WHERE cast(strftime('%m', datetime(transaction_date / 1000, 'unixepoch', 'localtime')) as INTEGER) =:month AND cast(strftime('%Y', datetime(transaction_date / 1000, 'unixepoch', 'localtime')) as INTEGER) =:year")
     fun getFullTransactionsPerMonth(month: Int, year: Int): LiveData<List<FullTransaction>>
 }

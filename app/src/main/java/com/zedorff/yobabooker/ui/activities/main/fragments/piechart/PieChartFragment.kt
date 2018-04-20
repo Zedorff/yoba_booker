@@ -1,6 +1,7 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.piechart
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Build
 import android.os.Bundle
@@ -8,12 +9,16 @@ import android.support.annotation.RequiresApi
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.zedorff.yobabooker.app.extensions.fromTimeInMillis
+import com.zedorff.yobabooker.app.extensions.getMonth
+import com.zedorff.yobabooker.app.extensions.getYear
 import com.zedorff.yobabooker.databinding.FragmentPieChartBinding
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.viewmodel.PieChartViewModel
+import com.zedorff.yobabooker.ui.views.PieChartView
 import java.util.*
 
-class PieChartFragment : BaseFragment<PieChartViewModel>() {
+class PieChartFragment : BaseFragment<PieChartViewModel>(), PieChartView.OnPieChartClickListener {
 
     private lateinit var binding: FragmentPieChartBinding
 
@@ -26,26 +31,31 @@ class PieChartFragment : BaseFragment<PieChartViewModel>() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewPieChart.setOnSliceClickListener(this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PieChartViewModel::class.java)
-        binding.monthSelector.selectedTimeInMillis.observe(this, Observer {
-            it?.let {
-                var calendar: Calendar = Calendar.getInstance().apply { timeInMillis = it }
-                var month = calendar.get(Calendar.MONTH) + 1
-                var year = calendar.get(Calendar.YEAR)
-                viewModel.getOutcomeTransactions(month, year).observe(this, Observer {
-                    it?.let {
-                        binding.viewPieChart.setTransactions(it)
-                        binding.pieChartLegend.setCategories(it.map { it.category.name })
-                    }
-                })
+
+        Transformations.switchMap(binding.monthSelector.selectedTimeInMillis, {
+            with(Calendar.getInstance().fromTimeInMillis(it), {
+                viewModel.getOutcomeTransactions(getMonth() + 1, getYear())
+            })
+        }).observe(this, Observer { it?.let {
+                binding.viewPieChart.setTransactions(it)
+                binding.viewPieChartLegend.setCategories(it.map { it.category.name }.distinct())
             }
         })
+        viewModel.getGraphData().observe(this, Observer { it?.let {
+                binding.viewColumnBarGraph.setTransactions(it)
+            }
+        })
+    }
+
+    override fun onSliceClick(categoryId: Int) {
+        viewModel.onSliceClick(categoryId)
     }
 }

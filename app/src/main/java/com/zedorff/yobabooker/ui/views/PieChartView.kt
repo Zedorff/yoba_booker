@@ -9,7 +9,6 @@ import android.graphics.*
 import android.graphics.Paint.Cap
 import android.graphics.Paint.Join
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
@@ -82,6 +81,7 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
     private var categoryNameWidth: Float = 0f
 
     private lateinit var categoryName: String
+    private var listener: OnPieChartClickListener? = null
 
     init {
         setWillNotDraw(false)
@@ -89,11 +89,11 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
         post {
-            initRects()
+            initRect()
         }
 
-        initPaints()
-        initAnimators()
+        initPaint()
+        initAnimator()
     }
 
     fun setTransactions(transactions: List<FullTransaction>) {
@@ -108,7 +108,11 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
         startAnimation()
     }
 
-    private fun initRects() {
+    fun setOnSliceClickListener(listener: OnPieChartClickListener) {
+        this.listener = listener
+    }
+
+    private fun initRect() {
         viewWidth = width
         viewHeight = height
 
@@ -135,7 +139,7 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
         decorationBounds.bottom = halfRadiusBounds.bottom + radius / 2 * 0.15f
     }
 
-    private fun initPaints() {
+    private fun initPaint() {
         pieChartPaint.apply {
             isAntiAlias = true
             style = Paint.Style.FILL
@@ -163,11 +167,9 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
             color = resources.getColor(R.color.white_semi)
             style = Paint.Style.FILL
         }
-
-
     }
 
-    private fun initAnimators() {
+    private fun initAnimator() {
         infoAppearingAnimator.duration = 500
         infoAppearingAnimator.addUpdateListener {
             infoInterpolation = it.animatedValue as Float
@@ -208,7 +210,6 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (categories.isEmpty()) return
-        canvas.drawPaint(linePaint)
 
         for (index in 0 until categories.size) {
             drawPieChart(canvas, index)
@@ -369,6 +370,9 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
                         previousClickedSlice = clickedSlice
                         clickedSlice = index
                         if (categories.size > 1) selectionAnimator.start()
+                        listener?.let {
+                            it.onSliceClick(categories[index].id)
+                        }
                     }
                     break
                 }
@@ -376,5 +380,9 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }
         }
         return false
+    }
+
+    open interface OnPieChartClickListener {
+        fun onSliceClick(categoryId: Int)
     }
 }
