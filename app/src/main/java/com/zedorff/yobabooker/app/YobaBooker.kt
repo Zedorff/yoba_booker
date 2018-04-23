@@ -9,6 +9,7 @@ import com.zedorff.yobabooker.app.di.DaggerAppComponent
 import com.zedorff.yobabooker.app.managers.AppPreferencesManager
 import com.zedorff.yobabooker.model.db.dao.CategoryDao
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
+import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -36,9 +37,9 @@ class YobaBooker : Application(), HasActivityInjector, HasServiceInjector {
         if (!appPreference.isInitialDataWritten()) {
             async {
                 resources.getStringArray(R.array.categories_income)
-                        .forEach { categoryDao.insert(CategoryEntity(name = it, type = 0)) }
+                        .forEach { categoryDao.insert(CategoryEntity(name = it, type = TransactionActivity.TransactionType.INCOME)) }
                 resources.getStringArray(R.array.categories_outcome)
-                        .forEach { categoryDao.insert(CategoryEntity(name = it, type = 1)) }
+                        .forEach { categoryDao.insert(CategoryEntity(name = it, type = TransactionActivity.TransactionType.OUTCOME)) }
                 appPreference.storeInitialDataWritten()
             }
         }

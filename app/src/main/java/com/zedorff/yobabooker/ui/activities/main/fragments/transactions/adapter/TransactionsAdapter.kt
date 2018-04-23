@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.zedorff.yobabooker.databinding.ItemTransactionBinding
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.ui.activities.base.fragments.adapter.BaseAdapter
+import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class TransactionsAdapter: BaseAdapter<TransactionsAdapter.ViewHolder, FullTransaction>() {
@@ -20,7 +21,11 @@ class TransactionsAdapter: BaseAdapter<TransactionsAdapter.ViewHolder, FullTrans
         holder.binding.transaction = items[position].transaction
         holder.binding.category = items[position].category
         holder.binding.account = items[position].account
-        holder.binding.root.onClick {  }
+        holder.binding.root.onClick {
+            TransactionActivity.startEdit(holder.itemView.context,
+                    items[position].category.type,
+                    items[position].transaction.id.toString())
+        }
     }
 
     override fun compareItems(oldItem: FullTransaction, newItem: FullTransaction): Boolean {

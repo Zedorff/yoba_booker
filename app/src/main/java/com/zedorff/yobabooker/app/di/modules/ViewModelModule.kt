@@ -9,7 +9,7 @@ import com.zedorff.yobabooker.ui.activities.main.fragments.categories.viewmodel.
 import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.viewmodel.PieChartViewModel
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.viewmodel.TransactionsViewModel
 import com.zedorff.yobabooker.ui.activities.newaccount.fragments.viewmodel.NewAccountViewModel
-import com.zedorff.yobabooker.ui.activities.newtransaction.fragments.viewmodel.NewTransactionViewModel
+import com.zedorff.yobabooker.ui.activities.transaction.fragments.viewmodel.TransactionViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -33,8 +33,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(NewTransactionViewModel::class)
-    abstract fun bindNewTransactionViewModel(viewModel: NewTransactionViewModel): ViewModel
+    @ViewModelKey(TransactionViewModel::class)
+    abstract fun bindNewTransactionViewModel(viewModel: TransactionViewModel): ViewModel
 
     @Binds
     @IntoMap

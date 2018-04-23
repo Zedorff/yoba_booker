@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity.TransactionType"/>
         <variable
-            name="income"
-            type="boolean"/>
+            name="type"
+            type="TransactionType"/>
+
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -24,7 +26,7 @@
                 android:layout_height="?android:attr/actionBarSize"
                 android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@{income ? @string/text_transaction_income : @string/text_transaction_outcome}"/>
+                app:title="@{type == TransactionType.INCOME ? @string/text_transaction_income : @string/text_transaction_outcome}"/>
 
         </android.support.design.widget.AppBarLayout>
 

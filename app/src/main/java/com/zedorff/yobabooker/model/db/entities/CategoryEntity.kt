@@ -1,15 +1,16 @@
 package com.zedorff.yobabooker.model.db.entities
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
+import com.zedorff.yobabooker.model.db.converters.TransactionTypeConverter
+import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity.TransactionType
 
 @Entity(tableName = "categories")
+@TypeConverters(TransactionTypeConverter::class)
 class CategoryEntity(@PrimaryKey(autoGenerate = true)
                      @ColumnInfo(name = "category_id")
                      var id: Int = 0,
                      @ColumnInfo(name = "category_type")
-                     var type: Int,
+                     var type: TransactionType,
                      @ColumnInfo(name = "category_name")
                      var name: String) {
 
@@ -28,7 +29,7 @@ class CategoryEntity(@PrimaryKey(autoGenerate = true)
 
     override fun hashCode(): Int {
         var result = id
-        result = 31 * result + type
+        result = 31 * result + type.hashCode()
         result = 31 * result + name.hashCode()
         return result
     }

@@ -10,6 +10,7 @@ import com.zedorff.yobabooker.app.extensions.getYear
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.model.repository.YobaRepository
 import com.zedorff.yobabooker.ui.activities.base.fragments.viewmodel.BaseViewModel
+import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
 import java.util.*
 import javax.inject.Inject
 
@@ -29,7 +30,7 @@ class PieChartViewModel @Inject constructor(var repository: YobaRepository): Bas
         monthTransactions = Transformations.switchMap(dateLiveData, { millis ->
             val calendar = Calendar.getInstance().fromTimeInMillis(millis)
             return@switchMap Transformations.map(repository.getFullTransactionsByMonthInYear(calendar.getActualMonth(), calendar.getYear()), {
-                it.filter { it.category.type == 1 }
+                it.filter { it.category.type == TransactionActivity.TransactionType.OUTCOME }
             })
         })
     }

@@ -10,6 +10,7 @@ import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.model.db.entities.AccountEntity
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.model.db.entities.TransactionEntity
+import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import javax.inject.Inject
@@ -35,15 +36,27 @@ class YobaRepositoryImpl @Inject constructor(
     override fun getFullAccount(id: String): LiveData<FullAccount> = accountDao.getAccountWithTransactions(id)
 
     override fun getAllCategories(): LiveData<List<CategoryEntity>> = categoryDao.getAllCategories()
-    override fun getIncomeCategories(): LiveData<List<CategoryEntity>> = categoryDao.getIncomeCategories()
-    override fun getOutcomeCategories(): LiveData<List<CategoryEntity>> = categoryDao.getOutcomeCategories()
+    override fun getCategoriesByType(type: TransactionActivity.TransactionType): LiveData<List<CategoryEntity>> = categoryDao.getCategoriesByType(type)
+
     override fun getCategory(id: String): LiveData<CategoryEntity> = categoryDao.getCategory(id)
 
-    override suspend fun createAccount(account: AccountEntity): Long {
-        return asyncAwait{accountDao.insert(account)}
+    override suspend fun createOrUpdateAccount(account: AccountEntity) {
+        asyncAwait {
+            if (account.id > 0) {
+                accountDao.update(account)
+            } else {
+                accountDao.insert(account)
+            }
+        }
     }
 
-    override suspend fun createTransaction(transaction: TransactionEntity): Long {
-        return asyncAwait{transactionDao.insert(transaction)}
+    override suspend fun createOrUpdateTransaction(transaction: TransactionEntity) {
+        asyncAwait {
+            if (transaction.id > 0) {
+                transactionDao.update(transaction)
+            } else {
+                transactionDao.insert(transaction)
+            }
+        }
     }
 }
