@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.zedorff.yobabooker.ui.activities.newtransaction.fragments.viewmodel.NewTransactionViewModel" />
+            type="com.zedorff.yobabooker.ui.activities.transaction.fragments.viewmodel.TransactionViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -60,8 +61,8 @@
             android:layout_height="55dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:entries="@{viewModel.categoriesData}"
             android:selectedItemPosition="@={viewModel.transactionCategory}"
-            app:arrayAdapter="@{viewModel.categoriesData}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageButton3"
             app:layout_constraintTop_toBottomOf="@+id/new_transaction_description" />
@@ -72,8 +73,8 @@
             android:layout_height="?android:attr/actionBarSize"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:entries="@{viewModel.accountsData}"
             android:selectedItemPosition="@={viewModel.transactionAccount}"
-            app:arrayAdapter="@{viewModel.accountsData}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageButton4"
             app:layout_constraintTop_toBottomOf="@+id/new_transaction_category_spinner" />

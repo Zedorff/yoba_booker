@@ -23,7 +23,7 @@ interface TransactionDao: BaseDao<TransactionEntity> {
     fun getTransactions(): LiveData<List<TransactionEntity>>
 
     @Transaction
-    @Query("SELECT * FROM transactions JOIN categories ON category_id_relation = category_id JOIN accounts ON account_id_relation = account_id")
+    @Query("SELECT * FROM transactions JOIN categories ON category_id_relation = category_id JOIN accounts ON account_id_relation = account_id ORDER BY transaction_date")
     fun getFullTransactions(): LiveData<List<FullTransaction>>
 
     @Transaction

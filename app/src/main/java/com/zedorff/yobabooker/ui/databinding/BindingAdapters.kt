@@ -9,14 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.zedorff.yobabooker.R
 
-@BindingAdapter("bind:arrayAdapter")
-fun setSpinnerAdapter(spinner: AppCompatSpinner, data: List<String>?) {
-    data?.let {
-        spinner.adapter = ArrayAdapter<String>(spinner.context,
-                android.R.layout.simple_spinner_dropdown_item, it)
-    }
-}
-
 @BindingAdapter("bind:accountImage")
 fun setImageDrawable(view: ImageView, type: Int) {
     val array: TypedArray = view.resources.obtainTypedArray(R.array.account_icons)

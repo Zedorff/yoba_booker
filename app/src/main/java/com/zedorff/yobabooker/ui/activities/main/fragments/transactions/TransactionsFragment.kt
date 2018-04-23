@@ -13,7 +13,7 @@ import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.adapter.TransactionsAdapter
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.viewmodel.TransactionsViewModel
-import com.zedorff.yobabooker.ui.activities.newtransaction.NewTransactionActivity
+import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
 
 class TransactionsFragment : BaseFragment<TransactionsViewModel>(), View.OnClickListener {
 
@@ -89,8 +89,8 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(), View.OnClick
 
     override fun onClick(view: View) {
         when(view.id) {
-            R.id.fab_new_income -> { NewTransactionActivity.build(view.context, true)}
-            R.id.fab_new_outcome -> { NewTransactionActivity.build(view.context, false)}
+            R.id.fab_new_income -> { TransactionActivity.startCreate(view.context, TransactionActivity.TransactionType.INCOME)}
+            R.id.fab_new_outcome -> { TransactionActivity.startCreate(view.context, TransactionActivity.TransactionType.OUTCOME)}
             R.id.fab_new_transfer -> {}
         }
     }

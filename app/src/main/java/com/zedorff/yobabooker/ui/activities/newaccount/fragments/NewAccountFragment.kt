@@ -9,7 +9,6 @@ import com.zedorff.yobabooker.databinding.FragmentNewAccountBinding
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.newaccount.fragments.viewmodel.NewAccountViewModel
 import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 
 class NewAccountFragment : BaseFragment<NewAccountViewModel>() {
@@ -53,7 +52,7 @@ class NewAccountFragment : BaseFragment<NewAccountViewModel>() {
         when (item.itemId) {
             R.id.save -> {
                 launch(UI) {
-                    viewModel.saveNewAccount()
+                    viewModel.saveAccount()
                     activity?.finish()
                 }
             }

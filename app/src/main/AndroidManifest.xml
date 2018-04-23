@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activities.newtransaction.NewTransactionActivity"
+            android:name=".ui.activities.transaction.TransactionActivity"
             android:theme="@style/NewTransactionActivity"
             android:parentActivityName=".ui.activities.main.MainActivity">
         </activity>
