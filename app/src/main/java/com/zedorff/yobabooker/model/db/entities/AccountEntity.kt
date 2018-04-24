@@ -6,10 +6,10 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "accounts")
 data class AccountEntity(@PrimaryKey(autoGenerate = true)
-                    @ColumnInfo(name = "account_id")
-                    var id: Int = 0,
-                    @ColumnInfo(name = "account_name")
-                    var name: String = "",
-                    @ColumnInfo(name = "account_type")
-                    var type: Int = 0)
+                         @ColumnInfo(name = "account_id")
+                         var id: Int = 0,
+                         @ColumnInfo(name = "account_name")
+                         var name: String = "",
+                         @ColumnInfo(name = "account_type")
+                         var type: Int = 0)
 

@@ -38,13 +38,16 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             app:fab_labelsPosition="left"
-            app:fab_addButtonSize="normal">
+            app:fab_expandDirection="up"
+            app:fab_addButtonSize="normal"
+            app:fab_labelStyle="@style/menu_labels_style">
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_new_income"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:fab_title="@string/text_transaction_income"
+                app:fab_stroke_visible="true"
                 app:fab_colorNormal="@color/income_button_color"
                 app:fab_colorPressed="@color/income_button_color_pressed"
                 app:fab_size="mini"

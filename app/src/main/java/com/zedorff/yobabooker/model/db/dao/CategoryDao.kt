@@ -20,10 +20,4 @@ interface CategoryDao: BaseDao<CategoryEntity> {
     @TypeConverters(TransactionTypeConverter::class)
     @Query("SELECT * FROM categories WHERE category_type=:type")
     fun getCategoriesByType(type: TransactionType): LiveData<List<CategoryEntity>>
-
-    @Query("SELECT * from categories WHERE category_type=0")
-    fun getIncomeCategories(): LiveData<List<CategoryEntity>>
-
-    @Query("SELECT * from categories WHERE category_type=1")
-    fun getOutcomeCategories(): LiveData<List<CategoryEntity>>
 }

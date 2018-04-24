@@ -111,6 +111,7 @@ class TransactionViewModel @Inject constructor(var repository: YobaRepository) :
                             ?: throw IllegalStateException("Categories can't be null!!"),
                     date = transactionDate.value
                             ?: throw IllegalStateException("Date can't be null!!"),
+                    type = transactionType.value!!,
                     accountId = accounts.value?.get(selectedAccount)?.id
                             ?: throw IllegalStateException("Accounts can't be null!")))
         }
