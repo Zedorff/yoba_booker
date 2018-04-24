@@ -9,7 +9,7 @@ import com.zedorff.yobabooker.model.db.entities.AccountEntity
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.model.db.entities.TransactionEntity
 
-@Database(entities = [(TransactionEntity::class), (AccountEntity::class), (CategoryEntity::class)], version = 1)
+@Database(entities = [(TransactionEntity::class), (AccountEntity::class), (CategoryEntity::class)], version = 2)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun transactionDao(): TransactionDao
     abstract fun accountDao(): AccountDao

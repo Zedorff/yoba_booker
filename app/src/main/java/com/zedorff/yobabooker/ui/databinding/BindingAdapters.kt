@@ -3,8 +3,6 @@ package com.zedorff.yobabooker.ui.databinding
 import android.content.res.TypedArray
 import android.databinding.BindingAdapter
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.AppCompatSpinner
-import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.zedorff.yobabooker.R

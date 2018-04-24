@@ -23,7 +23,7 @@ class TransactionsAdapter: BaseAdapter<TransactionsAdapter.ViewHolder, FullTrans
         holder.binding.account = items[position].account
         holder.binding.root.onClick {
             TransactionActivity.startEdit(holder.itemView.context,
-                    items[position].category.type,
+                    items[position].transaction.type,
                     items[position].transaction.id.toString())
         }
     }

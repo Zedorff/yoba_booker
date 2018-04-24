@@ -94,5 +94,6 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(), View.OnClick
             R.id.fab_new_outcome -> { TransactionActivity.startCreate(view.context, TransactionType.OUTCOME)}
             R.id.fab_new_transfer -> {}
         }
+        binding.fabMenu.collapse()
     }
 }
