@@ -5,29 +5,17 @@ import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import com.zedorff.yobabooker.R
+import com.zedorff.yobabooker.app.enums.TransactionType
+import com.zedorff.yobabooker.app.enums.UiType
 import com.zedorff.yobabooker.databinding.ActivityTransactionBinding
 import com.zedorff.yobabooker.model.repository.YobaRepository
+import com.zedorff.yobabooker.ui.activities.account.AccountActivity
 import com.zedorff.yobabooker.ui.activities.base.BaseActivity
-import com.zedorff.yobabooker.ui.activities.newaccount.NewAccountActivity
 import com.zedorff.yobabooker.ui.activities.transaction.fragments.TransactionFragment
 import org.jetbrains.anko.intentFor
 import javax.inject.Inject
 
 class TransactionActivity : BaseActivity() {
-
-    enum class TransactionType constructor(val value: Int) {
-        INCOME(0),
-        OUTCOME(1),
-        TRANSFER(2);
-
-        companion object {
-            fun from(value: Int) = TransactionType.values().first { it.value == value }
-        }
-    }
-
-    enum class UiType {
-        EDIT, CREATE
-    }
 
     companion object {
 
@@ -77,7 +65,7 @@ class TransactionActivity : BaseActivity() {
         repository.getAllAccounts().observe(this, Observer {
             it?.let {
                 if (it.isEmpty()) {
-                    startActivity(intentFor<NewAccountActivity>())
+                    startActivity(intentFor<AccountActivity>())
                 } else {
                     when(uiType) {
                         UiType.EDIT -> {replaceFragment(R.id.container_new_transaction, TransactionFragment.buildEdit(transactionType, transactionId))}

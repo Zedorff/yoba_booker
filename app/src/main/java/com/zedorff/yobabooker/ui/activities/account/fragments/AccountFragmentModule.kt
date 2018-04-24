@@ -1,4 +1,4 @@
-package com.zedorff.yobabooker.ui.activities.newaccount.fragments
+package com.zedorff.yobabooker.ui.activities.account.fragments
 
 import android.support.v4.app.Fragment
 import com.zedorff.yobabooker.app.di.scopes.PerFragment
@@ -7,8 +7,8 @@ import dagger.Binds
 import dagger.Module
 
 @Module(includes = [(BaseFragmentModule::class)])
-abstract class NewAccountFragmentModule {
+abstract class AccountFragmentModule {
     @Binds
     @PerFragment
-    abstract fun bindFragment(fragmentModule: NewAccountFragment): Fragment
+    abstract fun bindFragment(fragmentModule: AccountFragment): Fragment
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity.TransactionType"/>
+        <import type="com.zedorff.yobabooker.app.enums.TransactionType"/>
         <variable
             name="type"
             type="TransactionType"/>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.zedorff.yobabooker.R
+import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.databinding.FragmentTransactionsBinding
 import com.zedorff.yobabooker.model.db.entities.AccountEntity
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
@@ -89,8 +90,8 @@ class TransactionsFragment : BaseFragment<TransactionsViewModel>(), View.OnClick
 
     override fun onClick(view: View) {
         when(view.id) {
-            R.id.fab_new_income -> { TransactionActivity.startCreate(view.context, TransactionActivity.TransactionType.INCOME)}
-            R.id.fab_new_outcome -> { TransactionActivity.startCreate(view.context, TransactionActivity.TransactionType.OUTCOME)}
+            R.id.fab_new_income -> { TransactionActivity.startCreate(view.context, TransactionType.INCOME)}
+            R.id.fab_new_outcome -> { TransactionActivity.startCreate(view.context, TransactionType.OUTCOME)}
             R.id.fab_new_transfer -> {}
         }
     }

@@ -1,13 +1,12 @@
 package com.zedorff.yobabooker.model.repository
 
 import android.arch.lifecycle.LiveData
+import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.model.db.embeded.FullAccount
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.model.db.entities.AccountEntity
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.model.db.entities.TransactionEntity
-import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
-import kotlinx.coroutines.experimental.Deferred
 
 interface YobaRepository {
     fun getTransactions(): LiveData<List<TransactionEntity>>
@@ -25,7 +24,7 @@ interface YobaRepository {
     fun getFullAccount(id: String): LiveData<FullAccount>
 
     fun getAllCategories(): LiveData<List<CategoryEntity>>
-    fun getCategoriesByType(type: TransactionActivity.TransactionType): LiveData<List<CategoryEntity>>
+    fun getCategoriesByType(type: TransactionType): LiveData<List<CategoryEntity>>
     fun getCategory(id: String): LiveData<CategoryEntity>
 
     suspend fun createOrUpdateAccount(account: AccountEntity)

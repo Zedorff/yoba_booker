@@ -7,8 +7,10 @@ import com.zedorff.yobabooker.app.extensions.sumBy
 import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
 import com.zedorff.yobabooker.databinding.ItemAccountBinding
 import com.zedorff.yobabooker.model.db.embeded.FullAccount
+import com.zedorff.yobabooker.ui.activities.account.AccountActivity
 import com.zedorff.yobabooker.ui.activities.base.fragments.adapter.BaseAdapter
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk25.coroutines.onLongClick
 
 class AccountsAdapter(var listener: ViewHolderClickListener<FullAccount>) : BaseAdapter<AccountsAdapter.ViewHolder, FullAccount>() {
 
@@ -21,6 +23,7 @@ class AccountsAdapter(var listener: ViewHolderClickListener<FullAccount>) : Base
         holder.binding.account = items[position].account
         holder.binding.balance = items[position].transactions.sumBy { it.value }
         holder.binding.root.onClick { listener.onClick(items[holder.adapterPosition]) }
+        holder.binding.root.onLongClick { AccountActivity.build(holder.binding.root.context, items[position].account.id.toString()) }
     }
 
     override fun compareItems(oldItem: FullAccount, newItem: FullAccount): Boolean {

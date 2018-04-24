@@ -1,6 +1,7 @@
 package com.zedorff.yobabooker.model.repository
 
 import android.arch.lifecycle.LiveData
+import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.app.extensions.asyncAwait
 import com.zedorff.yobabooker.model.db.dao.AccountDao
 import com.zedorff.yobabooker.model.db.dao.CategoryDao
@@ -10,9 +11,6 @@ import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.model.db.entities.AccountEntity
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.model.db.entities.TransactionEntity
-import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
 import javax.inject.Inject
 
 class YobaRepositoryImpl @Inject constructor(
@@ -36,7 +34,7 @@ class YobaRepositoryImpl @Inject constructor(
     override fun getFullAccount(id: String): LiveData<FullAccount> = accountDao.getAccountWithTransactions(id)
 
     override fun getAllCategories(): LiveData<List<CategoryEntity>> = categoryDao.getAllCategories()
-    override fun getCategoriesByType(type: TransactionActivity.TransactionType): LiveData<List<CategoryEntity>> = categoryDao.getCategoriesByType(type)
+    override fun getCategoriesByType(type: TransactionType): LiveData<List<CategoryEntity>> = categoryDao.getCategoriesByType(type)
 
     override fun getCategory(id: String): LiveData<CategoryEntity> = categoryDao.getCategory(id)
 

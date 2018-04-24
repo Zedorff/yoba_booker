@@ -4,12 +4,12 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.Transformations
+import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.model.db.entities.AccountEntity
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.model.db.entities.TransactionEntity
 import com.zedorff.yobabooker.model.repository.YobaRepository
 import com.zedorff.yobabooker.ui.activities.base.fragments.viewmodel.BaseViewModel
-import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity.TransactionType
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.async
 import javax.inject.Inject
