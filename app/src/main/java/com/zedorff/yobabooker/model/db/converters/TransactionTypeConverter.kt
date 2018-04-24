@@ -1,16 +1,16 @@
 package com.zedorff.yobabooker.model.db.converters
 
 import android.arch.persistence.room.TypeConverter
-import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
+import com.zedorff.yobabooker.app.enums.TransactionType
 
 class TransactionTypeConverter {
     @TypeConverter
-    fun toTransactionType(value: Int): TransactionActivity.TransactionType {
-        return TransactionActivity.TransactionType.from(value)
+    fun toTransactionType(value: Int): TransactionType {
+        return TransactionType.from(value)
     }
 
     @TypeConverter
-    fun toValue(type: TransactionActivity.TransactionType): Int {
+    fun toValue(type: TransactionType): Int {
         return type.value
     }
 }

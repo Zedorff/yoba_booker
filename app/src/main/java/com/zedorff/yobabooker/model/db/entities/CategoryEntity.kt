@@ -1,8 +1,11 @@
 package com.zedorff.yobabooker.model.db.entities
 
-import android.arch.persistence.room.*
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverters
+import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.model.db.converters.TransactionTypeConverter
-import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity.TransactionType
 
 @Entity(tableName = "categories")
 @TypeConverters(TransactionTypeConverter::class)

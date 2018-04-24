@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.zedorff.yobabooker.R
+import com.zedorff.yobabooker.app.enums.UiType
 import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
 import com.zedorff.yobabooker.databinding.FragmentAccountsBinding
 import com.zedorff.yobabooker.model.db.embeded.FullAccount
@@ -15,7 +16,7 @@ import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.adapter.AccountsAdapter
 import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.viewmodel.AccountsViewModel
 import com.zedorff.yobabooker.ui.activities.main.view.MainActivityView
-import com.zedorff.yobabooker.ui.activities.newaccount.NewAccountActivity
+import com.zedorff.yobabooker.ui.activities.account.AccountActivity
 import javax.inject.Inject
 
 class AccountsFragment: BaseFragment<AccountsViewModel>(), ViewHolderClickListener<FullAccount>, View.OnClickListener {
@@ -64,7 +65,7 @@ class AccountsFragment: BaseFragment<AccountsViewModel>(), ViewHolderClickListen
 
     override fun onClick(view: View) {
         when(view.id) {
-            R.id.fab_new_account -> {NewAccountActivity.build(view.context)}
+            R.id.fab_new_account -> {AccountActivity.build(view.context)}
         }
     }
 }

@@ -4,16 +4,15 @@ import android.app.DatePickerDialog
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
-import android.widget.AdapterView
 import android.widget.DatePicker
 import com.zedorff.yobabooker.R
+import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.app.extensions.getDayOfMonth
 import com.zedorff.yobabooker.app.extensions.getMonth
 import com.zedorff.yobabooker.app.extensions.getYear
-import com.zedorff.yobabooker.databinding.FragmentNewTransactionBinding
+import com.zedorff.yobabooker.databinding.FragmentTransactionBinding
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
-import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity.TransactionType
 import com.zedorff.yobabooker.ui.activities.transaction.fragments.viewmodel.TransactionViewModel
 import java.util.*
 
@@ -21,11 +20,6 @@ class TransactionFragment : BaseFragment<TransactionViewModel>(), DatePickerDial
 
     companion object {
         fun buildCreate(type: TransactionType): TransactionFragment {
-//            val fragment = TransactionFragment()
-//            val bundle = Bundle()
-//            bundle.putSerializable(TransactionActivity.KEY_TRANSACTION_TYPE, type)
-//            fragment.arguments = bundle
-//            return fragment
             return TransactionFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(TransactionActivity.KEY_TRANSACTION_TYPE, type)
@@ -43,7 +37,7 @@ class TransactionFragment : BaseFragment<TransactionViewModel>(), DatePickerDial
         }
     }
 
-    private lateinit var binding: FragmentNewTransactionBinding
+    private lateinit var binding: FragmentTransactionBinding
     private lateinit var transactionType: TransactionType
     private var transactionId: String? = null
 
@@ -52,7 +46,7 @@ class TransactionFragment : BaseFragment<TransactionViewModel>(), DatePickerDial
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentNewTransactionBinding.inflate(inflater, container, false)
+        binding = FragmentTransactionBinding.inflate(inflater, container, false)
         binding.setLifecycleOwner(this)
         return binding.root
     }
