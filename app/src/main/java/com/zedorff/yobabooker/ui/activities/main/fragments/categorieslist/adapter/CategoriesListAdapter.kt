@@ -3,6 +3,7 @@ package com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.adapt
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.zedorff.yobabooker.app.extensions.swap
 import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
 import com.zedorff.yobabooker.databinding.ItemCategoryBinding
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
@@ -24,6 +25,11 @@ class CategoriesListAdapter(val listener: ViewHolderClickListener<CategoryEntity
         holder.binding.root.onClick {
             listener.onClick(items[holder.adapterPosition])
         }
+    }
+
+    fun onMoved(from: Int, to: Int) {
+        items.swap(from, to)
+        notifyItemMoved(from, to)
     }
 
     override fun compareItems(oldItem: CategoryEntity, newItem: CategoryEntity): Boolean {

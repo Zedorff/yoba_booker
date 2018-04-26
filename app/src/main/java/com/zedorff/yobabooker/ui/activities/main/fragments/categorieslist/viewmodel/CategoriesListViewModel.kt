@@ -25,4 +25,8 @@ class CategoriesListViewModel @Inject constructor(var repository: YobaRepository
 
     fun getCategories() = categoriesLiveData
     fun getCategoryType(): LiveData<TransactionType> = categoryType
+
+    fun updateCategoriesOrder(items: List<CategoryEntity>) {
+        repository.updateCategories(items)
+    }
 }
