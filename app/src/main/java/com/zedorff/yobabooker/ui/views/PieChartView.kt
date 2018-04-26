@@ -31,8 +31,6 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
     private var categories: MutableList<CategoryEntity> = mutableListOf()
     private var categoriesSum: MutableList<Float> = mutableListOf()
 
-    private val generator = ColorGenerator.MATERIAL
-
     private var viewWidth: Int = 0
     private var viewHeight: Int = 0
 
@@ -245,7 +243,7 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
         sweepAngle = if (transactionTotal == 0f) 0f else (circleDegrees * categoryPercents)
         sliceCenterAngle = Math.round(startAngle + (sweepAngle / 2f)).toFloat()
 
-        pieChartPaint.color = generator.getColor(categories[index])
+        pieChartPaint.color = categories[index].color
 
         percents = "${Math.round(categoryPercents * 100f)}%"
         percentsWidth = textPaint.measureText(percents)

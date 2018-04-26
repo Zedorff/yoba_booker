@@ -6,7 +6,7 @@ import com.zedorff.yobabooker.model.db.converters.TransactionTypeConverter
 
 @Entity(tableName = "transactions", foreignKeys = [
     (ForeignKey(entity = CategoryEntity::class, parentColumns = [("category_id")], childColumns = [("category_id_relation")])),
-    (ForeignKey(entity = AccountEntity::class, parentColumns = [("account_id")], childColumns = [("account_id_relation")]))
+    (ForeignKey(entity = AccountEntity::class, parentColumns = [("account_id")], childColumns = [("account_id_relation")], onDelete = ForeignKey.SET_NULL))
 ])
 @TypeConverters(TransactionTypeConverter::class)
 data class TransactionEntity(@PrimaryKey(autoGenerate = true)

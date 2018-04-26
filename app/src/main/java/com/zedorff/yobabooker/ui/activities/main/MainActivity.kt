@@ -12,12 +12,11 @@ import com.zedorff.yobabooker.databinding.ActivityMainBinding
 import com.zedorff.yobabooker.model.db.entities.AccountEntity
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.ui.activities.base.BaseActivity
-import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.AccountsFragment
-import com.zedorff.yobabooker.ui.activities.main.fragments.categories.CategoriesFragment
+import com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.AccountsListFragment
+import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.CategoriesListFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.PieChartFragment
-import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.TransactionsFragment
+import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.TransactionsListFragment
 import com.zedorff.yobabooker.ui.activities.main.view.MainActivityView
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener,
         MainActivityView {
@@ -29,12 +28,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolbar)
         val toggle = ActionBarDrawerToggle(
-                this, drawer_layout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+                this, binding.drawerLayout, binding.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         binding.navView.setNavigationItemSelectedListener(this)
-        savedInstanceState ?: replaceFragment(R.id.container_main, TransactionsFragment.build())
+
+        if (savedInstanceState != null) return
+
+        replaceFragment(R.id.container_main, TransactionsListFragment.build())
     }
 
     override fun onBackPressed() {
@@ -65,28 +67,20 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_transactions -> {
-                replaceFragment(R.id.container_main, TransactionsFragment.build())
+                replaceFragment(R.id.container_main, TransactionsListFragment.build())
             }
             R.id.nav_categories -> {
-                replaceFragment(R.id.container_main, CategoriesFragment.build())
+                replaceFragment(R.id.container_main, CategoriesListFragment.build())
             }
             R.id.nav_pie_charts -> {
                 replaceFragment(R.id.container_main, PieChartFragment.build())
             }
             R.id.nav_accounts -> {
-                replaceFragment(R.id.container_main, AccountsFragment.build())
+                replaceFragment(R.id.container_main, AccountsListFragment.build())
             }
         }
 
         binding.drawerLayout.closeDrawer(GravityCompat.START)
         return true
-    }
-
-    override fun openTransactionsForCategory(category: CategoryEntity) {
-        replaceFragment(R.id.container_main, TransactionsFragment.build(category = category))
-    }
-
-    override fun openTransactionsForAccount(account: AccountEntity) {
-        replaceFragment(R.id.container_main, TransactionsFragment.build(account = account))
     }
 }

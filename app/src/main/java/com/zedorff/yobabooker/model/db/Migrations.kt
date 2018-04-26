@@ -2,6 +2,7 @@ package com.zedorff.yobabooker.model.db
 
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.migration.Migration
+import android.graphics.Color
 import com.zedorff.yobabooker.app.enums.TransactionType
 
 class Migrations {
@@ -11,5 +12,5 @@ class Migrations {
                 database.execSQL("ALTER TABLE transactions ADD COLUMN transaction_type INTEGER NOT NULL DEFAULT " + TransactionType.EMPTY.value)
             }
         }
-    }
+     }
 }

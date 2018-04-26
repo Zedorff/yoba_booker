@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textAppearance">@style/BodyTextView</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -30,4 +31,10 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="BodyTextView">
+        <item name="android:textColor">@color/text_color_body</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
 </resources>

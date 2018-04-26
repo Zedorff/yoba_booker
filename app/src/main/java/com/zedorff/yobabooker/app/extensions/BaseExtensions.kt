@@ -1,11 +1,7 @@
 package com.zedorff.yobabooker.app.extensions
 
-import android.arch.core.util.Function
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Transformations
 import android.graphics.Rect
 import android.graphics.RectF
-import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
 import android.support.v4.content.ContextCompat
 import android.view.View
@@ -20,6 +16,8 @@ inline fun <T> Iterable<T>.sumBy(selector: (T) -> Float): Float {
 }
 
 fun Float.negate(): Float = this * -1
+
+fun Int.negate(): Int = this * -1
 
 fun Float.half(): Float = this / 2F
 

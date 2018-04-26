@@ -27,8 +27,6 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
     private var daysDescriptionString: String = ""
     private var valuesDescriptionString: String = ""
 
-    private var generator = ColorGenerator.MATERIAL
-
     private var linePaint = Paint()
     private var graphPaint = Paint()
     private var textPaint = Paint()
@@ -213,7 +211,7 @@ class ColumnBarGraph(context: Context?, attrs: AttributeSet?) : View(context, at
     fun setTransactions(list: List<FullTransaction>) {
         if (!list.isEmpty()) {
             category = list[0].category.name
-            barPaint.color = generator.getColor(list[0].category)
+            barPaint.color = list[0].category.color
         }
 
         transactionsMap = list.map { fullTransaction ->

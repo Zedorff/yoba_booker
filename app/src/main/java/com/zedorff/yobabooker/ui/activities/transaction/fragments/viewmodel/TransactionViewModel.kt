@@ -56,7 +56,13 @@ class TransactionViewModel @Inject constructor(var repository: YobaRepository) :
     fun setTransaction(transaction: TransactionEntity, type: TransactionType) {
         this.transaction = transaction
         transactionType.value = type
-        transactionCost.value = Math.abs(transaction.value).toString()
+        if (transaction.value != 0f) {
+            if (transaction.value % 1 != 0F) {
+                transactionCost.value = Math.abs(transaction.value).toString()
+            } else {
+                transactionCost.value = Math.abs(Math.round(transaction.value)).toString()
+            }
+        }
         transactionDescription.value = transaction.description
         transactionDate.value = if (transaction.date == 0L) System.currentTimeMillis() else transaction.date
 

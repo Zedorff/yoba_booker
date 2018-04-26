@@ -3,14 +3,14 @@ package com.zedorff.yobabooker.ui.activities.main
 import android.support.v7.app.AppCompatActivity
 import com.zedorff.yobabooker.app.di.scopes.PerActivity
 import com.zedorff.yobabooker.ui.activities.base.BaseActivityModule
-import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.AccountsFragment
-import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.AccountsFragmentModule
-import com.zedorff.yobabooker.ui.activities.main.fragments.categories.CategoriesFragment
-import com.zedorff.yobabooker.ui.activities.main.fragments.categories.CategoriesFragmentModule
+import com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.AccountsListFragment
+import com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.AccountsListFragmentModule
+import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.CategoriesListFragment
+import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.CategoriesListFragmentModule
 import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.PieChartFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.PieChartFragmentModule
-import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.TransactionsFragmentModule
-import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.TransactionsFragment
+import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.TransactionsListFragmentModule
+import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.TransactionsListFragment
 import com.zedorff.yobabooker.ui.activities.main.view.MainActivityView
 import dagger.Binds
 import dagger.Module
@@ -26,14 +26,14 @@ abstract class MainActivityModule {
     @PerActivity
     abstract fun bindActivityView(activity: MainActivity): MainActivityView
 
-    @ContributesAndroidInjector(modules = [(AccountsFragmentModule::class)])
-    abstract fun contributeAccountsFragment(): AccountsFragment
+    @ContributesAndroidInjector(modules = [(AccountsListFragmentModule::class)])
+    abstract fun contributeAccountsFragment(): AccountsListFragment
 
-    @ContributesAndroidInjector(modules = [(CategoriesFragmentModule::class)])
-    abstract fun contributeCategoriesFragment(): CategoriesFragment
+    @ContributesAndroidInjector(modules = [(CategoriesListFragmentModule::class)])
+    abstract fun contributeCategoriesFragment(): CategoriesListFragment
 
-    @ContributesAndroidInjector(modules = [(TransactionsFragmentModule::class)])
-    abstract fun contributeTransactionsFragment(): TransactionsFragment
+    @ContributesAndroidInjector(modules = [(TransactionsListFragmentModule::class)])
+    abstract fun contributeTransactionsFragment(): TransactionsListFragment
 
     @ContributesAndroidInjector(modules = [(PieChartFragmentModule::class)])
     abstract fun contributePieChartFragment(): PieChartFragment

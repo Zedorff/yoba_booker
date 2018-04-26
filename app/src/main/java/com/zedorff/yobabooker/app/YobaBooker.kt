@@ -36,10 +36,33 @@ class YobaBooker : Application(), HasActivityInjector, HasServiceInjector {
                 .inject(this)
         if (!appPreference.isInitialDataWritten()) {
             async {
-                resources.getStringArray(R.array.categories_income)
-                        .forEach { categoryDao.insert(CategoryEntity(name = it, type = TransactionType.INCOME)) }
-                resources.getStringArray(R.array.categories_outcome)
-                        .forEach { categoryDao.insert(CategoryEntity(name = it, type = TransactionType.OUTCOME)) }
+                val incomeColors = resources.getIntArray(R.array.categories_income_color)
+                val outcomeColors = resources.getIntArray(R.array.categories_outcome_colors)
+                val incomeDrawable = resources.getStringArray(R.array.categories_income_icons)
+                val outcomeDrawables = resources.getStringArray(R.array.categories_outcome_icons)
+
+                val incomeCategories = resources.getStringArray(R.array.categories_income)
+                val outcomeCategories = resources.getStringArray(R.array.categories_outcome)
+
+                incomeCategories.forEachIndexed { index, name ->
+                    categoryDao.insert(CategoryEntity(
+                            name = name,
+                            type = TransactionType.INCOME,
+                            order = index,
+                            icon = incomeDrawable[index],
+                            color = incomeColors[index]
+                    ))
+                }
+
+                outcomeCategories.forEachIndexed { index, name ->
+                    categoryDao.insert(CategoryEntity(
+                            name = name,
+                            type = TransactionType.OUTCOME,
+                            order = index,
+                            icon = outcomeDrawables[index],
+                            color = outcomeColors[index]
+                    ))
+                }
                 appPreference.storeInitialDataWritten()
             }
         }
