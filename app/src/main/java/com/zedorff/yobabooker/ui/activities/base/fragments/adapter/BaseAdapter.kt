@@ -5,11 +5,11 @@ import android.support.v7.widget.RecyclerView
 
 abstract class BaseAdapter<VH: RecyclerView.ViewHolder, IT: Any>: RecyclerView.Adapter<VH>() {
 
-    protected var items: List<IT> = emptyList()
+    var items: MutableList<IT> = mutableListOf()
 
     fun swapItems(newItems: List<IT>) {
         val diffResult = DiffUtil.calculateDiff(DiffCallback(items, newItems))
-        this.items = newItems
+        this.items = newItems.toMutableList()
         diffResult.dispatchUpdatesTo(this)
     }
 

@@ -4,71 +4,79 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="transaction"
-            type="com.zedorff.yobabooker.model.db.entities.TransactionEntity"/>
+            type="com.zedorff.yobabooker.model.db.entities.TransactionEntity" />
+
         <variable
             name="category"
-            type="com.zedorff.yobabooker.model.db.entities.CategoryEntity"/>
+            type="com.zedorff.yobabooker.model.db.entities.CategoryEntity" />
+
         <variable
             name="account"
-            type="com.zedorff.yobabooker.model.db.entities.AccountEntity"/>
-        <import type="com.zedorff.yobabooker.ui.databinding.DateConvertersKt"/>
+            type="com.zedorff.yobabooker.model.db.entities.AccountEntity" />
+
+        <import type="com.zedorff.yobabooker.ui.databinding.DateConvertersKt" />
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="?android:attr/selectableItemBackground"
+        android:layout_height="72dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/transaction_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:gravity="end"
-            android:textAlignment="textEnd"
-            android:text="@{DateConvertersKt.convertUnixToString(transaction.date)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toBottomOf="@+id/transaction_cost" />
-
-        <TextView
-            android:id="@+id/transaction_info"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:textColor="@android:color/darker_gray"
-            android:text="@{@string/pattern_transaction_info(category.name, account.name)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        <FrameLayout
+            android:id="@+id/frameLayout2"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:padding="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/transaction_name" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/transaction_category_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="center"
+                bind:categoryColor="@{category.color}"
+                bind:categoryIcon="@{category.icon}" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/transaction_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:ems="10"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
             android:text="@{transaction.description}"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/frameLayout2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/transaction_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:ems="10"
+            android:gravity="end"
+            android:text="@{account.name}"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            app:layout_constraintVertical_bias="0.0" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline3"
@@ -81,17 +89,40 @@
             android:id="@+id/transaction_cost"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:ems="10"
             android:gravity="end"
             android:textAlignment="textEnd"
-            android:textSize="18sp"
-            bind:currencyColor="@{transaction.value}"
-            bind:roundableFloatText="@{transaction.value}"
+            android:textColor="@color/text_color_body"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            bind:roundableFloatText="@{transaction.value}" />
+
+        <TextView
+            android:id="@+id/transaction_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:gravity="start"
+            android:text="@{DateConvertersKt.convertUnixToString(transaction.date)}"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/transaction_name"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/transaction_name"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
     </android.support.constraint.ConstraintLayout>
 </layout>

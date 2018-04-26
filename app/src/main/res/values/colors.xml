@@ -4,18 +4,38 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="colorRed">#f44336</color>
+    <color name="colorPink">#E91E63</color>
+    <color name="colorPurple">#9C27B0</color>
+    <color name="colorDeepPurple">#673AB7</color>
+    <color name="colorIndigo">#3F51B5</color>
+    <color name="colorBlue">#2196F3</color>
+    <color name="colorLightBlue">#03A9F4</color>
+    <color name="colorCyan">#00BCD4</color>
+    <color name="colorTeal">#009688</color>
+    <color name="colorGreen">#4CAF50</color>
+    <color name="colorLightGreen">#8BC34A</color>
+    <color name="colorLime">#CDDC39</color>
+    <color name="colorYellow">#FFEB3B</color>
+    <color name="colorAmber">#FFC107</color>
+    <color name="colorOrange">#FF9800</color>
+    <color name="colorDeepOrange">#FF5722</color>
+    <color name="colorBrown">#795548</color>
+    <color name="colorGrey">#9E9E9E</color>
+    <color name="colorBlueGrey">#607D8B</color>
+    <color name="colorDarkGrey">#424242</color>
+
     <color name="black_semi_transparent">#b2000000</color>
     <color name="background">#e5e5e5</color>
     <color name="half_black">#808080</color>
     <color name="white">#fafafa</color>
     <color name="white_pressed">#f1f1f1</color>
-    <color name="pink">#e91e63</color>
     <color name="pink_pressed">#ec407a</color>
     <color name="blue_semi_transparent">#805677fc</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
 
-    <color name="outcome_button_color">#dd2c00</color>
-    <color name="outcome_button_color_pressed">#b60000</color>
+    <color name="outcome_button_color">#f44336</color>
+    <color name="outcome_button_color_pressed">#c2352b</color>
 
     <color name="income_button_color">#4fd43d</color>
     <color name="income_button_color_pressed">#3da430</color>
@@ -34,5 +54,7 @@
 
     <color name="pie_chart_fragment_big_text_color">#af000000</color>
     <color name="pie_chart_fragment_small_text_color">#8a000000</color>
+
+    <color name="text_color_body">#de000000</color>
 
 </resources>

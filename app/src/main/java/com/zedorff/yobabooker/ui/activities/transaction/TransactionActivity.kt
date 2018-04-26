@@ -65,7 +65,7 @@ class TransactionActivity : BaseActivity() {
         repository.getAllAccounts().observe(this, Observer {
             it?.let {
                 if (it.isEmpty()) {
-                    startActivity(intentFor<AccountActivity>())
+                    AccountActivity.build(this)
                 } else {
                     when(uiType) {
                         UiType.EDIT -> {replaceFragment(R.id.container_new_transaction, TransactionFragment.buildEdit(transactionType, transactionId))}

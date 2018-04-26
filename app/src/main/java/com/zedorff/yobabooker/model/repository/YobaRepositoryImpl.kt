@@ -25,8 +25,8 @@ class YobaRepositoryImpl @Inject constructor(
     override fun getFullTransactionsByCategoryId(id: String): LiveData<List<FullTransaction>> = transactionDao.getFullTransactionsByCategoryId(id)
     override fun getFullTransactionsByAccountId(id: String): LiveData<List<FullTransaction>> = transactionDao.getFullTransactionsByAccountId(id)
     override fun getFullTransactionsByMonthInYear(month: Int, year: Int): LiveData<List<FullTransaction>> = transactionDao.getFullTransactionsPerMonth(month, year)
-
     override fun getTransaction(id: String): LiveData<TransactionEntity> = transactionDao.getTransaction(id)
+    override fun deleteTransaction(transaction: TransactionEntity) = transactionDao.delete(transaction)
 
     override fun getAllAccounts(): LiveData<List<AccountEntity>> = accountDao.getAllAccounts()
     override fun getFullAccounts(): LiveData<List<FullAccount>> = accountDao.getFullAccounts()
@@ -37,6 +37,7 @@ class YobaRepositoryImpl @Inject constructor(
     override fun getCategoriesByType(type: TransactionType): LiveData<List<CategoryEntity>> = categoryDao.getCategoriesByType(type)
 
     override fun getCategory(id: String): LiveData<CategoryEntity> = categoryDao.getCategory(id)
+    override fun updateCategories(items: List<CategoryEntity>) = categoryDao.update(items)
 
     override suspend fun createOrUpdateAccount(account: AccountEntity) {
         asyncAwait {

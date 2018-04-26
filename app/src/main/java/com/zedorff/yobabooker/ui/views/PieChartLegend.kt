@@ -16,8 +16,6 @@ class PieChartLegend(context: Context?, attrs: AttributeSet?) : View(context, at
 
     private var categories: List<CategoryEntity> = emptyList()
 
-    private var generator = ColorGenerator.MATERIAL
-
     private var legendMarkerBounds = RectF()
 
     private var legendMarkerPath = Path()
@@ -93,7 +91,7 @@ class PieChartLegend(context: Context?, attrs: AttributeSet?) : View(context, at
     }
 
     private fun drawLegend(canvas: Canvas, index: Int) {
-        legendMarkerPaint.color = generator.getColor(categories[index])
+        legendMarkerPaint.color = categories[index].color
 
         if (legendLastX + legendMarkerSize + legendTextStartOffset + legendTextPaint.measureText(categories[index].name) > width - legendMarkerSize) {
             legendTextLines++

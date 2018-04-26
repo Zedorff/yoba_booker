@@ -4,10 +4,10 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.zedorff.yobabooker.app.di.annotations.ViewModelKey
 import com.zedorff.yobabooker.ui.activities.base.fragments.viewmodel.ViewModelFactory
-import com.zedorff.yobabooker.ui.activities.main.fragments.accounts.viewmodel.AccountsViewModel
-import com.zedorff.yobabooker.ui.activities.main.fragments.categories.viewmodel.CategoriesViewModel
+import com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.viewmodel.AccountsListViewModel
+import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.viewmodel.CategoriesListViewModel
 import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.viewmodel.PieChartViewModel
-import com.zedorff.yobabooker.ui.activities.main.fragments.transactions.viewmodel.TransactionsViewModel
+import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.viewmodel.TransactionsListViewModel
 import com.zedorff.yobabooker.ui.activities.account.fragments.viewmodel.AccountViewModel
 import com.zedorff.yobabooker.ui.activities.transaction.fragments.viewmodel.TransactionViewModel
 import dagger.Binds
@@ -18,18 +18,18 @@ import dagger.multibindings.IntoMap
 abstract class ViewModelModule {
     @Binds
     @IntoMap
-    @ViewModelKey(AccountsViewModel::class)
-    abstract fun bindAccountViewModel(viewModel: AccountsViewModel): ViewModel
+    @ViewModelKey(AccountsListViewModel::class)
+    abstract fun bindAccountViewModel(viewModel: AccountsListViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(CategoriesViewModel::class)
-    abstract fun bindCategoriesViewModel(viewModel: CategoriesViewModel): ViewModel
+    @ViewModelKey(CategoriesListViewModel::class)
+    abstract fun bindCategoriesViewModel(viewModel: CategoriesListViewModel): ViewModel
 
     @Binds
     @IntoMap
-    @ViewModelKey(TransactionsViewModel::class)
-    abstract fun bindTransactionsViewModel(viewModel: TransactionsViewModel): ViewModel
+    @ViewModelKey(TransactionsListViewModel::class)
+    abstract fun bindTransactionsViewModel(viewModel: TransactionsListViewModel): ViewModel
 
     @Binds
     @IntoMap

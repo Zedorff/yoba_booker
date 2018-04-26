@@ -3,4 +3,5 @@
     <string name="hint_account_name">Название счета</string>
     <string name="description_days_of_month">Дни месяца</string>
     <string name="text_no_month_data">Нет данных за этот месяц</string>
+    <string name="text_transaction_swipe_delete">Удалить</string>
 </resources>
