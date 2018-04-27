@@ -1,6 +1,6 @@
-package com.zedorff.yobabooker.app.listeners
+package com.zedorff.dragandswiperecycler.helper
 
-interface RecyclerTouchListener {
+interface SDHelperListener {
     fun dragDropEnabled(): Boolean
     fun swipeEnabled(): Boolean
     fun onDragged(from: Int, to: Int)

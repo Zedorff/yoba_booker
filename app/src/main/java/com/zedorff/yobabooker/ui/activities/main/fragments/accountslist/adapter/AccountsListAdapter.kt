@@ -14,8 +14,8 @@ import org.jetbrains.anko.sdk25.coroutines.onLongClick
 
 class AccountsListAdapter(var listener: ViewHolderClickListener<FullAccount>) : BaseAdapter<AccountsListAdapter.ViewHolder, FullAccount>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        val binding = ItemAccountBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemAccountBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

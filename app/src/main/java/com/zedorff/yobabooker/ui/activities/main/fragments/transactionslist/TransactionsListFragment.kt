@@ -6,18 +6,14 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BaseTransientBottomBar
 import android.support.design.widget.Snackbar
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.zedorff.dragandswiperecycler.helper.SDItemTouchHelper
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.TransactionType
-import com.zedorff.yobabooker.app.listeners.RecyclerTouchListener
-import com.zedorff.yobabooker.app.utils.RecyclerTouchHelper
 import com.zedorff.yobabooker.databinding.FragmentTransactionsListBinding
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
-import com.zedorff.yobabooker.model.db.entities.AccountEntity
-import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.adapter.TransactionsListAdapter
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.viewmodel.TransactionsListViewModel
@@ -50,8 +46,7 @@ class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View
         super.onViewCreated(view, savedInstanceState)
         adapter = TransactionsListAdapter()
         binding.recycler.adapter = adapter
-        var helper = ItemTouchHelper(RecyclerTouchHelper(this))
-        helper.attachToRecyclerView(binding.recycler)
+        SDItemTouchHelper(this).attachToRecyclerView(binding.recycler)
         binding.fabNewIncome.setOnClickListener(this)
         binding.fabNewOutcome.setOnClickListener(this)
         binding.fabNewTransfer.setOnClickListener(this)
@@ -73,32 +68,32 @@ class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View
 
     //TODO move to viewModel, maybe
     override fun onSwiped(position: Int) {
-        deletedItem =  adapter.items[position]
+        deletedItem = adapter.items[position]
         deletedPosition = position
 
         adapter.removeItem(position)
 
-        Snackbar.make(binding.root, "Транзакцию уебали", Snackbar.LENGTH_LONG).apply {
-            setAction("НИИИТ", {
-                if (deletedItem != null && deletedPosition != null) {
-                    adapter.addItem(deletedItem!!, deletedPosition!!)
-                }
-            })
-            setActionTextColor(Color.YELLOW)
-            addCallback(object: Snackbar.Callback() {
-                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                    if (event != BaseTransientBottomBar.BaseCallback.DISMISS_EVENT_ACTION) {
-                        async {
-                            deletedItem?.let {
-                                viewModel.deleteTransaction(it)
-                            }
-                            deletedItem = null
-                            deletedPosition = null
+        val snackbar = Snackbar.make(binding.root, R.string.snackbar_text_transaction_deleted, Snackbar.LENGTH_LONG)
+        snackbar.setAction(R.string.snackbar_text_undo, {
+            if (deletedItem != null && deletedPosition != null) {
+                adapter.addItem(deletedItem!!, deletedPosition!!)
+            }
+        })
+        snackbar.setActionTextColor(Color.YELLOW)
+        snackbar.addCallback(object : Snackbar.Callback() {
+            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                if (event != BaseTransientBottomBar.BaseCallback.DISMISS_EVENT_ACTION) {
+                    async {
+                        deletedItem?.let {
+                            viewModel.deleteTransaction(it)
                         }
+                        deletedItem = null
+                        deletedPosition = null
                     }
                 }
-            })
-        }.show()
+            }
+        })
+        snackbar.show()
     }
 
     override fun onClick(view: View) {

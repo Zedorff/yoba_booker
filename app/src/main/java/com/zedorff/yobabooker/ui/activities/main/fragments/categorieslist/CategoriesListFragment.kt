@@ -5,13 +5,12 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.*
+import com.zedorff.dragandswiperecycler.helper.SDHelperListener
+import com.zedorff.dragandswiperecycler.helper.SDItemTouchHelper
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.TransactionType
-import com.zedorff.yobabooker.app.listeners.RecyclerTouchListener
 import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
-import com.zedorff.yobabooker.app.utils.RecyclerTouchHelper
 import com.zedorff.yobabooker.databinding.FragmentCategoriesListBinding
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
@@ -20,7 +19,7 @@ import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.viewmo
 import kotlinx.coroutines.experimental.async
 
 class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
-        ViewHolderClickListener<CategoryEntity>, RecyclerTouchListener {
+        ViewHolderClickListener<CategoryEntity>, SDHelperListener {
 
     private lateinit var binding: FragmentCategoriesListBinding
     private lateinit var adapter: CategoriesListAdapter
@@ -48,8 +47,7 @@ class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
         adapter = CategoriesListAdapter(this)
         binding.recycler.adapter = adapter
         binding.recycler.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-        val touchHelper = ItemTouchHelper(RecyclerTouchHelper(this))
-        touchHelper.attachToRecyclerView(binding.recycler)
+        SDItemTouchHelper(this).attachToRecyclerView(binding.recycler)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

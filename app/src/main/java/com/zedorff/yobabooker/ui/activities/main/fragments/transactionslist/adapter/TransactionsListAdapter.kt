@@ -2,10 +2,11 @@ package com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.ada
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.zedorff.dragandswiperecycler.viewholder.BaseSwipeableViewHolder
+import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.databinding.ItemTransactionBinding
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.ui.activities.base.fragments.adapter.BaseAdapter
-import com.zedorff.yobabooker.ui.activities.base.fragments.adapter.BaseSwipeableViewHolder
 import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
@@ -47,5 +48,5 @@ class TransactionsListAdapter: BaseAdapter<TransactionsListAdapter.ViewHolder, F
     }
 
     inner class ViewHolder(parent: ViewGroup, binding: ItemTransactionBinding)
-        : BaseSwipeableViewHolder<ItemTransactionBinding>(parent = parent, binding = binding)
+        : BaseSwipeableViewHolder<ItemTransactionBinding>(parent = parent, binding = binding, backgroundRes = R.layout.item_transaction_background)
 }

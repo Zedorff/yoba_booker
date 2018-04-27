@@ -1,13 +1,12 @@
-package com.zedorff.yobabooker.app.utils
+package com.zedorff.dragandswiperecycler.helper
 
 import android.graphics.Canvas
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import com.zedorff.yobabooker.app.extensions.negate
-import com.zedorff.yobabooker.app.listeners.RecyclerTouchListener
-import com.zedorff.yobabooker.ui.activities.base.fragments.adapter.BaseSwipeableViewHolder
+import com.zedorff.dragandswiperecycler.extensions.negate
+import com.zedorff.dragandswiperecycler.viewholder.BaseSwipeableViewHolder
 
-class RecyclerTouchHelper(var listener: RecyclerTouchListener): ItemTouchHelper.Callback() {
+class SDItemTouchCallback(private var listener: SDHelperListener): ItemTouchHelper.Callback() {
 
     override fun isLongPressDragEnabled() = listener.dragDropEnabled()
     override fun isItemViewSwipeEnabled() = listener.swipeEnabled()
@@ -45,7 +44,8 @@ class RecyclerTouchHelper(var listener: RecyclerTouchListener): ItemTouchHelper.
         viewHolder?.let {
             if (it is BaseSwipeableViewHolder<*>) {
                 getDefaultUIUtil().onDraw(c, recyclerView, it.foreground, dX, dY, actionState, isCurrentlyActive)
-                if (dX < it.delete.width.negate()) getDefaultUIUtil().onDraw(c, recyclerView, it.delete, dX + it.delete.width, dY, actionState, isCurrentlyActive)
+                if (dX < it.background.width.negate()) getDefaultUIUtil().onDraw(c, recyclerView, it.background, dX + it.background.width, dY, actionState, isCurrentlyActive)
+                if (dX != 0f) it.setState(BaseSwipeableViewHolder.SwipeState.SWIPING)
             }
         }
     }
@@ -63,7 +63,8 @@ class RecyclerTouchHelper(var listener: RecyclerTouchListener): ItemTouchHelper.
         viewHolder?.let {
             if (it is BaseSwipeableViewHolder<*>) {
                 getDefaultUIUtil().clearView(it.foreground)
-                getDefaultUIUtil().clearView(it.delete)
+                getDefaultUIUtil().clearView(it.background)
+                it.setState(BaseSwipeableViewHolder.SwipeState.IDLE)
             }
         }
     }

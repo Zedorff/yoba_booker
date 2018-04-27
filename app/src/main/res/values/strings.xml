@@ -105,5 +105,7 @@
     <string name="description_days_of_month">Дни месяца</string>
     <string name="description_outcome_transactions">Траты</string>
     <string name="text_no_month_data">Нет данных за этот месяц</string>
-    <string name="text_transaction_swipe_delete">Удалить</string>
+
+    <string name="snackbar_text_transaction_deleted">Транзакция удалена</string>
+    <string name="snackbar_text_undo">Отменить</string>
 </resources>
