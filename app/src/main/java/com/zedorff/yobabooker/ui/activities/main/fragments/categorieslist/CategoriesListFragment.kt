@@ -97,12 +97,8 @@ class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
 
     //TODO figure out why this became so laggy
     override fun onDragDropEnded() {
-        val items = adapter.items
-        items.forEachIndexed { index, categoryEntity ->
-            categoryEntity.order = index
-        }
         async {
-            viewModel.updateCategoriesOrder(items)
+            viewModel.updateCategoriesOrder(adapter.items)
         }
     }
 

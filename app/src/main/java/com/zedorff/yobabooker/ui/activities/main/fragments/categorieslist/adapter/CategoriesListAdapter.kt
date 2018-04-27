@@ -27,11 +27,6 @@ class CategoriesListAdapter(val listener: ViewHolderClickListener<CategoryEntity
         }
     }
 
-    fun onMoved(from: Int, to: Int) {
-        items.swap(from, to)
-        notifyItemMoved(from, to)
-    }
-
     override fun compareItems(oldItem: CategoryEntity, newItem: CategoryEntity): Boolean {
         return oldItem.id == newItem.id
     }
