@@ -1,22 +1,20 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.zedorff.dragandswiperecycler.viewholder.BaseDraggableViewHolder
 import com.zedorff.yobabooker.app.extensions.sumBy
 import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
 import com.zedorff.yobabooker.databinding.ItemAccountBinding
 import com.zedorff.yobabooker.model.db.embeded.FullAccount
-import com.zedorff.yobabooker.ui.activities.account.AccountActivity
 import com.zedorff.yobabooker.ui.activities.base.fragments.adapter.BaseAdapter
 import org.jetbrains.anko.sdk25.coroutines.onClick
-import org.jetbrains.anko.sdk25.coroutines.onLongClick
 
 class AccountsListAdapter(var listener: ViewHolderClickListener<FullAccount>) : BaseAdapter<AccountsListAdapter.ViewHolder, FullAccount>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemAccountBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(parent, binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -33,5 +31,6 @@ class AccountsListAdapter(var listener: ViewHolderClickListener<FullAccount>) : 
         return oldItem.account == newItem.account
     }
 
-    inner class ViewHolder(var binding: ItemAccountBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(parent: ViewGroup, var binding: ItemAccountBinding)
+        : BaseDraggableViewHolder<ItemAccountBinding>(parent = parent, binding = binding)
 }

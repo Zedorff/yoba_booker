@@ -1,5 +1,6 @@
 package com.zedorff.dragandswiperecycler.extensions
 
+import android.content.Context
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
@@ -13,3 +14,5 @@ fun <T : ViewGroup> T.inflate(@LayoutRes res: Int): View {
 }
 
 fun Int.negate(): Int = this * -1
+fun Context.dip(value: Int): Int = (value * resources.displayMetrics.density).toInt()
+fun View.dip(value: Int): Int = context.dip(value)

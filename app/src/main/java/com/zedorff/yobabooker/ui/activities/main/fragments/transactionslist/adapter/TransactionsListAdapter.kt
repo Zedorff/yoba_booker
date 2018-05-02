@@ -3,6 +3,7 @@ package com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.ada
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.zedorff.dragandswiperecycler.viewholder.BaseSwipeableViewHolder
+import com.zedorff.dragandswiperecycler.viewholder.SwipeableViewHolder
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.databinding.ItemTransactionBinding
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
@@ -48,5 +49,10 @@ class TransactionsListAdapter: BaseAdapter<TransactionsListAdapter.ViewHolder, F
     }
 
     inner class ViewHolder(parent: ViewGroup, binding: ItemTransactionBinding)
-        : BaseSwipeableViewHolder<ItemTransactionBinding>(parent = parent, binding = binding, backgroundRes = R.layout.item_transaction_background)
+        : BaseSwipeableViewHolder<ItemTransactionBinding>(parent = parent, binding = binding) {
+        init {
+            setBackgroundRightActionResId(R.layout.item_transaction_background)
+            setBackgroundRightActionPositionType(SwipeableViewHolder.PositionType.FLOAT)
+        }
+    }
 }

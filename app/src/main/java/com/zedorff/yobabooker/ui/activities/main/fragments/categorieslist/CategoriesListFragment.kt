@@ -3,8 +3,6 @@ package com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import com.zedorff.dragandswiperecycler.helper.SDHelperListener
 import com.zedorff.dragandswiperecycler.helper.SDItemTouchHelper
@@ -44,10 +42,10 @@ class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CategoriesListAdapter(this)
+        val touchHelper = SDItemTouchHelper(this)
+        adapter = CategoriesListAdapter(this, touchHelper)
         binding.recycler.adapter = adapter
-        binding.recycler.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-        SDItemTouchHelper(this).attachToRecyclerView(binding.recycler)
+        touchHelper.attachToRecyclerView(binding.recycler)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

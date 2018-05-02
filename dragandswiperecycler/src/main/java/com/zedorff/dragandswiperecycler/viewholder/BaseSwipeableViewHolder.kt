@@ -1,63 +1,98 @@
 package com.zedorff.dragandswiperecycler.viewholder
 
 import android.databinding.ViewDataBinding
+import android.support.annotation.ColorRes
 import android.support.annotation.LayoutRes
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.zedorff.dragandswiperecycler.R
 import com.zedorff.dragandswiperecycler.extensions.inflate
-import kotlinx.android.synthetic.main.swipeable_background_root.view.*
-import kotlinx.android.synthetic.main.swipeable_foreground_root.view.*
+import com.zedorff.dragandswiperecycler.wrapperview.SwipeableRoot
 
-open class BaseSwipeableViewHolder<T: ViewDataBinding>(
+open class BaseSwipeableViewHolder<T : ViewDataBinding> (
         @LayoutRes
-        private val backgroundRes: Int = R.layout.swipeable_background_default,
         private val parent: ViewGroup,
         var binding: T,
-        root: ViewGroup = parent.inflate(R.layout.swipeable_root_layout) as ViewGroup
-) : RecyclerView.ViewHolder(root) {
+        var swipeableRoot: SwipeableRoot = parent.inflate(R.layout.swipeable_root_layout) as SwipeableRoot
+        ) : RecyclerView.ViewHolder(swipeableRoot), SwipeableViewHolder {
 
-    enum class SwipeState {
-        IDLE,
-        SWIPING;
-    }
+    private var backgroundActionLeftPositionType = SwipeableViewHolder.PositionType.FIXED
+    private var backgroundActionRightPositionType = SwipeableViewHolder.PositionType.FIXED
 
-    private var backgroundRoot = root.inflate(R.layout.swipeable_background_root)
-    private var foregroundRoot = root.inflate(R.layout.swipeable_foreground_root)
+    private var state: SDState = SDState.IDLE
 
-    private var backgroundMovable = root.inflate(backgroundRes)
-
-    var background: ViewGroup = backgroundRoot.background_movable_root
-    var foreground: View = foregroundRoot
-
-    private var foregroundTopDecoration: View = foreground.swipeable_foreground_top_line
-    private var foregroundBottomDecoration: View = foreground.swipeable_foreground_bottom_line
-
-    private var state: SwipeState = SwipeState.IDLE
+    private var drawShadow: Boolean = true
+    private var canSwipeLeft: Boolean = false
+    private var canSwipeRight: Boolean = false
 
     init {
-        root.addView(backgroundRoot, 0)
-        root.addView(foregroundRoot, 1)
-        foreground.foreground_container.addView(binding.root)
-        background.addView(backgroundMovable)
+        swipeableRoot.getSwipeableContainer().addView(binding.root)
     }
 
-    fun setState(state: SwipeState) {
+    override fun getBackgroundView(): View = swipeableRoot.getSwipeableBackground()
+    override fun getForegroundView(): View = swipeableRoot.getSwipeableForeground()
+    override fun getBackgroundActionLeftView(): View = swipeableRoot.getLeftActionView()
+    override fun getBackgroundActionRightView(): View = swipeableRoot.getRightActionView()
+
+    override fun canSwipeLeft() = canSwipeLeft
+    override fun canSwipeRight() = canSwipeRight
+    override fun getState() = state
+
+    override fun getBackgroundRightActionPositionType() = backgroundActionRightPositionType
+    override fun getBackgroundLeftActionPositionType() = backgroundActionLeftPositionType
+
+    override fun setState(state: SDState) {
         this.state = state
         updateAppearanceForState()
     }
 
-    private fun updateAppearanceForState() {
-        when(state) {
-            SwipeState.IDLE -> {
-                foregroundTopDecoration.visibility = View.GONE
-                foregroundBottomDecoration.visibility = View.GONE
+    override fun updateAppearanceForState() {
+        when (state) {
+            SDState.IDLE -> {
+                if (drawShadow) {
+                    swipeableRoot.setShadowVisibility(View.INVISIBLE)
+                }
             }
-            SwipeState.SWIPING -> {
-                foregroundTopDecoration.visibility = View.VISIBLE
-                foregroundBottomDecoration.visibility = View.VISIBLE
+            SDState.SWIPING -> {
+                if (drawShadow) {
+                    swipeableRoot.setShadowVisibility(View.VISIBLE)
+                }
             }
+            SDState.DRAGGING -> {}
         }
     }
+
+    override fun updateVisibilityForSwipeDirection(direction: SwipeableViewHolder.SwipeDirection) {
+        swipeableRoot.setSwipeDirection(direction)
+    }
+
+    fun setBackgroundRightActionResId(@LayoutRes layoutId: Int) {
+        swipeableRoot.setRightAction(layoutId)
+        canSwipeLeft = true
+    }
+
+    fun setBackgroundLeftActionResId(@LayoutRes layoutId: Int) {
+        swipeableRoot.setLeftAction(layoutId)
+        canSwipeRight = true
+    }
+
+    fun setBackgroundRightActionPositionType(type: SwipeableViewHolder.PositionType) {
+        backgroundActionRightPositionType = type
+    }
+
+    fun setBackgroundLeftActionPositionType(type: SwipeableViewHolder.PositionType) {
+        backgroundActionLeftPositionType = type
+    }
+
+    fun setBackgroundColor(@ColorRes colorRes: Int) {
+        swipeableRoot.setBackgroundColor(ContextCompat.getColor(swipeableRoot.context, colorRes))
+    }
+
+    fun setDrawShadow(enabled: Boolean) {
+        drawShadow = enabled
+    }
+
+    override fun onClearView() {}
 }
