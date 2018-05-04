@@ -1,5 +1,7 @@
 package com.zedorff.yobabooker.app.extensions
 
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.LiveData
 import android.graphics.Rect
 import android.graphics.RectF
 import android.support.annotation.ColorRes
@@ -8,7 +10,7 @@ import android.view.View
 import java.util.*
 
 inline fun <T> Iterable<T>.sumBy(selector: (T) -> Float): Float {
-    var sum: Float = 0f
+    var sum = 0f
     for (element in this) {
         sum += selector(element)
     }
@@ -23,7 +25,13 @@ fun Float.half(): Float = this / 2F
 
 fun Int.half() : Int = this / 2
 
+val Int.boolean
+    get() = this == 1
+
 fun Double.half(): Double = this / 2.0
+
+val Boolean.int
+    get() = if (this) 1 else 0
 
 fun Calendar.getYear(): Int = this.get(Calendar.YEAR)
 
@@ -50,4 +58,10 @@ fun View.getColor(@ColorRes res: Int): Int {
     this.context?.let {
         return ContextCompat.getColor(it, res)
     } ?: return -0xfff
+}
+
+fun <T> LiveData<T>.nonNullObserve(owner: LifecycleOwner, observer: (t: T) -> Unit) {
+    this.observe(owner, android.arch.lifecycle.Observer {
+        it?.let(observer)
+    })
 }

@@ -3,89 +3,12 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
 
-    <string name="category_food_and_drinks">Еда и напитки</string>
-    <string name="category_transport">Транспорт</string>
-    <string name="category_health_and_care">Красота и здоровье</string>
-    <string name="category_study_and_self_improvement">Образование</string>
-    <string name="category_outfit">Одежда и обувь</string>
-    <string name="category_gadgets_and_appliances">Электроника</string>
-    <string name="category_fun_and_reset">Развлечения</string>
-    <string name="category_other">Прочее</string>
-    <string name="category_money_transfer_out">Перевод</string>
-
-    <string name="category_salary">Зарплата</string>
-    <string name="category_profit">Начисления</string>
-    <string name="category_gift">Подарок</string>
-    <string name="category_transfer_in">Перевод</string>
-
-    <array name="categories_outcome">
-        <item>@string/category_food_and_drinks</item>
-        <item>@string/category_health_and_care</item>
-        <item>@string/category_study_and_self_improvement</item>
-        <item>@string/category_outfit</item>
-        <item>@string/category_fun_and_reset</item>
-        <item>@string/category_gadgets_and_appliances</item>
-        <item>@string/category_transport</item>
-        <item>@string/category_other</item>
-        <item>@string/category_money_transfer_out</item>
-    </array>
-
-    <array name="categories_outcome_icons">
-        <item>ic_category_food_and_drinks</item>
-        <item>ic_category_health_and_care</item>
-        <item>ic_category_study_and_self_improvement</item>
-        <item>ic_category_outfit</item>
-        <item>ic_category_fun_and_rest</item>
-        <item>ic_category_gadgets_and_appliances</item>
-        <item>ic_category_transport</item>
-        <item>ic_category_other</item>
-        <item>ic_category_money_transfer_out</item>
-    </array>
-
-    <array name="categories_outcome_colors">
-        <item>@color/colorRed</item>
-        <item>@color/colorLightGreen</item>
-        <item>@color/colorCyan</item>
-        <item>@color/colorDeepPurple</item>
-        <item>@color/colorLightBlue</item>
-        <item>@color/colorDeepOrange</item>
-        <item>@color/colorGrey</item>
-        <item>@color/colorBlueGrey</item>
-        <item>@color/colorBrown</item>
-    </array>
-
-    <array name="categories_income">
-        <item>@string/category_salary</item>
-        <item>@string/category_profit</item>
-        <item>@string/category_gift</item>
-        <item>@string/category_transfer_in</item>
-    </array>
-
-    <array name="categories_income_icons">
-        <item>ic_category_salary</item>
-        <item>ic_category_profit</item>
-        <item>ic_category_gift</item>
-        <item>ic_category_money_transfer_in</item>
-    </array>
-
-    <array name="categories_income_color">
-        <item>@color/colorOrange</item>
-        <item>@color/colorTeal</item>
-        <item>@color/colorPurple</item>
-        <item>@color/colorBrown</item>
-    </array>
-
-    <array name="accounts">
-        <item>Наличные</item>
-        <item>Карта</item>
-        <item>Сбережения</item>
-    </array>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="text_transaction_outcome">Новый расход</string>
     <string name="text_transaction_income">Новый доход</string>
+    <string name="text_new_transfer_cost">Укажите сумму</string>
     <string name="text_new_transaction_description">Описание</string>
     <string name="text_new_transaction_cost">Укажите сумму</string>
     <string name="text_new_account">Новый счет</string>
@@ -106,4 +29,7 @@
     <string name="description_outcome_transactions">Траты</string>
     <string name="text_no_month_data">Нет данных за этот месяц</string>
     <string name="text_transaction_swipe_delete">Удалить</string>
+
+    <string name="text_transfer_description_out">Перевод на %s</string>
+    <string name="text_transfer_description_in">Перевод с %s</string>
 </resources>

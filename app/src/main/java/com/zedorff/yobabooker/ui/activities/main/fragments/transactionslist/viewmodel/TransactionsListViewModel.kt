@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class TransactionsListViewModel @Inject constructor(val repository: YobaRepository): BaseViewModel() {
 
-    var fullTransactions = repository.getFullTransactions()
+    private var fullTransactions = repository.loadFullTransactions()
 
     fun getTransactions(): LiveData<List<FullTransaction>> {
         return fullTransactions

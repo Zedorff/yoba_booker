@@ -13,6 +13,7 @@ import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.adapter.TransactionsListAdapter
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.viewmodel.TransactionsListViewModel
 import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
+import com.zedorff.yobabooker.ui.activities.transfer.TransferActivity
 
 class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View.OnClickListener {
 
@@ -63,6 +64,7 @@ class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View
                 TransactionActivity.startCreate(view.context, TransactionType.OUTCOME)
             }
             R.id.fab_new_transfer -> {
+                TransferActivity.startCreate(view.context)
             }
         }
         binding.fabMenu.collapse()

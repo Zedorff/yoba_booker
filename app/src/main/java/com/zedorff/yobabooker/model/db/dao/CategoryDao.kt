@@ -2,22 +2,28 @@ package com.zedorff.yobabooker.model.db.dao
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
+import com.zedorff.yobabooker.app.enums.CategoryType
 import com.zedorff.yobabooker.app.enums.TransactionType
+import com.zedorff.yobabooker.model.db.converters.CategoryTypeConverter
 import com.zedorff.yobabooker.model.db.converters.TransactionTypeConverter
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 
 @Dao
+@TypeConverters(TransactionTypeConverter::class, CategoryTypeConverter::class)
 interface CategoryDao: BaseDao<CategoryEntity> {
 
-    @Query("SELECT * FROM categories ORDER BY category_order")
-    fun getAllCategories(): LiveData<List<CategoryEntity>>
+    @Query("SELECT * FROM categories WHERE category_is_internal=0 ORDER BY category_order")
+    fun loadAllCategories(): LiveData<List<CategoryEntity>>
 
     @Query("SELECT * FROM categories WHERE category_id=:id")
-    fun getCategory(id: String): LiveData<CategoryEntity>
+    fun loadCategory(id: Long): LiveData<CategoryEntity>
 
     @TypeConverters(TransactionTypeConverter::class)
-    @Query("SELECT * FROM categories WHERE category_type=:type ORDER BY category_order")
-    fun getCategoriesByType(type: TransactionType): LiveData<List<CategoryEntity>>
+    @Query("SELECT * FROM categories WHERE category_type=:type AND category_is_internal=0 ORDER BY category_order")
+    fun loadCategoriesByType(type: TransactionType): LiveData<List<CategoryEntity>>
+
+    @Query("SELECT * FROM categories WHERE category_internal_type=:type")
+    fun loadCategoryByInternalType(type: CategoryType): LiveData<CategoryEntity>
 
     @Transaction
     @Update

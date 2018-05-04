@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">YobaBooker</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="text_transaction_outcome">Новый расход</string>
+    <string name="text_transaction_income">Новый доход</string>
+    <string name="text_new_transfer_cost">Укажите сумму</string>
+    <string name="text_new_transaction_description">Описание</string>
+    <string name="text_new_transaction_cost">Укажите сумму</string>
+    <string name="text_new_account">Новый счет</string>
+    <string name="text_account_name">Название счета</string>
+    <string name="text_new_transfer">Новый перевод</string>
+    <string name="text_transfer">Перевод</string>
+    <string name="text_transactions_empty">Список транзакций пуст</string>
+
     <string name="hint_account_name">Название счета</string>
+    <string name="menu_title_save">Сохранить</string>
+
+    <string name="text_title_transactions">Транзакции</string>
+    <string name="text_title_categories">Категории</string>
+    <string name="text_title_accounts">Счета</string>
+    <string name="text_title_pie_charts">Графики</string>
+
     <string name="description_days_of_month">Дни месяца</string>
+    <string name="description_outcome_transactions">Траты</string>
     <string name="text_no_month_data">Нет данных за этот месяц</string>
     <string name="text_transaction_swipe_delete">Удалить</string>
 </resources>

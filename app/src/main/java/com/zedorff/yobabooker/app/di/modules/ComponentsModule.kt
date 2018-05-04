@@ -7,6 +7,9 @@ import com.zedorff.yobabooker.ui.activities.account.AccountActivity
 import com.zedorff.yobabooker.ui.activities.account.AccountActivityModule
 import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
 import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivityModule
+import com.zedorff.yobabooker.ui.activities.transfer.TransferActivity
+import com.zedorff.yobabooker.ui.activities.transfer.TransferActivityModule
+import com.zedorff.yobabooker.ui.activities.transfer.TransferActivityModule_ContributeTransferFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -26,6 +29,10 @@ abstract class ComponentsModule {
     @ContributesAndroidInjector(modules = [(AccountActivityModule::class)])
     @PerActivity
     abstract fun contributeNewAccountActivity(): AccountActivity
+
+    @ContributesAndroidInjector(modules = [TransferActivityModule::class])
+    @PerActivity
+    abstract fun contirbuteNewTransferActivity(): TransferActivity
     //</editor-fold>
 }
 

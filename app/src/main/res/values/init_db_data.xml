@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category_food_and_drinks">Еда и напитки</string>
+    <string name="category_transport">Транспорт</string>
+    <string name="category_health_and_care">Красота и здоровье</string>
+    <string name="category_study_and_self_improvement">Образование</string>
+    <string name="category_outfit">Одежда и обувь</string>
+    <string name="category_gadgets_and_appliances">Электроника</string>
+    <string name="category_fun_and_reset">Развлечения</string>
+    <string name="category_other">Прочее</string>
+    <string name="category_money_transfer_out">Перевод</string>
+
+    <string name="category_salary">Зарплата</string>
+    <string name="category_profit">Начисления</string>
+    <string name="category_gift">Подарок</string>
+    <string name="category_transfer_in">Перевод</string>
+
+    <string name="account_cash">Наличные</string>
+    <string name="account_card">Карта</string>
+    <string name="account_savings">Сбережения</string>
+
+    <array name="accounts">
+        <item>@string/account_cash</item>
+        <item>@string/account_card</item>
+        <item>@string/account_savings</item>
+    </array>
+
+    <array name="categories">
+        <item>@string/category_food_and_drinks</item>
+        <item>@string/category_health_and_care</item>
+        <item>@string/category_study_and_self_improvement</item>
+        <item>@string/category_outfit</item>
+        <item>@string/category_fun_and_reset</item>
+        <item>@string/category_gadgets_and_appliances</item>
+        <item>@string/category_transport</item>
+        <item>@string/category_other</item>
+
+        <item>@string/category_salary</item>
+        <item>@string/category_profit</item>
+        <item>@string/category_gift</item>
+
+        <item>@string/category_money_transfer_out</item>
+        <item>@string/category_transfer_in</item>
+    </array>
+
+    <array name="categories_icons">
+        <item>ic_category_food_and_drinks</item>
+        <item>ic_category_health_and_care</item>
+        <item>ic_category_study_and_self_improvement</item>
+        <item>ic_category_outfit</item>
+        <item>ic_category_fun_and_rest</item>
+        <item>ic_category_gadgets_and_appliances</item>
+        <item>ic_category_transport</item>
+        <item>ic_category_other</item>
+
+        <item>ic_category_salary</item>
+        <item>ic_category_profit</item>
+        <item>ic_category_gift</item>
+
+        <item>ic_category_money_transfer_out</item>
+        <item>ic_category_money_transfer_in</item>
+    </array>
+
+    <array name="categories_colors">
+        <item>@color/colorRed</item>
+        <item>@color/colorLightGreen</item>
+        <item>@color/colorCyan</item>
+        <item>@color/colorDeepPurple</item>
+        <item>@color/colorLightBlue</item>
+        <item>@color/colorDeepOrange</item>
+        <item>@color/colorGrey</item>
+        <item>@color/colorBlueGrey</item>
+
+        <item>@color/colorOrange</item>
+        <item>@color/colorTeal</item>
+        <item>@color/colorPurple</item>
+
+        <item>@color/colorBrown</item>
+        <item>@color/colorBrown</item>
+    </array>
+
+    <integer-array name="categories_type">
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+
+        <item>0</item>
+        <item>1</item>
+    </integer-array>
+
+
+    <integer-array name="categories_internal_type">
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+
+        <item>1</item>
+        <item>2</item>
+    </integer-array>
+</resources>

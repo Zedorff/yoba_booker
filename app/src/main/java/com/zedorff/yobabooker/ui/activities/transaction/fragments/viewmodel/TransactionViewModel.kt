@@ -2,124 +2,112 @@ package com.zedorff.yobabooker.ui.activities.transaction.fragments.viewmodel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.Transformations
+import android.databinding.ObservableField
+import android.databinding.ObservableInt
+import android.databinding.ObservableLong
 import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.model.db.entities.AccountEntity
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.model.db.entities.TransactionEntity
 import com.zedorff.yobabooker.model.repository.YobaRepository
 import com.zedorff.yobabooker.ui.activities.base.fragments.viewmodel.BaseViewModel
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.async
 import javax.inject.Inject
 
 //TODO refactor and rethink this pizdec
+//Looks good as for now
 class TransactionViewModel @Inject constructor(var repository: YobaRepository) : BaseViewModel() {
 
-    var accounts: LiveData<List<AccountEntity>> = repository.getAllAccounts()
-    var accountsData: LiveData<List<String>>
-    var categories: LiveData<List<CategoryEntity>>
-    var categoriesData: LiveData<List<String>>
+    private var observableAccounts: LiveData<List<AccountEntity>> = MutableLiveData()
+    private var observableCategories: LiveData<List<CategoryEntity>> = MutableLiveData()
+    private var observableTransaction: LiveData<TransactionEntity> = MutableLiveData()
+    private var observableTransactionId: MutableLiveData<Long> = MutableLiveData()
+    private var observableTransactionType: MutableLiveData<TransactionType> = MutableLiveData()
 
-    var transactionCost: MutableLiveData<String> = MutableLiveData()
-    var transactionDescription: MutableLiveData<String> = MutableLiveData()
-    var transactionCategory: MutableLiveData<Int> = MutableLiveData()
-    var transactionAccount: MutableLiveData<Int> = MutableLiveData()
+    var accounts: ObservableField<List<String>> = ObservableField()
+    var categories: ObservableField<List<String>> = ObservableField()
 
-    private var transactionDate: MutableLiveData<Long> = MutableLiveData()
-    private var transactionId: MutableLiveData<String?> = MutableLiveData()
-    private var transactionLiveData: LiveData<TransactionEntity>
-    private var transactionType: MutableLiveData<TransactionType> = MutableLiveData()
-
-    private lateinit var categoriesObserver: Observer<List<CategoryEntity>>
-    private lateinit var accountObserver: Observer<List<AccountEntity>>
+    var transactionCost: ObservableField<String> = ObservableField()
+    var transactionDescription: ObservableField<String> = ObservableField()
+    var transactionCategory: ObservableInt = ObservableInt()
+    var transactionAccount: ObservableInt = ObservableInt()
+    var transactionDate: ObservableLong = ObservableLong()
 
     private lateinit var transaction: TransactionEntity
 
+    fun getTransaction() = observableTransaction
+    fun getAccounts() = observableAccounts
+    fun getCategories() = observableCategories
+    fun getDate(): Long = transactionDate.get()
+
     init {
-        accountsData = Transformations.map(accounts, { it.map { it.name } })
-        transactionLiveData = Transformations.switchMap(transactionId, {
-            if (it == null) {
+        observableAccounts = repository.loadAllAccounts()
+        observableCategories = Transformations.switchMap(observableTransactionType, {
+            repository.loadCategoriesByType(it)
+        })
+
+        observableTransaction = Transformations.switchMap(observableTransactionId, {
+            if (it == null || it == 0L) {
                 return@switchMap MutableLiveData<TransactionEntity>().apply { value = TransactionEntity() }
             } else {
-                return@switchMap repository.getTransaction(it)
+                return@switchMap repository.loadTransaction(it)
             }
         })
-        categories = Transformations.switchMap(transactionType, {
-            repository.getCategoriesByType(it)
-        })
-
-        categoriesData = Transformations.map(categories, { it.map { it.name } })
     }
 
-    fun setTransaction(transaction: TransactionEntity, type: TransactionType) {
+    fun setTransactionId(id: Long?) {
+        observableTransactionId.value = id
+    }
+
+    fun setTransactionType(type: TransactionType) {
+        observableTransactionType.value = type
+    }
+
+    fun setTransaction(transaction: TransactionEntity) {
         this.transaction = transaction
-        transactionType.value = type
-        if (transaction.value != 0f) {
-            if (transaction.value % 1 != 0F) {
-                transactionCost.value = Math.abs(transaction.value).toString()
-            } else {
-                transactionCost.value = Math.abs(Math.round(transaction.value)).toString()
+        with(transaction) {
+            if (value != 0f) {
+                if (value % 1 != 0F) {
+                    transactionCost.set(Math.abs(value).toString())
+                } else {
+                    transactionCost.set(Math.abs(Math.round(value)).toString())
+                }
             }
+            transactionDescription.set(description)
+            transactionDate.set(date)
         }
-        transactionDescription.value = transaction.description
-        transactionDate.value = if (transaction.date == 0L) System.currentTimeMillis() else transaction.date
-
-        categoriesObserver = Observer {
-            it?.forEachIndexed { index, categoryEntity ->
-                if (categoryEntity.id == transaction.categoryId)
-                    transactionCategory.value = index
-            }
-            categories.removeObserver(categoriesObserver)
-
-        }
-        categories.observeForever(categoriesObserver)
-
-        accountObserver = Observer {
-            it?.forEachIndexed { index, accountEntity ->
-                if (accountEntity.id == transaction.accountId)
-                    transactionAccount.value = index
-            }
-            accounts.removeObserver(accountObserver)
-
-        }
-        accounts.observeForever(accountObserver)
     }
 
-    fun setTransactionId(id: String?) {
-        transactionId.value = id
+    fun setAccounts(items: List<AccountEntity>) {
+        accounts.set(items.map { it.name })
+        items.forEachIndexed { index, accountEntity ->
+            if (accountEntity.id == transaction.accountId)
+                transactionAccount.set(index)
+        }
     }
 
-    fun getTransaction(): LiveData<TransactionEntity> {
-        return transactionLiveData
+    fun setCategories(items: List<CategoryEntity>) {
+        categories.set(items.map { it.name })
+        items.forEachIndexed { index, categoryEntity ->
+            if (categoryEntity.id == transaction.categoryId)
+                transactionCategory.set(index)
+        }
     }
-
-    fun getDate(): LiveData<Long> = transactionDate
 
     fun setDate(millis: Long) {
-        transactionDate.value = millis
+        transactionDate.set(millis)
     }
 
-    //TODO get rid of this elvis guys
     fun saveTransaction() {
-        val selectedCategory = transactionCategory.value
-                ?: throw IllegalStateException("Category can't be null!")
-        val selectedAccount = transactionAccount.value
-                ?: throw IllegalStateException("Account can't be null!")
-        async(CommonPool) {
-            repository.createOrUpdateTransaction(TransactionEntity(
-                    id = transaction.id,
-                    description = transactionDescription.value,
-                    value = (transactionCost.value?.toFloat()
-                            ?: 0f) * if (transactionType.value == TransactionType.INCOME) 1 else -1,
-                    categoryId = categories.value?.get(selectedCategory)?.id
-                            ?: throw IllegalStateException("Categories can't be null!!"),
-                    date = transactionDate.value
-                            ?: throw IllegalStateException("Date can't be null!!"),
-                    type = transactionType.value!!,
-                    accountId = accounts.value?.get(selectedAccount)?.id
-                            ?: throw IllegalStateException("Accounts can't be null!")))
-        }
+        val selectedCategory = transactionCategory.get()
+        val selectedAccount = transactionAccount.get()
+        repository.createOrUpdateTransaction(TransactionEntity(
+                id = transaction.id,
+                description = transactionDescription.get(),
+                value = transactionCost.get()!!.toFloat() * if (observableTransactionType.value == TransactionType.INCOME) 1 else -1,
+                categoryId = observableCategories.value!![selectedCategory].id,
+                date = transactionDate.get(),
+                type = observableTransactionType.value!!,
+                accountId = observableAccounts.value!![selectedAccount].id))
     }
 }

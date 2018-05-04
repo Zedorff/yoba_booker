@@ -391,7 +391,7 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
                             selectionAnimatorSet.start()
                         }
                         listener?.let {
-                            it.onSliceClick(categories[index].id)
+                            it.onSliceClick(categories[index].id.toInt())
                         }
                     }
                     break

@@ -23,12 +23,12 @@ class PieChartViewModel @Inject constructor(var repository: YobaRepository): Bas
     init {
         graphTransactions = Transformations.switchMap(selectedCategory, { selected ->
             Transformations.map(monthTransactions, {
-                it.filter { it.category.id ==  selected}
+                it.filter { it.category.id.toInt() ==  selected}
             })
         })
         monthTransactions = Transformations.switchMap(dateLiveData, { millis ->
             val calendar = Calendar.getInstance().fromTimeInMillis(millis)
-            return@switchMap Transformations.map(repository.getFullTransactionsByMonthInYear(calendar.getActualMonth(), calendar.getYear()), {
+            return@switchMap Transformations.map(repository.loadFullTransactionsByMonthInYear(calendar.getActualMonth(), calendar.getYear()), {
                 it.filter { it.category.type == TransactionType.OUTCOME }
             })
         })

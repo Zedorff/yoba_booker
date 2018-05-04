@@ -12,15 +12,15 @@ interface AccountDao: BaseDao<AccountEntity> {
 
     @Transaction
     @Query("SELECT * from accounts WHERE account_id=:id")
-    fun getAccountWithTransactions(id: String): LiveData<FullAccount>
+    fun loadAccountWithTransactions(id: Long): LiveData<FullAccount>
 
     @Query("SELECT * from accounts WHERE account_id=:id")
-    fun getAccount(id: String): LiveData<AccountEntity>
+    fun loadAccount(id: Long): LiveData<AccountEntity>
 
     @Query("SELECT * from accounts")
-    fun getAllAccounts(): LiveData<List<AccountEntity>>
+    fun loadAllAccounts(): LiveData<List<AccountEntity>>
 
     @Transaction
     @Query("SELECT * from accounts")
-    fun getFullAccounts(): LiveData<List<FullAccount>>
+    fun loadFullAccounts(): LiveData<List<FullAccount>>
 }

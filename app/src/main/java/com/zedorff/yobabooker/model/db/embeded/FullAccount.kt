@@ -1,6 +1,5 @@
 package com.zedorff.yobabooker.model.db.embeded
 
-import android.accounts.Account
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Relation
 import com.zedorff.yobabooker.model.db.entities.AccountEntity
