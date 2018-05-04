@@ -23,6 +23,7 @@ interface YobaRepository {
     fun getFullAccounts(): LiveData<List<FullAccount>>
     fun getAccount(id: String): LiveData<AccountEntity>
     fun getFullAccount(id: String): LiveData<FullAccount>
+    fun updateAccounts(items: List<AccountEntity>)
 
     fun getAllCategories(): LiveData<List<CategoryEntity>>
     fun getCategoriesByType(type: TransactionType): LiveData<List<CategoryEntity>>

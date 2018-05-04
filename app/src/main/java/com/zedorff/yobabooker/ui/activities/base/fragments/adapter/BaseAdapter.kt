@@ -2,6 +2,7 @@ package com.zedorff.yobabooker.ui.activities.base.fragments.adapter
 
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
+import com.zedorff.yobabooker.app.extensions.swap
 
 abstract class BaseAdapter<VH: RecyclerView.ViewHolder, IT: Any>: RecyclerView.Adapter<VH>() {
 
@@ -14,6 +15,11 @@ abstract class BaseAdapter<VH: RecyclerView.ViewHolder, IT: Any>: RecyclerView.A
     }
 
     override fun getItemCount(): Int = items.size
+
+    fun onMoved(from: Int, to: Int) {
+        items.swap(from, to)
+        notifyItemMoved(from, to)
+    }
 
     protected abstract fun compareItems(oldItem: IT, newItem: IT): Boolean
     protected abstract fun compareContent(oldItem: IT, newItem: IT): Boolean

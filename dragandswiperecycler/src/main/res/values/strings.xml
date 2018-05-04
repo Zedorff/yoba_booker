@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DragAndSwipeRecycler</string>
+    <string name="text_transaction_swipe_delete">Удалить</string>
+</resources>

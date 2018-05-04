@@ -13,4 +13,8 @@ class TransactionsListViewModel @Inject constructor(val repository: YobaReposito
     fun getTransactions(): LiveData<List<FullTransaction>> {
         return fullTransactions
     }
+
+    fun deleteTransaction(transaction: FullTransaction) {
+        repository.deleteTransaction(transaction.transaction)
+    }
 }

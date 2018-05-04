@@ -31,7 +31,8 @@ class YobaRepositoryImpl @Inject constructor(
     override fun getAllAccounts(): LiveData<List<AccountEntity>> = accountDao.getAllAccounts()
     override fun getFullAccounts(): LiveData<List<FullAccount>> = accountDao.getFullAccounts()
     override fun getAccount(id: String): LiveData<AccountEntity> = accountDao.getAccount(id)
-    override fun getFullAccount(id: String): LiveData<FullAccount> = accountDao.getAccountWithTransactions(id)
+    override fun getFullAccount(id: String): LiveData<FullAccount> = accountDao.getFullAccount(id)
+    override fun updateAccounts(items: List<AccountEntity>) = accountDao.update(items)
 
     override fun getAllCategories(): LiveData<List<CategoryEntity>> = categoryDao.getAllCategories()
     override fun getCategoriesByType(type: TransactionType): LiveData<List<CategoryEntity>> = categoryDao.getCategoriesByType(type)
@@ -44,7 +45,10 @@ class YobaRepositoryImpl @Inject constructor(
             if (account.id > 0) {
                 accountDao.update(account)
             } else {
-                accountDao.insert(account)
+                with(account) {
+                    order = accountDao.getAccountMaxOrder()
+                    accountDao.insert(this)
+                }
             }
         }
     }

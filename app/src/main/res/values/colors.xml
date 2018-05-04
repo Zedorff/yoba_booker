@@ -25,12 +25,14 @@
     <color name="colorBlueGrey">#607D8B</color>
     <color name="colorDarkGrey">#424242</color>
 
-    <color name="black_semi_transparent">#b2000000</color>
-    <color name="background">#e5e5e5</color>
-    <color name="half_black">#808080</color>
-    <color name="white">#fafafa</color>
-    <color name="white_pressed">#f1f1f1</color>
-    <color name="pink_pressed">#ec407a</color>
+    <color name="black_69">#b2000000</color>
+    <color name="black_87">#de000000</color>
+    <color name="black_50">#7f000000</color>
+    <color name="gray_35">#5b808080</color>
+    <color name="gray_15">#26808080</color>
+    <color name="white_43">#70ffffff</color>
+
+    <color name="black_semi_transparent">@color/black_69</color>
     <color name="blue_semi_transparent">#805677fc</color>
     <color name="blue_semi_transparent_pressed">#80738ffe</color>
 
@@ -45,8 +47,7 @@
 
     <color name="transaction_fragment_overlay_background">#893d3d3d</color>
 
-    <color name="gray_semi">#5b808080</color>
-    <color name="white_semi">#70ffffff</color>
+    <color name="pie_chart_inner_circle_color">@color/white_43</color>
 
     <color name="positive_currency">#4fd43d</color>
     <color name="zero_currency">@android:color/darker_gray</color>
@@ -55,6 +56,6 @@
     <color name="pie_chart_fragment_big_text_color">#af000000</color>
     <color name="pie_chart_fragment_small_text_color">#8a000000</color>
 
-    <color name="text_color_body">#de000000</color>
+    <color name="text_color_body">@color/black_87</color>
 
 </resources>

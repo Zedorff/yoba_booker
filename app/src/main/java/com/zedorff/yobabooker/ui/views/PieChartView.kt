@@ -14,7 +14,6 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.extensions.getColor
 import com.zedorff.yobabooker.app.extensions.sumBy
-import com.zedorff.yobabooker.app.utils.ColorGenerator
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import org.jetbrains.anko.dip
@@ -130,7 +129,7 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
         infoTextUnderlineLength = radius / 2f
 
         pieChartBounds.left = viewWidth / 2f - radius
-        pieChartBounds.top = viewHeight / 2f - radius + dip(8) //TODO change to something width\height related
+        pieChartBounds.top = viewHeight / 2f - radius + dip(8)
         pieChartBounds.right = viewWidth / 2f + radius
         pieChartBounds.bottom = pieChartBounds.top + radius * 2
 
@@ -174,7 +173,7 @@ class PieChartView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         semiTransparentPaint.apply {
             isAntiAlias = true
-            color = getColor(R.color.white_semi)
+            color = getColor(R.color.pie_chart_inner_circle_color)
             style = Paint.Style.FILL
         }
     }
