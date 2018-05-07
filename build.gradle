@@ -1,13 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
+    ext.kotlin_version = '1.2.40'
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha12'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -23,7 +23,7 @@ ext {
     arch_package = 'android.arch.lifecycle'
     anko_package = 'org.jetbrains.anko'
 
-    support_version = '27.0.2'
+    support_version = '27.1.1'
     dagger_version = '2.14.1'
     room_version = '1.0.0'
     arch_version = '1.1.1'
@@ -34,8 +34,8 @@ ext {
             support : [
                     appcompat : "$support_package:appcompat-v7:$support_version",
                     design    : "$support_package:design:$support_version",
-                    preference: "$support_package:preference-v7:26.1.0",
-                    constraint: "${support_package}.constraint:constraint-layout:1.0.2",
+                    preference: "$support_package:preference-v7:$support_version",
+                    constraint: "${support_package}.constraint:constraint-layout:1.1.0",
             ],
             dagger  : [
                     core    : "$dagger_package:dagger:$dagger_version",

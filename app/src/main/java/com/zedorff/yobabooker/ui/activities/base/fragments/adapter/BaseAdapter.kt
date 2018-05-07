@@ -2,18 +2,24 @@ package com.zedorff.yobabooker.ui.activities.base.fragments.adapter
 
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
+import com.zedorff.yobabooker.app.extensions.swap
 
 abstract class BaseAdapter<VH: RecyclerView.ViewHolder, IT: Any>: RecyclerView.Adapter<VH>() {
 
-    protected var items: List<IT> = emptyList()
+    var items: MutableList<IT> = mutableListOf()
 
     fun swapItems(newItems: List<IT>) {
         val diffResult = DiffUtil.calculateDiff(DiffCallback(items, newItems))
-        this.items = newItems
+        this.items = newItems.toMutableList()
         diffResult.dispatchUpdatesTo(this)
     }
 
     override fun getItemCount(): Int = items.size
+
+    fun onMoved(from: Int, to: Int) {
+        items.swap(from, to)
+        notifyItemMoved(from, to)
+    }
 
     protected abstract fun compareItems(oldItem: IT, newItem: IT): Boolean
     protected abstract fun compareContent(oldItem: IT, newItem: IT): Boolean
