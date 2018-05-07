@@ -21,6 +21,7 @@ import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
 import kotlinx.coroutines.experimental.async
 import com.zedorff.yobabooker.ui.activities.transfer.TransferActivity
 
+//TODO Need to group transfers into one deletable view
 class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View.OnClickListener {
 
     private lateinit var binding: FragmentTransactionsListBinding

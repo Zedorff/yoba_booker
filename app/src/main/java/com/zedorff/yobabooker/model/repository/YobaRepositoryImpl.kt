@@ -29,8 +29,6 @@ class YobaRepositoryImpl @Inject constructor(
     override fun loadTransaction(id: Long) = transactionDao.loadTransaction(id)
     override fun loadFullTransfer(id: Long) = transferDao.loadFullTransfer(id)
 
-    override fun deleteTransaction(transaction: TransactionEntity) = transactionDao.delete(transaction)
-
     override fun loadAllAccounts() = accountDao.loadAllAccounts()
     override fun loadFullAccounts() = accountDao.loadFullAccounts()
     override fun loadAccount(id: Long) = accountDao.loadAccount(id)
@@ -44,6 +42,12 @@ class YobaRepositoryImpl @Inject constructor(
     override fun updateCategories(items: List<CategoryEntity>) = categoryDao.update(items)
 
     override fun loadTransfer(id: Long) = transferDao.loadTransfer(id)
+
+    override fun deleteTransaction(transaction: TransactionEntity) {
+        transaction.transferId?.let {
+            transferDao.delete(it)
+        } ?: transactionDao.delete(transaction)
+    }
 
     override fun createOrUpdateAccount(account: AccountEntity) {
         async {

@@ -14,4 +14,7 @@ interface TransferDao: BaseDao<TransferEntity> {
 
     @Query("SELECT * FROM transfers WHERE transfer_id=:id")
     fun loadFullTransfer(id: Long): LiveData<FullTransfer>
+
+    @Query("DELETE FROM transfers WHERE transfer_id=:id")
+    fun delete(id: Long)
 }
