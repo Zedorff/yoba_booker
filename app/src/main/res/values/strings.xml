@@ -32,4 +32,7 @@
 
     <string name="text_transfer_description_out">Перевод на %s</string>
     <string name="text_transfer_description_in">Перевод с %s</string>
+
+    <string name="snackbar_text_transaction_deleted">Транзакция удалена</string>
+    <string name="snackbar_text_undo">Отменить</string>
 </resources>

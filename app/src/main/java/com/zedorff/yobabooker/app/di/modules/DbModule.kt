@@ -24,6 +24,7 @@ class DbModule {
     fun provideAppDataBase(@AppContext context: Context): AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, context.getString(R.string.app_name))
                 .addMigrations(Migrations.MIGRATION_FROM_1_TO_2)
+                .addMigrations(Migrations.MIGRATION_FROM_2_TO_3)
                 .fallbackToDestructiveMigration()
                 .build()
     }

@@ -3,9 +3,9 @@ package com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.view.*
+import com.zedorff.dragandswiperecycler.helper.SDHelperListener
+import com.zedorff.dragandswiperecycler.helper.SDItemTouchHelper
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
@@ -14,9 +14,10 @@ import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.adapter.CategoriesListAdapter
 import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.viewmodel.CategoriesListViewModel
+import kotlinx.coroutines.experimental.async
 
 class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
-        ViewHolderClickListener<CategoryEntity> {
+        ViewHolderClickListener<CategoryEntity>, SDHelperListener {
 
     private lateinit var binding: FragmentCategoriesListBinding
     private lateinit var adapter: CategoriesListAdapter
@@ -41,9 +42,10 @@ class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = CategoriesListAdapter(this)
+        val touchHelper = SDItemTouchHelper(this)
+        adapter = CategoriesListAdapter(this, touchHelper)
         binding.recycler.adapter = adapter
-        binding.recycler.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        touchHelper.attachToRecyclerView(binding.recycler)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -84,6 +86,19 @@ class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
         }
     }
 
+
+    override fun dragDropEnabled() = true
+
+    override fun onDragged(from: Int, to: Int) {
+        adapter.onMoved(from, to)
+    }
+
+    //TODO figure out why this became so laggy
+    override fun onDragDropEnded() {
+        async {
+            viewModel.updateCategoriesOrder(adapter.items)
+        }
+    }
 
     override fun onClick(item: CategoryEntity) {
     }

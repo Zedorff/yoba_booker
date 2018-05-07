@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Transaction
+import android.arch.persistence.room.Update
 import com.zedorff.yobabooker.model.db.embeded.FullAccount
 import com.zedorff.yobabooker.model.db.entities.AccountEntity
 
@@ -17,10 +18,17 @@ interface AccountDao: BaseDao<AccountEntity> {
     @Query("SELECT * from accounts WHERE account_id=:id")
     fun loadAccount(id: Long): LiveData<AccountEntity>
 
-    @Query("SELECT * from accounts")
+    @Query("SELECT * from accounts ORDER BY account_order")
     fun loadAllAccounts(): LiveData<List<AccountEntity>>
 
     @Transaction
-    @Query("SELECT * from accounts")
+    @Query("SELECT * from accounts ORDER BY account_order")
     fun loadFullAccounts(): LiveData<List<FullAccount>>
+
+    @Query("SELECT MAX(account_order) FROM accounts")
+    fun getAccountMaxOrder(): Int
+
+    @Transaction
+    @Update
+    fun update(items: Collection<AccountEntity>)
 }

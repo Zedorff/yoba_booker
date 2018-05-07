@@ -27,6 +27,7 @@ interface YobaRepository {
     fun loadFullAccounts(): LiveData<List<FullAccount>>
     fun loadAccount(id: Long): LiveData<AccountEntity>
     fun loadFullAccount(id: Long): LiveData<FullAccount>
+    fun updateAccounts(items: List<AccountEntity>)
 
     fun loadAllCategories(): LiveData<List<CategoryEntity>>
     fun loadCategoriesByType(type: TransactionType): LiveData<List<CategoryEntity>>

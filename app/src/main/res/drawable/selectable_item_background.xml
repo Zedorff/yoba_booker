@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true">
         <!-- Can't use the ?attr/colorPrimary before API 21 -->
-        <color android:color="@color/gray_semi"/>
+        <color android:color="@color/gray_35"/>
     </item>
 
     <item>

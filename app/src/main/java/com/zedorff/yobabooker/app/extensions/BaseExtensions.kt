@@ -5,8 +5,11 @@ import android.arch.lifecycle.LiveData
 import android.graphics.Rect
 import android.graphics.RectF
 import android.support.annotation.ColorRes
+import android.support.annotation.LayoutRes
 import android.support.v4.content.ContextCompat
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import java.util.*
 
 inline fun <T> Iterable<T>.sumBy(selector: (T) -> Float): Float {
@@ -55,9 +58,26 @@ fun Rect.halfWidth() = this.width() / 2F
 fun Rect.halfHeight() = this.height() / 2F
 
 fun View.getColor(@ColorRes res: Int): Int {
-    this.context?.let {
-        return ContextCompat.getColor(it, res)
-    } ?: return -0xfff
+    return ContextCompat.getColor(this.context, res)
+}
+
+fun <T : ViewGroup> T.inflate(@LayoutRes res: Int): View {
+    let {
+        val inflater = LayoutInflater.from(this.context)
+        return inflater.inflate(res, this, false)
+    }
+}
+
+fun <T> List<T>.swap(from: Int, to: Int) {
+    if (from < to) {
+        for (i in from until to) {
+            Collections.swap(this, i, i + 1)
+        }
+    } else {
+        for (i in from downTo to + 1) {
+            Collections.swap(this, i, i - 1)
+        }
+    }
 }
 
 fun <T> LiveData<T>.nonNullObserve(owner: LifecycleOwner, observer: (t: T) -> Unit) {

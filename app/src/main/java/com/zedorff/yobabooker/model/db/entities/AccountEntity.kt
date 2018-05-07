@@ -11,5 +11,7 @@ data class AccountEntity(@PrimaryKey(autoGenerate = true)
                          @ColumnInfo(name = "account_name")
                          var name: String = "",
                          @ColumnInfo(name = "account_type")
-                         var type: Int = 0)
+                         var type: Int = 0,
+                         @ColumnInfo(name = "account_order")
+                         var order: Int = 0)
 

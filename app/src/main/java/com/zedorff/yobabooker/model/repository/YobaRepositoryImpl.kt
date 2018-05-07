@@ -35,6 +35,7 @@ class YobaRepositoryImpl @Inject constructor(
     override fun loadFullAccounts() = accountDao.loadFullAccounts()
     override fun loadAccount(id: Long) = accountDao.loadAccount(id)
     override fun loadFullAccount(id: Long) = accountDao.loadAccountWithTransactions(id)
+    override fun updateAccounts(items: List<AccountEntity>) = accountDao.update(items)
 
     override fun loadAllCategories() = categoryDao.loadAllCategories()
     override fun loadCategoriesByType(type: TransactionType) = categoryDao.loadCategoriesByType(type)
@@ -49,7 +50,10 @@ class YobaRepositoryImpl @Inject constructor(
             if (account.id > 0) {
                 accountDao.update(account)
             } else {
-                accountDao.insert(account)
+                with(account) {
+                    order = accountDao.getAccountMaxOrder()
+                    accountDao.insert(this)
+                }
             }
         }
     }
