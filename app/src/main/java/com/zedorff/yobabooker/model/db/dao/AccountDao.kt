@@ -13,17 +13,17 @@ interface AccountDao: BaseDao<AccountEntity> {
 
     @Transaction
     @Query("SELECT * from accounts WHERE account_id=:id")
-    fun getFullAccount(id: String): LiveData<FullAccount>
+    fun loadAccountWithTransactions(id: Long): LiveData<FullAccount>
 
     @Query("SELECT * from accounts WHERE account_id=:id")
-    fun getAccount(id: String): LiveData<AccountEntity>
+    fun loadAccount(id: Long): LiveData<AccountEntity>
 
     @Query("SELECT * from accounts ORDER BY account_order")
-    fun getAllAccounts(): LiveData<List<AccountEntity>>
+    fun loadAllAccounts(): LiveData<List<AccountEntity>>
 
     @Transaction
     @Query("SELECT * from accounts ORDER BY account_order")
-    fun getFullAccounts(): LiveData<List<FullAccount>>
+    fun loadFullAccounts(): LiveData<List<FullAccount>>
 
     @Query("SELECT MAX(account_order) FROM accounts")
     fun getAccountMaxOrder(): Int

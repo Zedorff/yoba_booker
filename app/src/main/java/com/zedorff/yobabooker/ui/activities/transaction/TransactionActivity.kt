@@ -30,7 +30,7 @@ class TransactionActivity : BaseActivity() {
             )
         }
 
-        fun startEdit(context: Context, type: TransactionType, id: String) {
+        fun startEdit(context: Context, type: TransactionType, id: Long) {
             context.startActivity(context.intentFor<TransactionActivity>(
                     KEY_TRANSACTION_TYPE to type,
                     KEY_UI_TYPE to UiType.EDIT,
@@ -44,7 +44,7 @@ class TransactionActivity : BaseActivity() {
     private lateinit var binding: ActivityTransactionBinding
     private lateinit var transactionType: TransactionType
     private lateinit var uiType: UiType
-    private var transactionId: String? = null
+    private var transactionId: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,13 +56,13 @@ class TransactionActivity : BaseActivity() {
 
         transactionType = intent.getSerializableExtra(KEY_TRANSACTION_TYPE) as TransactionType
         uiType = intent.getSerializableExtra(KEY_UI_TYPE) as UiType
-        transactionId = intent.getStringExtra(KEY_TRANSACTION_ID)
+        transactionId = intent.getLongExtra(KEY_TRANSACTION_ID, 0L)
 
         binding.type = transactionType
 
         if (savedInstanceState != null) return
 
-        repository.getAllAccounts().observe(this, Observer {
+        repository.loadAllAccounts().observe(this, Observer {
             it?.let {
                 if (it.isEmpty()) {
                     AccountActivity.build(this)

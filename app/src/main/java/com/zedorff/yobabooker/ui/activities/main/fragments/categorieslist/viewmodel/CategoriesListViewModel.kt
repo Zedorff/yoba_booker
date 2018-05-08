@@ -15,7 +15,7 @@ class CategoriesListViewModel @Inject constructor(var repository: YobaRepository
 
     init {
         categoriesLiveData = Transformations.switchMap(categoryType, {
-            repository.getCategoriesByType(it)
+            repository.loadCategoriesByType(it)
         })
     }
 
@@ -24,7 +24,7 @@ class CategoriesListViewModel @Inject constructor(var repository: YobaRepository
     }
 
     fun getCategories() = categoriesLiveData
-    fun getCategoryType(): LiveData<TransactionType> = categoryType
+    fun getCategoryType(): TransactionType = categoryType.value!!
 
     fun updateCategoriesOrder(items: List<CategoryEntity>) {
         items.forEachIndexed { index, categoryEntity ->

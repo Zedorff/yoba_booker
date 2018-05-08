@@ -1,8 +1,8 @@
 package com.zedorff.yobabooker.app.enums
 
 enum class TransactionType constructor(val value: Int) {
-    INCOME(0),
-    OUTCOME(1),
+    OUTCOME(0),
+    INCOME(1),
     TRANSFER(2),
     EMPTY(3);
 

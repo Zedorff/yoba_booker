@@ -29,6 +29,10 @@
             android:name=".ui.activities.account.AccountActivity"
             android:theme="@style/NewAccountActivity">
         </activity>
+        <activity
+            android:name=".ui.activities.transfer.TransferActivity"
+            android:theme="@style/NewTransferActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -7,9 +7,7 @@ import android.view.*
 import android.widget.DatePicker
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.TransactionType
-import com.zedorff.yobabooker.app.extensions.getDayOfMonth
-import com.zedorff.yobabooker.app.extensions.getMonth
-import com.zedorff.yobabooker.app.extensions.getYear
+import com.zedorff.yobabooker.app.extensions.*
 import com.zedorff.yobabooker.databinding.FragmentTransactionBinding
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
@@ -27,11 +25,11 @@ class TransactionFragment : BaseFragment<TransactionViewModel>(), DatePickerDial
             }
         }
 
-        fun buildEdit(type: TransactionType, id: String?): TransactionFragment {
+        fun buildEdit(type: TransactionType, id: Long): TransactionFragment {
             return TransactionFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(TransactionActivity.KEY_TRANSACTION_TYPE, type)
-                    putString(TransactionActivity.KEY_TRANSACTION_ID, id)
+                    putLong(TransactionActivity.KEY_TRANSACTION_ID, id)
                 }
             }
         }
@@ -39,7 +37,7 @@ class TransactionFragment : BaseFragment<TransactionViewModel>(), DatePickerDial
 
     private lateinit var binding: FragmentTransactionBinding
     private lateinit var transactionType: TransactionType
-    private var transactionId: String? = null
+    private var transactionId: Long? = null
 
     init {
         setHasOptionsMenu(true)
@@ -54,15 +52,23 @@ class TransactionFragment : BaseFragment<TransactionViewModel>(), DatePickerDial
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         transactionType = arguments?.getSerializable(TransactionActivity.KEY_TRANSACTION_TYPE) as TransactionType
-        transactionId = arguments?.getString(TransactionActivity.KEY_TRANSACTION_ID)
+        transactionId = arguments?.getLong(TransactionActivity.KEY_TRANSACTION_ID, 0L)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(TransactionViewModel::class.java)
+
         viewModel.setTransactionId(transactionId)
-        viewModel.getTransaction().observe(this, android.arch.lifecycle.Observer {
-            it?.let {
-                viewModel.setTransaction(it, transactionType)
-            }
+        viewModel.setTransactionType(transactionType)
+        viewModel.getTransaction().nonNullObserve(this, {
+            viewModel.setTransaction(it)
+            viewModel.getCategories().nonNullObserve(this, {
+                viewModel.setCategories(it)
+            })
+
+            viewModel.getAccounts().nonNullObserve(this, {
+                viewModel.setAccounts(it)
+            })
         })
+
         binding.viewModel = viewModel
     }
 
@@ -86,14 +92,8 @@ class TransactionFragment : BaseFragment<TransactionViewModel>(), DatePickerDial
                 activity?.finish()
             }
             R.id.choose_date_transaction -> {
-                val calendar = Calendar.getInstance()
-                viewModel.getDate().value?.let {
-                    calendar.timeInMillis = it
-                }
+                val calendar = Calendar.getInstance().fromTimeInMillis(viewModel.getDate())
                 DatePickerDialog(context, this, calendar.getYear(), calendar.getMonth(), calendar.getDayOfMonth()).show()
-            }
-            android.R.id.home -> {
-                activity?.finish()
             }
             else -> super.onOptionsItemSelected(item)
         }

@@ -9,8 +9,10 @@ import com.zedorff.yobabooker.databinding.ItemTransactionBinding
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.ui.activities.base.fragments.adapter.BaseAdapter
 import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
+import com.zedorff.yobabooker.ui.activities.transfer.TransferActivity
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
+//TODO Need to group transfers into one deletable view
 class TransactionsListAdapter: BaseAdapter<TransactionsListAdapter.ViewHolder, FullTransaction>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,9 +26,11 @@ class TransactionsListAdapter: BaseAdapter<TransactionsListAdapter.ViewHolder, F
         holder.binding.category = items[position].category
         holder.binding.account = items[position].account
         holder.binding.root.onClick {
-            TransactionActivity.startEdit(holder.itemView.context,
+            items[position].transaction.transferId?.let {
+                TransferActivity.startEdit(holder.itemView.context, it)
+            } ?: TransactionActivity.startEdit(holder.itemView.context,
                     items[position].transaction.type,
-                    items[position].transaction.id.toString())
+                    items[position].transaction.id)
         }
     }
 

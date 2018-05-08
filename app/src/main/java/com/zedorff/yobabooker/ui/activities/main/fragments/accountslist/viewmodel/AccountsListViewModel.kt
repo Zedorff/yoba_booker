@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class AccountsListViewModel @Inject constructor(var repository: YobaRepository): BaseViewModel() {
 
-    private var accountsLiveData: LiveData<List<FullAccount>> = repository.getFullAccounts()
+    private var accountsLiveData: LiveData<List<FullAccount>> = repository.loadFullAccounts()
 
     fun getAccounts(): LiveData<List<FullAccount>> = accountsLiveData
 

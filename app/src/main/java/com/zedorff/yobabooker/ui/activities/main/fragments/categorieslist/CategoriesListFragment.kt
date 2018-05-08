@@ -64,28 +64,28 @@ class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
         menu?.findItem(R.id.action_settings)?.isVisible = false
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.menu_categories_swap -> {
-                viewModel.getCategoryType().value?.let {
-                    when (it) {
-                        TransactionType.OUTCOME -> {
-                            item.setIcon(R.drawable.ic_negative_categories_white_24dp)
-                            viewModel.setCategoryType(TransactionType.INCOME)
-                        }
-                        TransactionType.INCOME -> {
-                            item.setIcon(R.drawable.ic_positive_categories_white_24dp)
-                            viewModel.setCategoryType(TransactionType.OUTCOME)
-                        }
-                        else -> {
-                            viewModel.setCategoryType(TransactionType.OUTCOME)
-                        }
+                when (viewModel.getCategoryType()) {
+                    TransactionType.OUTCOME -> {
+                        item.setIcon(R.drawable.ic_negative_categories_white_24dp)
+                        viewModel.setCategoryType(TransactionType.INCOME)
+                    }
+                    TransactionType.INCOME -> {
+                        item.setIcon(R.drawable.ic_positive_categories_white_24dp)
+                        viewModel.setCategoryType(TransactionType.OUTCOME)
+                    }
+                    else -> {
+                        viewModel.setCategoryType(TransactionType.OUTCOME)
                     }
                 }
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
-        return true
     }
+
 
     override fun dragDropEnabled() = true
 

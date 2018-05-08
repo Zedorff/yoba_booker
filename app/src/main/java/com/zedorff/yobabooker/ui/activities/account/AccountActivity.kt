@@ -6,8 +6,8 @@ import android.os.Bundle
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.UiType
 import com.zedorff.yobabooker.databinding.ActivityAccountBinding
-import com.zedorff.yobabooker.ui.activities.base.BaseActivity
 import com.zedorff.yobabooker.ui.activities.account.fragments.AccountFragment
+import com.zedorff.yobabooker.ui.activities.base.BaseActivity
 import org.jetbrains.anko.intentFor
 
 class AccountActivity: BaseActivity() {
@@ -31,7 +31,7 @@ class AccountActivity: BaseActivity() {
 
     private lateinit var binding: ActivityAccountBinding
     private lateinit var uiType: UiType
-    private var accountId: String? = null
+    private var accountId: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,7 @@ class AccountActivity: BaseActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
         uiType = intent.getSerializableExtra(KEY_UI_TYPE) as UiType
-        accountId = intent.getStringExtra(KEY_ACCOUNT_ID)
+        accountId = intent.getLongExtra(KEY_ACCOUNT_ID, 0L)
 
         if (savedInstanceState != null) return
 
