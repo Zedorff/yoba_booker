@@ -5,6 +5,7 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.zedorff.dragandswiperecycler.helper.SDHelperListener
+import com.zedorff.dragandswiperecycler.helper.SDHelperListener
 import com.zedorff.yobabooker.ui.activities.base.fragments.viewmodel.BaseViewModel
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject

@@ -15,7 +15,10 @@ import com.zedorff.yobabooker.app.extensions.nonNullObserve
 import com.zedorff.yobabooker.databinding.FragmentTransactionsListBinding
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
+import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.adapter.TransactionItem
+import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.adapter.TransactionListItem
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.adapter.TransactionsListAdapter
+import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.adapter.TransferItem
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.viewmodel.TransactionsListViewModel
 import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
 import com.zedorff.yobabooker.ui.activities.transfer.TransferActivity
@@ -27,7 +30,7 @@ class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View
     private lateinit var binding: FragmentTransactionsListBinding
     private lateinit var adapter: TransactionsListAdapter
 
-    private var deletedItem: FullTransaction? = null
+    private var deletedItem: TransactionListItem? = null
     private var deletedPosition: Int? = null
 
     companion object {
@@ -60,8 +63,29 @@ class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View
                 .get(TransactionsListViewModel::class.java)
         viewModel.getTransactions().nonNullObserve(this, {
             binding.empty = it.isEmpty()
-            adapter.swapItems(it)
+            adapter.swapItems(processTransactions(it))
         })
+    }
+
+    private fun processTransactions(items: List<FullTransaction>): List<TransactionListItem> {
+        val group = items.groupBy { it.transaction.transferId?.let { it > 0 } ?: false }
+        return with(group) {
+            val mappedItems: MutableList<TransactionListItem> = mutableListOf()
+            val transactions = get(false)
+            val transfers = get(true)
+            return@with mappedItems.apply {
+                transactions?.let {
+                    addAll(it.map { TransactionItem(it) })
+                }
+                transfers?.let {
+                    addAll(it.groupBy {
+                        it.transaction.transferId
+                    }.values.map {
+                        TransferItem(it.first(), it.last())
+                    })
+                }
+            }
+        }
     }
 
     override fun swipeEnabled() = true
@@ -85,7 +109,15 @@ class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View
                 if (event != BaseTransientBottomBar.BaseCallback.DISMISS_EVENT_ACTION) {
                     async {
                         deletedItem?.let {
-                            viewModel.deleteTransaction(it)
+                            when (it.getType()) {
+                                TransactionListItem.TYPE_TRANSACTION -> {
+                                    viewModel.deleteTransaction((it as TransactionItem).transaction)
+                                }
+                                TransactionListItem.TYPE_TRANSFER -> {
+                                    viewModel.deleteTransaction((it as TransferItem).transactionTo)
+                                    viewModel.deleteTransaction(it.transactionFrom)
+                                }
+                            }
                         }
                         deletedItem = null
                         deletedPosition = null
