@@ -1,11 +1,11 @@
 package com.zedorff.dragandswiperecycler.wrapperview
 
 import android.content.Context
-import android.support.annotation.LayoutRes
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.annotation.LayoutRes
 import com.zedorff.dragandswiperecycler.extensions.inflate
 import com.zedorff.dragandswiperecycler.viewholder.SwipeableViewHolder
 import kotlinx.android.synthetic.main.swipeable_root_layout.view.*

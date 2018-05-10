@@ -1,13 +1,13 @@
 package com.zedorff.yobabooker.ui.databinding
 
 import android.content.res.TypedArray
-import android.databinding.BindingAdapter
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.databinding.BindingAdapter
 import com.zedorff.yobabooker.R
 import org.jetbrains.anko.dip
 

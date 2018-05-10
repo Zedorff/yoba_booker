@@ -1,6 +1,6 @@
 package com.zedorff.yobabooker.ui.activities.main
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.zedorff.yobabooker.app.di.scopes.PerActivity
 import com.zedorff.yobabooker.ui.activities.base.BaseActivityModule
 import com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.AccountsListFragment
@@ -9,8 +9,8 @@ import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.Catego
 import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.CategoriesListFragmentModule
 import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.PieChartFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.PieChartFragmentModule
-import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.TransactionsListFragmentModule
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.TransactionsListFragment
+import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.TransactionsListFragmentModule
 import com.zedorff.yobabooker.ui.activities.main.view.MainActivityView
 import dagger.Binds
 import dagger.Module

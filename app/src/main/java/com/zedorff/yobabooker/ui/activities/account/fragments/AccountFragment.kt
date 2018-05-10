@@ -1,8 +1,8 @@
 package com.zedorff.yobabooker.ui.activities.account.fragments
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
+import androidx.lifecycle.ViewModelProviders
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.extensions.nonNullObserve
 import com.zedorff.yobabooker.databinding.FragmentAccountBinding

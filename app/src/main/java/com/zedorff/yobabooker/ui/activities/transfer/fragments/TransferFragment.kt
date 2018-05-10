@@ -1,10 +1,10 @@
 package com.zedorff.yobabooker.ui.activities.transfer.fragments
 
 import android.app.DatePickerDialog
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
 import android.widget.DatePicker
+import androidx.lifecycle.ViewModelProviders
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.extensions.*
 import com.zedorff.yobabooker.databinding.FragmentTransferBinding

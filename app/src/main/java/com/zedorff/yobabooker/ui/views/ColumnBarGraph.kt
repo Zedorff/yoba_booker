@@ -9,7 +9,6 @@ import android.view.View
 import android.view.animation.BounceInterpolator
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.extensions.*
-import com.zedorff.yobabooker.app.utils.ColorGenerator
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.sp

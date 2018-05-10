@@ -9,33 +9,39 @@
             type="com.zedorff.yobabooker.ui.activities.transfer.fragments.viewmodel.TransferViewModel"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/transfer_input_layout"
             android:layout_width="0dp"
-            android:layout_height="?android:attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:hint="@string/text_new_transfer_cost"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomLeft="6dp"
+            app:boxCornerRadiusBottomRight="6dp"
+            app:boxBackgroundColor="@android:color/transparent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageButton2"
             app:layout_constraintTop_toTopOf="parent">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/transfer_dialog_cost"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="numberDecimal"
+                android:gravity="center_vertical"
                 android:text="@={viewModel.transferCost}"
+                android:layout_gravity="center_vertical"
                 tools:ignore="UnusedAttribute" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <android.support.v7.widget.AppCompatSpinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/transfer_dialog_from_account"
             android:layout_width="0dp"
             android:layout_height="?android:attr/actionBarSize"
@@ -47,7 +53,7 @@
             app:layout_constraintStart_toEndOf="@+id/imageButton3"
             app:layout_constraintTop_toBottomOf="@+id/transfer_input_layout" />
 
-        <android.support.v7.widget.AppCompatSpinner
+        <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/transfer_dialog_to_account"
             android:layout_width="0dp"
             android:layout_height="?android:attr/actionBarSize"
@@ -59,7 +65,7 @@
             app:layout_constraintStart_toEndOf="@+id/imageButton4"
             app:layout_constraintTop_toBottomOf="@+id/transfer_dialog_from_account" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +77,7 @@
             app:layout_constraintTop_toTopOf="@+id/transfer_input_layout"
             app:srcCompat="@drawable/ic_money" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageButton3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,7 +90,7 @@
             app:layout_constraintVertical_bias="0.5"
             app:srcCompat="@drawable/ic_account" />
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageButton4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,5 +103,5 @@
             app:layout_constraintVertical_bias="0.5"
             app:srcCompat="@drawable/ic_account" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

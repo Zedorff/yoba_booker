@@ -1,15 +1,15 @@
 package com.zedorff.yobabooker.app.extensions
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.LiveData
 import android.graphics.Rect
 import android.graphics.RectF
-import android.support.annotation.ColorRes
-import android.support.annotation.LayoutRes
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorRes
+import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import java.util.*
 
 inline fun <T> Iterable<T>.sumBy(selector: (T) -> Float): Float {
@@ -81,7 +81,7 @@ fun <T> List<T>.swap(from: Int, to: Int) {
 }
 
 fun <T> LiveData<T>.nonNullObserve(owner: LifecycleOwner, observer: (t: T) -> Unit) {
-    this.observe(owner, android.arch.lifecycle.Observer {
+    this.observe(owner, androidx.lifecycle.Observer {
         it?.let(observer)
     })
 }

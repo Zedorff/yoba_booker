@@ -1,28 +1,29 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.accountslist
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.zedorff.dragandswiperecycler.helper.SDItemTouchHelper
 import com.zedorff.yobabooker.R
+import com.zedorff.yobabooker.app.extensions.nonNullObserve
 import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
 import com.zedorff.yobabooker.databinding.FragmentAccountsListBinding
 import com.zedorff.yobabooker.model.db.embeded.FullAccount
+import com.zedorff.yobabooker.ui.activities.account.AccountActivity
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.adapter.AccountsListAdapter
 import com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.viewmodel.AccountsListViewModel
 import com.zedorff.yobabooker.ui.activities.main.view.MainActivityView
-import com.zedorff.yobabooker.ui.activities.account.AccountActivity
 import kotlinx.coroutines.experimental.async
 import javax.inject.Inject
 
-class AccountsListFragment: BaseFragment<AccountsListViewModel>(), ViewHolderClickListener<FullAccount>, View.OnClickListener {
+class AccountsListFragment : BaseFragment<AccountsListViewModel>(), ViewHolderClickListener<FullAccount>, View.OnClickListener {
 
-    @Inject lateinit var view: MainActivityView
+    @Inject
+    lateinit var view: MainActivityView
     private lateinit var binding: FragmentAccountsListBinding
     private lateinit var adapter: AccountsListAdapter
 
@@ -55,11 +56,9 @@ class AccountsListFragment: BaseFragment<AccountsListViewModel>(), ViewHolderCli
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AccountsListViewModel::class.java)
-        viewModel.getAccounts().observe(this, Observer({
-            it?.let {
-                adapter.swapItems(it)
-            }
-        }))
+        viewModel.getAccounts().nonNullObserve(this, {
+            adapter.swapItems(it)
+        })
     }
 
     override fun onClick(item: FullAccount) {
@@ -81,8 +80,10 @@ class AccountsListFragment: BaseFragment<AccountsListViewModel>(), ViewHolderCli
     }
 
     override fun onClick(view: View) {
-        when(view.id) {
-            R.id.fab_new_account -> {AccountActivity.build(view.context)}
+        when (view.id) {
+            R.id.fab_new_account -> {
+                AccountActivity.build(view.context)
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.zedorff.yobabooker.model.db
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import com.zedorff.yobabooker.model.db.dao.AccountDao
 import com.zedorff.yobabooker.model.db.dao.CategoryDao
 import com.zedorff.yobabooker.model.db.dao.TransactionDao

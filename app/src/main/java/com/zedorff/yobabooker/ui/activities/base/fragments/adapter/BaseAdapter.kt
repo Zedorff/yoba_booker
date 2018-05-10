@@ -1,7 +1,7 @@
 package com.zedorff.yobabooker.ui.activities.base.fragments.adapter
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.zedorff.yobabooker.app.extensions.swap
 
 abstract class BaseAdapter<VH: RecyclerView.ViewHolder, IT: Any>: RecyclerView.Adapter<VH>() {

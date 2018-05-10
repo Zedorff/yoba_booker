@@ -1,8 +1,8 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.adapter
 
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.zedorff.dragandswiperecycler.viewholder.BaseDraggableViewHolder
 import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
 import com.zedorff.yobabooker.databinding.ItemCategoryBinding

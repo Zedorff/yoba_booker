@@ -1,10 +1,10 @@
 package com.zedorff.dragandswiperecycler.viewholder
 
-import android.databinding.ViewDataBinding
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.zedorff.dragandswiperecycler.R
 import com.zedorff.dragandswiperecycler.extensions.inflate
 import com.zedorff.dragandswiperecycler.wrapperview.DraggableRoot

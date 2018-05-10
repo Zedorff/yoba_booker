@@ -1,14 +1,14 @@
 package com.zedorff.yobabooker.app.di.modules
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.zedorff.yobabooker.app.di.annotations.ViewModelKey
+import com.zedorff.yobabooker.ui.activities.account.fragments.viewmodel.AccountViewModel
 import com.zedorff.yobabooker.ui.activities.base.fragments.viewmodel.ViewModelFactory
 import com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.viewmodel.AccountsListViewModel
 import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.viewmodel.CategoriesListViewModel
 import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.viewmodel.PieChartViewModel
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.viewmodel.TransactionsListViewModel
-import com.zedorff.yobabooker.ui.activities.account.fragments.viewmodel.AccountViewModel
 import com.zedorff.yobabooker.ui.activities.transaction.fragments.viewmodel.TransactionViewModel
 import com.zedorff.yobabooker.ui.activities.transfer.fragments.viewmodel.TransferViewModel
 import dagger.Binds

@@ -1,8 +1,7 @@
 package com.zedorff.yobabooker.model.db.converters
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.zedorff.yobabooker.app.enums.CategoryType
-import com.zedorff.yobabooker.app.enums.TransactionType
 
 class CategoryTypeConverter {
     @TypeConverter

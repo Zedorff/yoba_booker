@@ -1,8 +1,8 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.piechart.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.app.extensions.fromTimeInMillis
 import com.zedorff.yobabooker.app.extensions.getActualMonth

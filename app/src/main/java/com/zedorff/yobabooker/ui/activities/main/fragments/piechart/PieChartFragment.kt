@@ -1,11 +1,11 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.piechart
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
+import com.zedorff.yobabooker.app.extensions.nonNullObserve
 import com.zedorff.yobabooker.databinding.FragmentPieChartBinding
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.piechart.viewmodel.PieChartViewModel
@@ -32,23 +32,17 @@ class PieChartFragment : BaseFragment<PieChartViewModel>(), PieChartView.OnPieCh
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PieChartViewModel::class.java)
-        binding.monthSelector.selectedTimeInMillis.observe(this, Observer {
-            it?.let {
-                viewModel.onDateChanged(it)
-            }
+        binding.monthSelector.selectedTimeInMillis.nonNullObserve(this, {
+            viewModel.onDateChanged(it)
         })
 
-        viewModel.getOutcomeTransactions().observe(this, Observer {
-            it?.let {
-                binding.viewPieChart.setTransactions(it)
-                binding.viewPieChartLegend.setCategories(it.map { it.category }.distinct())
-                binding.hasData = !it.isEmpty()
-            }
+        viewModel.getOutcomeTransactions().nonNullObserve(this, {
+            binding.viewPieChart.setTransactions(it)
+            binding.viewPieChartLegend.setCategories(it.map { it.category }.distinct())
+            binding.hasData = !it.isEmpty()
         })
-        viewModel.getGraphData().observe(this, Observer {
-            it?.let {
-                binding.viewColumnBarGraph.setTransactions(it)
-            }
+        viewModel.getGraphData().nonNullObserve(this, {
+            binding.viewColumnBarGraph.setTransactions(it)
         })
     }
 

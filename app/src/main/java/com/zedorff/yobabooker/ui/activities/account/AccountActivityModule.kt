@@ -1,10 +1,10 @@
 package com.zedorff.yobabooker.ui.activities.account
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.zedorff.yobabooker.app.di.scopes.PerActivity
-import com.zedorff.yobabooker.ui.activities.base.BaseActivityModule
 import com.zedorff.yobabooker.ui.activities.account.fragments.AccountFragment
 import com.zedorff.yobabooker.ui.activities.account.fragments.AccountFragmentModule
+import com.zedorff.yobabooker.ui.activities.base.BaseActivityModule
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

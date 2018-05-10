@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,15 +14,15 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="NewTransactionActivity" parent="AppTheme.NoActionBar">
+    <style name="NewTransactionActivity" parent="Theme.MaterialComponents.Light.NoActionBar">
 
     </style>
 
-    <style name="NewAccountActivity" parent="AppTheme.NoActionBar">
+    <style name="NewAccountActivity" parent="Theme.MaterialComponents.Light.NoActionBar">
 
     </style>
 
-    <style name="NewTransferActivity" parent="AppTheme.NoActionBar">
+    <style name="NewTransferActivity" parent="Theme.MaterialComponents.Light.NoActionBar">
 
     </style>
 

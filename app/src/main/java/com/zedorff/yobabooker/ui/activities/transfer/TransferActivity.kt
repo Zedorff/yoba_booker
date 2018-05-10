@@ -1,11 +1,11 @@
 package com.zedorff.yobabooker.ui.activities.transfer
 
-import android.arch.lifecycle.Observer
 import android.content.Context
-import android.databinding.DataBindingUtil
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.UiType
+import com.zedorff.yobabooker.app.extensions.nonNullObserve
 import com.zedorff.yobabooker.databinding.ActivityTransferBinding
 import com.zedorff.yobabooker.model.repository.YobaRepository
 import com.zedorff.yobabooker.ui.activities.account.AccountActivity
@@ -14,7 +14,7 @@ import com.zedorff.yobabooker.ui.activities.transfer.fragments.TransferFragment
 import org.jetbrains.anko.intentFor
 import javax.inject.Inject
 
-class TransferActivity: BaseActivity() {
+class TransferActivity : BaseActivity() {
 
     companion object {
         const val KEY_TRANSFER_ID = "transfer_id"
@@ -53,14 +53,16 @@ class TransferActivity: BaseActivity() {
 
         if (savedInstanceState != null) return
 
-        repository.loadAllAccounts().observe(this, Observer {
-            it?.let {
-                if (it.isEmpty()) {
-                    AccountActivity.build(this)
-                } else {
-                    when(uiType) {
-                        UiType.EDIT -> { replaceFragment(R.id.container_new_transfer, TransferFragment.buildEdit(transferId)) }
-                        UiType.CREATE -> { replaceFragment(R.id.container_new_transfer, TransferFragment.buildCreate()) }
+        repository.loadAllAccounts().nonNullObserve(this, {
+            if (it.isEmpty()) {
+                AccountActivity.build(this)
+            } else {
+                when (uiType) {
+                    UiType.EDIT -> {
+                        replaceFragment(R.id.container_new_transfer, TransferFragment.buildEdit(transferId))
+                    }
+                    UiType.CREATE -> {
+                        replaceFragment(R.id.container_new_transfer, TransferFragment.buildCreate())
                     }
                 }
             }
