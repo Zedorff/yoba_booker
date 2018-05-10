@@ -1,6 +1,6 @@
 package com.zedorff.yobabooker.app.extensions
 
-import android.arch.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleOwner
 import com.zedorff.yobabooker.app.listeners.CoroutineLifecycleListener
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.android.UI

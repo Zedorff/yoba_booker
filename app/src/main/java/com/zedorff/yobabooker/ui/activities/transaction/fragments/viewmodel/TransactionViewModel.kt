@@ -1,11 +1,11 @@
 package com.zedorff.yobabooker.ui.activities.transaction.fragments.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
-import android.databinding.ObservableField
-import android.databinding.ObservableInt
-import android.databinding.ObservableLong
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
+import androidx.databinding.ObservableLong
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.model.db.entities.AccountEntity
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity

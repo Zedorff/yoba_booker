@@ -1,12 +1,12 @@
 package com.zedorff.yobabooker.ui.activities.transaction
 
-import android.arch.lifecycle.Observer
 import android.content.Context
-import android.databinding.DataBindingUtil
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.app.enums.UiType
+import com.zedorff.yobabooker.app.extensions.nonNullObserve
 import com.zedorff.yobabooker.databinding.ActivityTransactionBinding
 import com.zedorff.yobabooker.model.repository.YobaRepository
 import com.zedorff.yobabooker.ui.activities.account.AccountActivity
@@ -62,14 +62,16 @@ class TransactionActivity : BaseActivity() {
 
         if (savedInstanceState != null) return
 
-        repository.loadAllAccounts().observe(this, Observer {
-            it?.let {
-                if (it.isEmpty()) {
-                    AccountActivity.build(this)
-                } else {
-                    when(uiType) {
-                        UiType.EDIT -> {replaceFragment(R.id.container_new_transaction, TransactionFragment.buildEdit(transactionType, transactionId))}
-                        UiType.CREATE -> {replaceFragment(R.id.container_new_transaction, TransactionFragment.buildCreate(transactionType)) }
+        repository.loadAllAccounts().nonNullObserve(this, {
+            if (it.isEmpty()) {
+                AccountActivity.build(this)
+            } else {
+                when (uiType) {
+                    UiType.EDIT -> {
+                        replaceFragment(R.id.container_new_transaction, TransactionFragment.buildEdit(transactionType, transactionId))
+                    }
+                    UiType.CREATE -> {
+                        replaceFragment(R.id.container_new_transaction, TransactionFragment.buildCreate(transactionType))
                     }
                 }
             }

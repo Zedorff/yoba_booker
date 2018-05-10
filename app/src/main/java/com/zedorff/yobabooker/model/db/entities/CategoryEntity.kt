@@ -1,10 +1,10 @@
 package com.zedorff.yobabooker.model.db.entities
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import android.arch.persistence.room.TypeConverters
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import android.graphics.Color
+import androidx.room.TypeConverters
 import com.zedorff.yobabooker.app.enums.CategoryType
 import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.model.db.converters.BaseConverters

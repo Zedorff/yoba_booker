@@ -1,6 +1,6 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.viewmodel
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.model.repository.YobaRepository
 import com.zedorff.yobabooker.ui.activities.base.fragments.viewmodel.BaseViewModel

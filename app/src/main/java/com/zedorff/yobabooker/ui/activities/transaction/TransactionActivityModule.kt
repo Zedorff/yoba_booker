@@ -1,6 +1,6 @@
 package com.zedorff.yobabooker.ui.activities.transaction
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.zedorff.yobabooker.app.di.scopes.PerActivity
 import com.zedorff.yobabooker.ui.activities.base.BaseActivityModule
 import com.zedorff.yobabooker.ui.activities.transaction.fragments.TransactionFragment

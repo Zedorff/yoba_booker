@@ -1,6 +1,6 @@
 package com.zedorff.yobabooker.model.db.entities
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.model.db.converters.TransactionTypeConverter
 

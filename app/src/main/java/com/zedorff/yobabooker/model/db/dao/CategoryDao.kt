@@ -1,7 +1,7 @@
 package com.zedorff.yobabooker.model.db.dao
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.*
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.zedorff.yobabooker.app.enums.CategoryType
 import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.model.db.converters.CategoryTypeConverter

@@ -1,7 +1,7 @@
 package com.zedorff.yobabooker.model.db.embeded
 
-import android.arch.persistence.room.Embedded
-import android.arch.persistence.room.Relation
+import androidx.room.Embedded
+import androidx.room.Relation
 import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.model.db.entities.TransactionEntity
 import com.zedorff.yobabooker.model.db.entities.TransferEntity

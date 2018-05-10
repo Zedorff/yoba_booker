@@ -2,12 +2,10 @@ package com.zedorff.yobabooker.ui.views
 
 import android.content.Context
 import android.graphics.*
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.extensions.getColor
-import com.zedorff.yobabooker.app.utils.ColorGenerator
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.sp

@@ -1,12 +1,12 @@
 package com.zedorff.dragandswiperecycler.viewholder
 
-import android.databinding.ViewDataBinding
-import android.support.annotation.ColorRes
-import android.support.annotation.LayoutRes
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorRes
+import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.RecyclerView
 import com.zedorff.dragandswiperecycler.R
 import com.zedorff.dragandswiperecycler.extensions.inflate
 import com.zedorff.dragandswiperecycler.wrapperview.SwipeableRoot

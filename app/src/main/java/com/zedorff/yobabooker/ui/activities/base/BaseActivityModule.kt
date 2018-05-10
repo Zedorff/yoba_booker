@@ -1,8 +1,8 @@
 package com.zedorff.yobabooker.ui.activities.base
 
 import android.content.Context
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.zedorff.yobabooker.app.di.qualifiers.ActivityContext
 import com.zedorff.yobabooker.app.di.scopes.PerActivity
 import dagger.Binds

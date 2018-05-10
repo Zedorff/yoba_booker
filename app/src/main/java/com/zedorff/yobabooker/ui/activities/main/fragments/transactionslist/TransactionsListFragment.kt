@@ -1,25 +1,25 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.BaseTransientBottomBar
-import android.support.design.widget.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.zedorff.dragandswiperecycler.helper.SDItemTouchHelper
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.TransactionType
+import com.zedorff.yobabooker.app.extensions.nonNullObserve
 import com.zedorff.yobabooker.databinding.FragmentTransactionsListBinding
 import com.zedorff.yobabooker.model.db.embeded.FullTransaction
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.adapter.TransactionsListAdapter
 import com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.viewmodel.TransactionsListViewModel
 import com.zedorff.yobabooker.ui.activities.transaction.TransactionActivity
-import kotlinx.coroutines.experimental.async
 import com.zedorff.yobabooker.ui.activities.transfer.TransferActivity
+import kotlinx.coroutines.experimental.async
 
 //TODO Need to group transfers into one deletable view
 class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View.OnClickListener {
@@ -58,11 +58,9 @@ class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(TransactionsListViewModel::class.java)
-        viewModel.getTransactions().observe(this, Observer {
-            it?.let {
-                binding.empty = it.isEmpty()
-                adapter.swapItems(it)
-            }
+        viewModel.getTransactions().nonNullObserve(this, {
+            binding.empty = it.isEmpty()
+            adapter.swapItems(it)
         })
     }
 

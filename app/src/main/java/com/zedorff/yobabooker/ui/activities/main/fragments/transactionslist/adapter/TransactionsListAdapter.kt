@@ -13,6 +13,7 @@ import com.zedorff.yobabooker.ui.activities.transfer.TransferActivity
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 //TODO Need to group transfers into one deletable view
+//Already in WIP, should be done after transfering to androidx
 class TransactionsListAdapter: BaseAdapter<TransactionsListAdapter.ViewHolder, FullTransaction>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

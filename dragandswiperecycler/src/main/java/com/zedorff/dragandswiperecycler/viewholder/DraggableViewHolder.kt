@@ -1,6 +1,6 @@
 package com.zedorff.dragandswiperecycler.viewholder
 
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper
 
 interface DraggableViewHolder: SDViewHolder {
     fun enableDragHandler(touchHelper: ItemTouchHelper)

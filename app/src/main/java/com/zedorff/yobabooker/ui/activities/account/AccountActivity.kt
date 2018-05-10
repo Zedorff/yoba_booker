@@ -1,8 +1,8 @@
 package com.zedorff.yobabooker.ui.activities.account
 
 import android.content.Context
-import android.databinding.DataBindingUtil
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.UiType
 import com.zedorff.yobabooker.databinding.ActivityAccountBinding

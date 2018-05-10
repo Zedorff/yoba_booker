@@ -1,5 +1,5 @@
 package com.zedorff.yobabooker.ui.activities.base.fragments.viewmodel
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 open class BaseViewModel: ViewModel()

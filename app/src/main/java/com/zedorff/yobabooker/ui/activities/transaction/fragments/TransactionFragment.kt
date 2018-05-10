@@ -1,10 +1,10 @@
 package com.zedorff.yobabooker.ui.activities.transaction.fragments
 
 import android.app.DatePickerDialog
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
 import android.widget.DatePicker
+import androidx.lifecycle.ViewModelProviders
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.app.extensions.*

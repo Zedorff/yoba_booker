@@ -1,8 +1,8 @@
 package com.zedorff.dragandswiperecycler.helper
 
 import android.graphics.Canvas
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.zedorff.dragandswiperecycler.extensions.negate
 import com.zedorff.dragandswiperecycler.viewholder.DraggableViewHolder
 import com.zedorff.dragandswiperecycler.viewholder.SDState
@@ -14,7 +14,7 @@ class SDItemTouchCallback(private var listener: SDHelperListener) : ItemTouchHel
     override fun isLongPressDragEnabled() = listener.dragDropEnabled()
     override fun isItemViewSwipeEnabled() = listener.swipeEnabled()
 
-    override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
+    override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
         val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         var swipeFlags = 0
         if (viewHolder is SwipeableViewHolder) {
@@ -37,7 +37,7 @@ class SDItemTouchCallback(private var listener: SDHelperListener) : ItemTouchHel
         super.onSelectedChanged(viewHolder, actionState)
     }
 
-    override fun onChildDraw(c: Canvas?, recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+    override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         if (viewHolder is SDViewHolder) {
             with(viewHolder as SDViewHolder) {
                 when {
@@ -67,31 +67,25 @@ class SDItemTouchCallback(private var listener: SDHelperListener) : ItemTouchHel
         }
     }
 
-    override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-        if (viewHolder != null && target != null) {
-            listener.onDragged(viewHolder.adapterPosition, target.adapterPosition)
-        }
+    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+        listener.onDragged(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-        viewHolder?.let {
-            if (it is SDViewHolder) {
-                listener.onSwiped(viewHolder.adapterPosition)
-            }
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        if (viewHolder is SDViewHolder) {
+            listener.onSwiped(viewHolder.adapterPosition)
         }
     }
 
-    override fun clearView(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?) {
+    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         listener.onDragDropEnded()
-        viewHolder?.let {
-            if (it is SDViewHolder) {
-                getDefaultUIUtil().clearView(it.getForegroundView())
-                it.setState(SDState.IDLE)
-            }
-            if (it is SwipeableViewHolder) {
-                getDefaultUIUtil().clearView(it.getBackgroundView())
-            }
+        if (viewHolder is SDViewHolder) {
+            getDefaultUIUtil().clearView(viewHolder.getForegroundView())
+            viewHolder.setState(SDState.IDLE)
+        }
+        if (viewHolder is SwipeableViewHolder) {
+            getDefaultUIUtil().clearView(viewHolder.getBackgroundView())
         }
     }
 }

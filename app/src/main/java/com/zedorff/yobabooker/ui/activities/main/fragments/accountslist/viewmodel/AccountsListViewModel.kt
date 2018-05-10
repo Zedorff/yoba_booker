@@ -1,8 +1,7 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.viewmodel
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import com.zedorff.yobabooker.model.db.embeded.FullAccount
-import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.model.repository.YobaRepository
 import com.zedorff.yobabooker.ui.activities.base.fragments.viewmodel.BaseViewModel
 import javax.inject.Inject

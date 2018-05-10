@@ -4,14 +4,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 'android-P'
     defaultConfig {
         applicationId "com.zedorff.yobabooker"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "0.1a"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -34,6 +34,7 @@ dependencies {
     implementation project(path: ':dragandswiperecycler')
     implementation libs.kotlin.stdlib
     implementation libs.kotlin.coroutines
+    implementation libs.kotlin.ktx
 
     implementation libs.anko.commons
     implementation libs.anko.coroutines

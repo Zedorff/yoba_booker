@@ -1,16 +1,14 @@
 package com.zedorff.yobabooker.ui.activities.main
 
-import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.databinding.DataBindingUtil
+import com.google.android.material.navigation.NavigationView
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.databinding.ActivityMainBinding
-import com.zedorff.yobabooker.model.db.entities.AccountEntity
-import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.ui.activities.base.BaseActivity
 import com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.AccountsListFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.CategoriesListFragment

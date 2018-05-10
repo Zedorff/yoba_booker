@@ -1,13 +1,13 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
+import androidx.lifecycle.ViewModelProviders
 import com.zedorff.dragandswiperecycler.helper.SDHelperListener
 import com.zedorff.dragandswiperecycler.helper.SDItemTouchHelper
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.TransactionType
+import com.zedorff.yobabooker.app.extensions.nonNullObserve
 import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
 import com.zedorff.yobabooker.databinding.FragmentCategoriesListBinding
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
@@ -52,10 +52,8 @@ class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(CategoriesListViewModel::class.java)
         viewModel.setCategoryType(TransactionType.OUTCOME)
-        viewModel.getCategories().observe(this, Observer {
-            it?.let {
-                adapter.swapItems(it)
-            }
+        viewModel.getCategories().nonNullObserve(this, {
+            adapter.swapItems(it)
         })
     }
 
