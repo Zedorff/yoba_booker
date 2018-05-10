@@ -73,7 +73,7 @@ class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View
 
         adapter.removeItem(position)
 
-        val snackbar = Snackbar.make(binding.root, R.string.snackbar_text_transaction_deleted, Snackbar.LENGTH_LONG)
+        val snackbar = Snackbar.make(binding.root, R.string.snackbar_text_transaction_deleted, BaseTransientBottomBar.LENGTH_LONG)
         snackbar.setAction(R.string.snackbar_text_undo, {
             if (deletedItem != null && deletedPosition != null) {
                 adapter.addItem(deletedItem!!, deletedPosition!!)
