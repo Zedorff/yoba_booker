@@ -14,6 +14,7 @@
     <string name="text_new_account">Новый счет</string>
     <string name="text_account_name">Название счета</string>
     <string name="text_new_transfer">Новый перевод</string>
+    <string name="text_select_date">Выберите дату</string>
     <string name="text_transfer">Перевод</string>
     <string name="text_transactions_empty">Список транзакций пуст</string>
 

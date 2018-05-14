@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zedorff.dragandswiperecycler.helper.SDItemTouchHelper
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.extensions.nonNullObserve
-import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
 import com.zedorff.yobabooker.databinding.FragmentAccountsListBinding
-import com.zedorff.yobabooker.model.db.embeded.FullAccount
 import com.zedorff.yobabooker.ui.activities.account.AccountActivity
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.accountslist.adapter.AccountsListAdapter
@@ -20,7 +18,7 @@ import com.zedorff.yobabooker.ui.activities.main.view.MainActivityView
 import kotlinx.coroutines.experimental.async
 import javax.inject.Inject
 
-class AccountsListFragment : BaseFragment<AccountsListViewModel>(), ViewHolderClickListener<FullAccount>, View.OnClickListener {
+class AccountsListFragment : BaseFragment<AccountsListViewModel>(), View.OnClickListener {
 
     @Inject
     lateinit var view: MainActivityView
@@ -45,7 +43,7 @@ class AccountsListFragment : BaseFragment<AccountsListViewModel>(), ViewHolderCl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = AccountsListAdapter(this)
+        adapter = AccountsListAdapter()
         binding.recycler.layoutManager = LinearLayoutManager(context)
         binding.recycler.adapter = adapter
         binding.fabNewAccount.setOnClickListener(this)
@@ -59,12 +57,6 @@ class AccountsListFragment : BaseFragment<AccountsListViewModel>(), ViewHolderCl
         viewModel.getAccounts().nonNullObserve(this, {
             adapter.swapItems(it)
         })
-    }
-
-    override fun onClick(item: FullAccount) {
-        activity?.let {
-            AccountActivity.build(it, item.account.id.toString())
-        }
     }
 
     override fun dragDropEnabled() = true

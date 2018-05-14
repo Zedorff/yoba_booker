@@ -8,16 +8,13 @@ import com.zedorff.dragandswiperecycler.helper.SDItemTouchHelper
 import com.zedorff.yobabooker.R
 import com.zedorff.yobabooker.app.enums.TransactionType
 import com.zedorff.yobabooker.app.extensions.nonNullObserve
-import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
 import com.zedorff.yobabooker.databinding.FragmentCategoriesListBinding
-import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.ui.activities.base.fragments.BaseFragment
 import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.adapter.CategoriesListAdapter
 import com.zedorff.yobabooker.ui.activities.main.fragments.categorieslist.viewmodel.CategoriesListViewModel
 import kotlinx.coroutines.experimental.async
 
-class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
-        ViewHolderClickListener<CategoryEntity>, SDHelperListener {
+class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(), SDHelperListener {
 
     private lateinit var binding: FragmentCategoriesListBinding
     private lateinit var adapter: CategoriesListAdapter
@@ -43,7 +40,7 @@ class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val touchHelper = SDItemTouchHelper(this)
-        adapter = CategoriesListAdapter(this, touchHelper)
+        adapter = CategoriesListAdapter(touchHelper)
         binding.recycler.adapter = adapter
         touchHelper.attachToRecyclerView(binding.recycler)
     }
@@ -96,8 +93,5 @@ class CategoriesListFragment : BaseFragment<CategoriesListViewModel>(),
         async {
             viewModel.updateCategoriesOrder(adapter.items)
         }
-    }
-
-    override fun onClick(item: CategoryEntity) {
     }
 }
