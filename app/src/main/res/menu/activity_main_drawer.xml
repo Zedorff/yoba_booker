@@ -7,18 +7,18 @@
         <item
             android:id="@+id/nav_transactions"
             android:icon="@drawable/ic_payment"
-            android:title="Операции" />
+            android:title="@string/text_title_transactions" />
         <item
             android:id="@+id/nav_categories"
             android:icon="@drawable/ic_categories"
-            android:title="Категории" />
+            android:title="@string/text_title_categories" />
         <item
             android:id="@+id/nav_pie_charts"
             android:icon="@drawable/ic_pie_chart"
-            android:title="Диаграммы" />
+            android:title="@string/text_title_pie_charts" />
         <item
             android:id="@+id/nav_accounts"
             android:icon="@drawable/ic_account"
-            android:title="Счета" />
+            android:title="@string/text_title_accounts" />
     </group>
 </menu>
