@@ -1,11 +1,12 @@
 package com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.zedorff.dragandswiperecycler.viewholder.BaseSwipeableViewHolder
 import com.zedorff.dragandswiperecycler.viewholder.SwipeableViewHolder
 import com.zedorff.yobabooker.R
+import com.zedorff.yobabooker.app.extensions.inverseVisibility
 import com.zedorff.yobabooker.databinding.ItemTransactionBinding
 import com.zedorff.yobabooker.databinding.ItemTransferBinding
 import com.zedorff.yobabooker.ui.activities.base.fragments.adapter.BaseAdapter
@@ -15,11 +16,11 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
 
 //TODO Need to group transfers into one deletable view
 //Already in WIP, should be done after transfering to androidx
-class TransactionsListAdapter: BaseAdapter<RecyclerView.ViewHolder, TransactionListItem>() {
+class TransactionsListAdapter(var animateRecycler: () -> Unit) : BaseAdapter<RecyclerView.ViewHolder, TransactionListItem>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return when(viewType) {
+        return when (viewType) {
             TransactionListItem.TYPE_TRANSACTION -> {
                 TransactionHolder(parent, ItemTransactionBinding.inflate(inflater, parent, false))
             }
@@ -30,7 +31,7 @@ class TransactionsListAdapter: BaseAdapter<RecyclerView.ViewHolder, TransactionL
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder.itemViewType) {
+        when (holder.itemViewType) {
             TransactionListItem.TYPE_TRANSACTION -> {
                 val item = items[position] as TransactionItem
                 with(holder as TransactionHolder) {
@@ -38,16 +39,27 @@ class TransactionsListAdapter: BaseAdapter<RecyclerView.ViewHolder, TransactionL
                     binding.category = item.transaction.category
                     binding.account = item.transaction.account
                     binding.root.onClick {
-                        item.transaction.transaction.transferId?.let {
-                            TransferActivity.startEdit(itemView.context, it)
-                        } ?: TransactionActivity.startEdit(itemView.context,
+                        TransactionActivity.startEdit(itemView.context,
                                 item.transaction.transaction.type,
                                 item.transaction.transaction.id)
                     }
                 }
             }
             TransactionListItem.TYPE_TRANSFER -> {
-
+                val item = items[position] as TransferItem
+                with(holder as TransferHolder) {
+                    binding.transferTo = item.transactionTo
+                    binding.transferFrom = item.transactionFrom
+                    binding.root.onClick {
+                        TransferActivity.startEdit(itemView.context, item.transactionFrom.transaction.transferId!!)
+                    }
+                    binding.transferMoreIcon.setOnClickListener {
+                        animateRecycler()
+                        it.rotation = (it.rotation + 180F) % 360
+                        binding.transferDetails.inverseVisibility()
+                        binding.transferDividers.inverseVisibility()
+                    }
+                }
             }
         }
     }

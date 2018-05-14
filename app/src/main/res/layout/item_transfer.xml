@@ -1,7 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <android.support.constraint.ConstraintLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="transferFrom"
+            type="com.zedorff.yobabooker.model.db.embeded.FullTransaction" />
+
+        <variable
+            name="transferTo"
+            type="com.zedorff.yobabooker.model.db.embeded.FullTransaction" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.constraint.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:foreground="?android:attr/selectableItemBackgroundBorderless">
+
+        <View
+            android:id="@+id/transfer_top_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1e000000"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <FrameLayout
+            android:id="@+id/frameLayout2"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:padding="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/transfer_category_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_transfer_combined" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/transaction_name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:ems="10"
+            android:gravity="center_vertical|start"
+            android:text="@string/text_transfer"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayout2"
+            app:layout_constraintEnd_toStartOf="@id/transfer_more_icon"
+            app:layout_constraintStart_toEndOf="@+id/frameLayout2"
+            app:layout_constraintTop_toTopOf="@+id/frameLayout2" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/transfer_more_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:layout_marginEnd="8dp"
+            android:padding="6dp"
+            app:srcCompat="@drawable/ic_expand_more_black_24dp"
+            android:foreground="?android:attr/actionBarItemBackground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/frameLayout2"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayout2"/>
+
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/transfer_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="transfer_income_transaction, transfer_outcome_transaction" />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/transfer_dividers"
+            android:visibility="gone"
+            app:constraint_referenced_ids="transfer_bottom_divider, transfer_top_divider"/>
+
+        <include
+            android:id="@+id/transfer_income_transaction"
+            layout="@layout/item_transaction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/frameLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            bind:account="@{transferTo.account}"
+            bind:category="@{transferTo.category}"
+            bind:transaction="@{transferTo.transaction}" />
+
+        <include
+            android:id="@+id/transfer_outcome_transaction"
+            layout="@layout/item_transaction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/transfer_income_transaction"
+            app:layout_constraintStart_toEndOf="@+id/frameLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            bind:account="@{transferFrom.account}"
+            bind:category="@{transferFrom.category}"
+            bind:transaction="@{transferFrom.transaction}" />
+
+        <View
+            android:id="@+id/transfer_bottom_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1e000000"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

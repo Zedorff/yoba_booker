@@ -4,13 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.zedorff.dragandswiperecycler.viewholder.BaseDraggableViewHolder
-import com.zedorff.yobabooker.app.listeners.ViewHolderClickListener
 import com.zedorff.yobabooker.databinding.ItemCategoryBinding
 import com.zedorff.yobabooker.model.db.entities.CategoryEntity
 import com.zedorff.yobabooker.ui.activities.base.fragments.adapter.BaseAdapter
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class CategoriesListAdapter(val listener: ViewHolderClickListener<CategoryEntity>, var touchHelper: ItemTouchHelper)
+class CategoriesListAdapter(var touchHelper: ItemTouchHelper)
     : BaseAdapter<CategoriesListAdapter.ViewHolder, CategoryEntity>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,7 +21,6 @@ class CategoriesListAdapter(val listener: ViewHolderClickListener<CategoryEntity
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.category = items[position]
         holder.binding.root.onClick {
-            listener.onClick(items[holder.adapterPosition])
         }
     }
 

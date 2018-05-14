@@ -61,6 +61,10 @@ fun View.getColor(@ColorRes res: Int): Int {
     return ContextCompat.getColor(this.context, res)
 }
 
+fun View.inverseVisibility() {
+    visibility = if (this.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+}
+
 fun <T : ViewGroup> T.inflate(@LayoutRes res: Int): View {
     let {
         val inflater = LayoutInflater.from(this.context)

@@ -7,4 +7,5 @@ interface TransactionListItem {
     }
 
     fun getType(): Int
+    fun getSortDate(): Long
 }

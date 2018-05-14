@@ -2,10 +2,13 @@ package com.zedorff.yobabooker.ui.activities.main.fragments.transactionslist
 
 import android.graphics.Color
 import android.os.Bundle
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.zedorff.dragandswiperecycler.helper.SDItemTouchHelper
@@ -49,9 +52,10 @@ class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = TransactionsListAdapter()
+        adapter = TransactionsListAdapter({ TransitionManager.beginDelayedTransition(binding.recycler) })
         binding.recycler.adapter = adapter
         SDItemTouchHelper(this).attachToRecyclerView(binding.recycler)
+        binding.recycler.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL))
         binding.fabNewIncome.setOnClickListener(this)
         binding.fabNewOutcome.setOnClickListener(this)
         binding.fabNewTransfer.setOnClickListener(this)
@@ -84,6 +88,7 @@ class TransactionsListFragment : BaseFragment<TransactionsListViewModel>(), View
                         TransferItem(it.first(), it.last())
                     })
                 }
+                sortBy { it.getSortDate() }
             }
         }
     }
